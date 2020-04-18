@@ -215,4 +215,4 @@ fabric.properties
 *.tar.gz
 *.rar
 
-*.target
+backend/target/*
