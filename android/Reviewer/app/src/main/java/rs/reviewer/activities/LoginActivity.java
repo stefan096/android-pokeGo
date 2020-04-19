@@ -18,8 +18,10 @@ import retrofit2.Response;
 import rs.reviewer.MainActivity;
 import rs.reviewer.R;
 import rs.reviewer.rest.BaseService;
+import rs.reviewer.utils.UserUtil;
 
 public class LoginActivity extends Activity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -48,6 +50,15 @@ public class LoginActivity extends Activity {
                 if (response.code() == 200){  //you can go on main page
                     Log.d("REZ","Meesage SUCC");
 
+                    try{
+                        String userJson = response.body().string();
+                        UserUtil.setLogInUser(userJson, getApplicationContext());
+                    }
+                    catch (Exception e){
+                        Log.d("REZ","Meesage Exception occured when parsing user");
+                    }
+
+
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish(); // because user can not go back to log in while he is logged in on app
                 }else{
@@ -73,5 +84,4 @@ public class LoginActivity extends Activity {
         startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
 
     }
-
 }

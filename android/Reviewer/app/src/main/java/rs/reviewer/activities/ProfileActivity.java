@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+
 import com.google.gson.Gson;
 
 import model.User;
@@ -18,12 +19,12 @@ import retrofit2.Response;
 import rs.reviewer.MainActivity;
 import rs.reviewer.R;
 import rs.reviewer.rest.BaseService;
+import rs.reviewer.utils.UserUtil;
 
 
 public class ProfileActivity extends Activity {
 
     private User user;
-
 
         @Override
         protected void onCreate(Bundle savedInstanceState)
@@ -31,38 +32,14 @@ public class ProfileActivity extends Activity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.profile);
 
-            Call<ResponseBody> call = BaseService.userService.findById(8L);
-            call.enqueue(new Callback<ResponseBody>() {
-                @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                    if (response.code() == 200) {
-                        Log.d("REZ", "Meesage SUCC");
-                        try{
-                            user = new Gson().fromJson(response.body().string(), User.class);
+            String userId = UserUtil.getLogInUser(getApplicationContext());
+            user = new Gson().fromJson(userId, User.class);
 
-                            EditText editTextFirstName = findViewById(R.id.first_name);
-                            EditText editTextLastName = findViewById(R.id.last_name);
+            EditText editTextFirstName = findViewById(R.id.first_name);
+            EditText editTextLastName = findViewById(R.id.last_name);
 
-                            editTextFirstName.setText(user.getName());
-                            editTextLastName.setText(user.getLastName());
-                        }
-                        catch (Exception e){
-                            Log.d("REZ","error Pri konvertovanju json-a");
-                        }
-
-                    }
-                    else{
-                        Log.d("REZ","error: "+response.code());
-                        Toast.makeText(ProfileActivity.this, R.string.bad_data, Toast.LENGTH_LONG).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
-                    Log.d("REZ", t.getMessage() != null?t.getMessage():"error");
-                    Toast.makeText(ProfileActivity.this, R.string.bad_data, Toast.LENGTH_LONG).show();
-                }
-            });
+            editTextFirstName.setText(user.getName());
+            editTextLastName.setText(user.getLastName());
 
         }
 
@@ -85,7 +62,6 @@ public class ProfileActivity extends Activity {
                         Log.d("REZ", "Meesage SUCC");
 
                         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
-                        finish(); // because user can not go back to log in while he is logged in on app
                     }
                     else{
                         Log.d("REZ","error: "+response.code());
@@ -100,6 +76,5 @@ public class ProfileActivity extends Activity {
                 }
             });
         }
-
 
     }
