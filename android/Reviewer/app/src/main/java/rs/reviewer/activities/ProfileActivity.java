@@ -61,6 +61,14 @@ public class ProfileActivity extends Activity {
                     if (response.code() == 200) {  //you can go on main page
                         Log.d("REZ", "Meesage SUCC");
 
+                        try{
+                            String userJson = response.body().string();
+                            UserUtil.setLogInUser(userJson, getApplicationContext());
+                        }
+                        catch (Exception e){
+                            Log.d("REZ", "Exception occured when parsing json");
+                        }
+
                         startActivity(new Intent(ProfileActivity.this, MainActivity.class));
                     }
                     else{
