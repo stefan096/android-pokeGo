@@ -72,4 +72,6 @@
     <string name="profile_long">User\'s profile</string>
     <string name="save_changes">Save Changes</string>
     <string name="poke_go">POKE GOO</string>
+    <string name="action_log_out">Log out</string>
+    <string name="log_out">Log out</string>
 </resources>
