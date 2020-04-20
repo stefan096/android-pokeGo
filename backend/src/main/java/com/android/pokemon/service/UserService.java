@@ -18,8 +18,16 @@ public class UserService {
 		return userRepository.findAll();
 	}
 	
+	public User findOne(Long id){
+		return userRepository.findById(id).get();
+	}
+	
 	public User register(User user){
 		return userRepository.save(user);
+	}
+	
+	public User findByEmail(String email) {
+		return userRepository.findByEmail(email);
 	}
 	
 	public User logIn(String email, String password) {
