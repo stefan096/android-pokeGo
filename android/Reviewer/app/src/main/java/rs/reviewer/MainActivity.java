@@ -26,27 +26,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.google.gson.Gson;
-
 import model.NavItem;
-import model.User;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import rs.reviewer.activities.PokemonListActivity;
 import rs.reviewer.activities.LoginActivity;
 import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
 import rs.reviewer.fragments.MyFragment;
 import rs.reviewer.fragments.PokemonListFragment;
-import rs.reviewer.rest.BaseService;
 import rs.reviewer.sync.SyncReceiver;
 import rs.reviewer.sync.SyncService;
 import rs.reviewer.tools.FragmentTransition;
 import rs.reviewer.tools.ReviewerTools;
-import rs.reviewer.tools.Util;
 import rs.reviewer.utils.UserUtil;
 
 import java.util.ArrayList;

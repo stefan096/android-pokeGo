@@ -1,5 +1,6 @@
 package com.android.pokemon.controller;
 
+import com.android.pokemon.dto.UserDTO;
 import com.android.pokemon.model.User;
 import com.android.pokemon.model.UsersPokemons;
 import com.android.pokemon.service.UserService;
@@ -22,15 +23,14 @@ public class UsersPokemonsController {
     @Autowired
     UserService userService;
 
-   /* @RequestMapping(value = "api/userspokemons/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<UsersPokemons>> getUsersPokemons(@PathVariable Long id) {
+    /*@RequestMapping(value = "api/userPokemons/{id}", method = RequestMethod.GET)
+    public ResponseEntity<User> getUsersPokemons(@PathVariable Long id) {
+        User retVal = userService.findOne(id);
 
-        User user = userService.findOne(id);
-
-        if(pokemons == null) {
+        if(retVal == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        return new ResponseEntity<>(pokemons,HttpStatus.OK);
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }*/
 }

@@ -1,9 +1,7 @@
 package rs.reviewer.fragments;
 
-import android.app.Application;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,13 +10,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
 import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
@@ -37,23 +33,19 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import rs.reviewer.MainActivity;
 import rs.reviewer.R;
-import rs.reviewer.activities.DetailActivity;
-import rs.reviewer.activities.LoginActivity;
 import rs.reviewer.activities.PokemonDetailActivity;
 import rs.reviewer.adapters.PokemonListAdapter;
-import rs.reviewer.database.DBContentProvider;
-import rs.reviewer.database.ReviewerSQLiteHelper;
 import rs.reviewer.rest.BaseService;
-import rs.reviewer.rest.UsersPokemonsService;
 import rs.reviewer.utils.UserUtil;
+
+import static android.content.ContentValues.TAG;
 
 public class PokemonListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private SimpleCursorAdapter adapter;
-    private User getUser;
-    private List < UsersPokemons > usersPokemons;
+    private User getUser = new User();
+    private List < UsersPokemons > usersPokemons = new ArrayList<>();
     private Pokemon pokemon = new Pokemon();
 
 
@@ -93,50 +85,41 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
         pokemon.setDefense(322);
         final UsersPokemons usersPokemons1 = new UsersPokemons(pokemon);
 
-        Call<ResponseBody> call = BaseService.userService.findById(id);
+        Call<ResponseBody> call = BaseService.userService.findByIdForPokemons(id);
         call.enqueue(new Callback<ResponseBody>() {
                          @Override
                          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                              String userJson = null;
-                             try {
-                                 userJson = response.body().string();
-                                 getUser = new Gson().fromJson(userJson, User.class);
-                                 usersPokemons = getUser.getPokemons();
-                                 if (usersPokemons.isEmpty()){
-                                     UsersPokemons up = new UsersPokemons();
-                                     up.setPokemon(pokemon);
-                                     usersPokemons.add(up);
+                             if (response.code() == 200) {
+                                 Log.d("REZ", "USO U FRAGMENT");
+                                 try {
+                                     userJson = response.body().string();
+                                     getUser = new Gson().fromJson(userJson, User.class);
+                                     usersPokemons = getUser.getPokemons();
+                                     if (usersPokemons.isEmpty()){
+                                         UsersPokemons up = new UsersPokemons();
+                                         up.setPokemon(pokemon);
+                                         usersPokemons.add(up);
+                                     }
+                                     PokemonListAdapter adapter = new PokemonListAdapter(getActivity(), usersPokemons);
+                                     setListAdapter(adapter);
+                                 } catch (IOException e) {
+                                     e.printStackTrace();
                                  }
-                                 PokemonListAdapter adapter = new PokemonListAdapter(getActivity(), usersPokemons);
-                                 setListAdapter(adapter);
-                             } catch (IOException e) {
-                                 e.printStackTrace();
+                             }else{
+                                 Log.d("pokes","error: "+response.code());
+
                              }
+
+
                          }
 
                          @Override
                          public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                             Log.d(TAG, "onFailure: NISTAA");
                          }
                      });
 
-
-        //= user.getPokemons();
-       /* Pokemon pokemon = new Pokemon();
-        pokemon.setAtk(55);
-        pokemon.setHp(431);
-        pokemon.setName("Pikachu");
-        pokemon.setDefense(322);
-        Pokemon pokemon1 = new Pokemon();
-        pokemon1.setAtk(55);
-        pokemon1.setHp(431);
-        pokemon1.setName("Bulbasaur");
-        pokemon1.setDefense(322);
-        UsersPokemons usersPokemons1 = new UsersPokemons(pokemon);
-        UsersPokemons usersPokemons2 = new UsersPokemons(pokemon1);*/
-
-       /* usersPokemons.add(usersPokemons1);
-        usersPokemons.add(usersPokemons2)*/;
 
     }
 
@@ -157,9 +140,7 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
         if (id == R.id.action_refresh) {
             Toast.makeText(getActivity(), "Refresh App", Toast.LENGTH_SHORT).show();
         }
-        if (id == R.id.action_new) {
-            Toast.makeText(getActivity(), "Create Text", Toast.LENGTH_SHORT).show();
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
