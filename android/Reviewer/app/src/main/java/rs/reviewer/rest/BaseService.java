@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class BaseService {
 
     //EXAMPLE: http://192.168.43.73:8080/rs.ftn.reviewer.rest/rest/proizvodi/
-    public static final String SERVICE_IP_ADDRESS = "192.168.1.8";
+    public static final String SERVICE_IP_ADDRESS = "192.168.0.36";
     public static final String SERVICE_PORT = "8000";
     public static final String SERVICE_BASE_URI = "api/";
     public static final String SERVICE_API_PATH = "http://" + SERVICE_IP_ADDRESS + ":" + SERVICE_PORT  + "/" +
@@ -29,9 +29,9 @@ public class BaseService {
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         OkHttpClient client = new OkHttpClient.Builder()
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
-                .writeTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .readTimeout(30, TimeUnit.SECONDS)
+                .writeTimeout(30, TimeUnit.SECONDS)
                 .addInterceptor(interceptor).build();
 
         return client;

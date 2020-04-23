@@ -53,6 +53,7 @@ public class LoginActivity extends Activity {
                     try{
                         String userJson = response.body().string();
                         UserUtil.setLogInUser(userJson, getApplicationContext());
+
                     }
                     catch (Exception e){
                         Log.d("REZ","Meesage Exception occured when parsing user");

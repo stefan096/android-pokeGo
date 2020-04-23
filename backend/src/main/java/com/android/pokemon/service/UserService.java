@@ -2,6 +2,7 @@ package com.android.pokemon.service;
 
 import java.util.List;
 
+import com.android.pokemon.model.UsersPokemons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class UserService {
 	public User findOne(Long id){
 		return userRepository.findById(id).get();
 	}
-	
+
 	public User register(User user){
 		return userRepository.save(user);
 	}

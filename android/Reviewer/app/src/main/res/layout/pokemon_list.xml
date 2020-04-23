@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageView
+        android:id="@+id/item_image"
+        android:layout_width="101dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:contentDescription="@null"
+        android:src="@drawable/pikachu" />
+
+    <TextView
+        android:id="@+id/pokemon_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:gravity="center_vertical"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/item_image"
+        android:padding="5dp"/>
+
+    <TextView android:id="@+id/atk_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pokemon_name"
+        android:layout_toRightOf="@+id/item_image"
+        android:padding="5dp"/>
+
+    <TextView android:id="@+id/atk"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/pokemon_name"
+        android:layout_toRightOf="@+id/atk_text"
+        android:padding="5dp"/>
+
+    <TextView android:id="@+id/defense_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/atk"
+        android:layout_toRightOf="@+id/item_image"
+        android:padding="5dp"/>
+
+    <TextView android:id="@+id/defense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/atk"
+        android:layout_toRightOf="@+id/defense_text"
+        android:padding="5dp"/>
+
+    <TextView android:id="@+id/hp_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/defense"
+        android:layout_toRightOf="@+id/item_image"
+        android:padding="5dp"/>
+
+    <TextView android:id="@+id/hp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/defense"
+        android:layout_toRightOf="@+id/hp_text"
+        android:padding="5dp"/>
+
+
+</RelativeLayout>

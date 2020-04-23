@@ -34,10 +34,12 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rs.reviewer.activities.PokemonListActivity;
 import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
 import rs.reviewer.fragments.MyFragment;
+import rs.reviewer.fragments.PokemonListFragment;
 import rs.reviewer.rest.BaseService;
 import rs.reviewer.sync.SyncReceiver;
 import rs.reviewer.sync.SyncService;
@@ -186,6 +188,8 @@ public class MainActivity extends AppCompatActivity {
         mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
         mNavItems.add(new NavItem(getString(R.string.about), getString(R.string.about_long), R.drawable.ic_action_about));
         mNavItems.add(new NavItem(getString(R.string.sync_data), getString(R.string.sync_data_long), R.drawable.ic_action_refresh));
+        mNavItems.add(new NavItem(getString(R.string.pokemon_list), getString(R.string.pokemon_list_long), R.drawable.ic_action_name));
+
     }
     
     @Override
@@ -206,6 +210,7 @@ public class MainActivity extends AppCompatActivity {
                 Util.initDB(MainActivity.this);
                 finish();
                 startActivity(getIntent());
+
         }
 
         return super.onOptionsItemSelected(item);
@@ -231,11 +236,14 @@ public class MainActivity extends AppCompatActivity {
             Intent preference = new Intent(MainActivity.this,ReviewerPreferenceActivity.class);
             startActivity(preference);
         }else if(position == 3){ //preferences
-            //..
+            //.
         }else if(position == 4){ //about
             //..
         }else if(position == 5){ //sync data
             //...
+        }else if(position == 6){ // list of pokemons
+            FragmentTransition.to(PokemonListFragment.newInstance(), this, false);
+            //startActivity(pokemonsList);
         }else{
             Log.e("DRAWER", "Nesto van opsega!");
         }

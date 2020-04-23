@@ -69,6 +69,10 @@
                 android:value=".MainActivity" />
         </activity>
         <activity
+            android:name=".activities.PokemonDetailActivity"
+            android:label="@string/title_activity_detail"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
             android:name=".activities.DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -77,6 +81,15 @@
             android:name="rs.reviewer.database.DBContentProvider"
             android:authorities="rs.reviewer"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.PokemonListActivity"
+            android:label="PokemonList"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
     </application>
 

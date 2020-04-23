@@ -36,6 +36,10 @@ public class UsersPokemons implements Serializable {
 
     }
 
+    public UsersPokemons(Pokemon pokemon){
+            this.setPokemon(pokemon);
+    }
+
     public Long getId() {
         return id;
     }
