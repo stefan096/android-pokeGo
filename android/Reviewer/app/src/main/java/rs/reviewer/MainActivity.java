@@ -25,15 +25,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+
+import com.google.gson.Gson;
+
 import model.NavItem;
+import model.User;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import rs.reviewer.activities.LoginActivity;
+import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
 import rs.reviewer.fragments.MyFragment;
+import rs.reviewer.rest.BaseService;
 import rs.reviewer.sync.SyncReceiver;
 import rs.reviewer.sync.SyncService;
 import rs.reviewer.tools.FragmentTransition;
 import rs.reviewer.tools.ReviewerTools;
 import rs.reviewer.tools.Util;
+import rs.reviewer.utils.UserUtil;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -59,9 +72,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         prepareMenu(mNavItems);
-        
+
         mTitle  = getTitle();
         mDrawerLayout = findViewById(R.id.drawerLayout);
         mDrawerList = findViewById(R.id.navList);
@@ -171,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
     
     private void prepareMenu(ArrayList<NavItem> mNavItems ){
     	mNavItems.add(new NavItem(getString(R.string.home), getString(R.string.home_long), R.drawable.ic_action_map));
+        mNavItems.add(new NavItem(getString(R.string.profile), getString(R.string.profile_long), R.drawable.ic_action_person));
         mNavItems.add(new NavItem(getString(R.string.places), getString(R.string.places_long), R.drawable.ic_action_place));
         mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
         mNavItems.add(new NavItem(getString(R.string.about), getString(R.string.about_long), R.drawable.ic_action_about));
@@ -180,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.activity_itemdetail, menu);
+        //inflater.inflate(R.menu.activity_itemdetail, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -191,10 +205,16 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(this, ReviewerPreferenceActivity.class);
                 startActivity(i);
                 return true;
-            case R.id.action_new:
-                Util.initDB(MainActivity.this);
+//            case R.id.action_new:
+//                Util.initDB(MainActivity.this);
+//                finish();
+//                startActivity(getIntent());
+
+            case R.id.action_log_out:
+                UserUtil.setLogInUser(null, getApplicationContext());
+                Intent login = new Intent(this, LoginActivity.class);
+                startActivity(login);
                 finish();
-                startActivity(getIntent());
         }
 
         return super.onOptionsItemSelected(item);
@@ -212,16 +232,18 @@ public class MainActivity extends AppCompatActivity {
     private void selectItemFromDrawer(int position) {
         if(position == 0){
             FragmentTransition.to(MyFragment.newInstance(), this, false);
-        }else if(position == 1){
-           //..
-        }else if(position == 2){
+        }else if(position == 1){ //profile
+            Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(profile);
+            //..
+        }else if(position == 2){ //places
             Intent preference = new Intent(MainActivity.this,ReviewerPreferenceActivity.class);
             startActivity(preference);
-        }else if(position == 3){
+        }else if(position == 3){ //preferences
             //..
-        }else if(position == 4){
+        }else if(position == 4){ //about
             //..
-        }else if(position == 5){
+        }else if(position == 5){ //sync data
             //...
         }else{
             Log.e("DRAWER", "Nesto van opsega!");
@@ -255,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
+
     @Override
     protected void onPause() {
         if (manager != null) {
@@ -269,4 +292,5 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
     }
+
 }

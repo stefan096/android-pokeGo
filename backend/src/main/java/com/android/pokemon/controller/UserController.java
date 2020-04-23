@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,8 +14,9 @@ import com.android.pokemon.dto.LoginDTO;
 import com.android.pokemon.dto.UserDTO;
 import com.android.pokemon.model.User;
 import com.android.pokemon.service.UserService;
+import com.android.pokemon.utils.CheckValidity;
 
-@Repository
+@Controller
 public class UserController {
 	
 	@Autowired
@@ -22,7 +24,6 @@ public class UserController {
 
 	@RequestMapping(value = "api/user/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
-		System.out.println("USAOOO");
 		User retVal = userService.logIn(loginDTO.getEmail(), loginDTO.getPassword());
 
 		if(retVal == null) {
@@ -33,9 +34,6 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "api/user/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-<<<<<<< Updated upstream
-	public ResponseEntity<User> register(@RequestBody User userDTO) {
-=======
 	public ResponseEntity<UserDTO> register(@RequestBody User userDTO) {
 		
 		if(!CheckValidity.nullOrEmpty(userDTO.getEmail())) {
@@ -59,20 +57,16 @@ public class UserController {
 		if(uniqueUser != null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); //400
 		}
-		
-		
->>>>>>> Stashed changes
+
 		User retVal = userService.register(userDTO);
 		
 		if(retVal == null) {
-			return new ResponseEntity<>(HttpStatus.LOCKED);
+			return new ResponseEntity<>(HttpStatus.LOCKED);  //423
 		}
 
 		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.CREATED);
 	}
-<<<<<<< Updated upstream
 
-=======
 	
 	@RequestMapping(value = "api/user/{id}", method = RequestMethod.GET)
 	public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
@@ -85,8 +79,9 @@ public class UserController {
 		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.OK);
 	}
 	
+
 	@RequestMapping(value = "api/user/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> editUser(@RequestBody UserDTO userDTO) {
+	public ResponseEntity<UserDTO> editUser(@RequestBody User userDTO) {
 		
 		if(!CheckValidity.nullOrEmpty(userDTO.getName())) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
@@ -109,5 +104,4 @@ public class UserController {
 		return new ResponseEntity<>(new UserDTO(savedUser), HttpStatus.OK);
 	}
 	
->>>>>>> Stashed changes
 }
