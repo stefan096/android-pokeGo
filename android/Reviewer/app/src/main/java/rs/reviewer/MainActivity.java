@@ -34,11 +34,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-<<<<<<< HEAD
 import rs.reviewer.activities.PokemonListActivity;
-=======
 import rs.reviewer.activities.LoginActivity;
->>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
 import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
@@ -222,11 +219,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent login = new Intent(this, LoginActivity.class);
                 startActivity(login);
                 finish();
-<<<<<<< HEAD
                 startActivity(getIntent());
 
-=======
->>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
         }
 
         return super.onOptionsItemSelected(item);
