@@ -86,8 +86,11 @@ public class MyFragment extends ListFragment implements LoaderManager.LoaderCall
         if(id == R.id.action_refresh){
             Toast.makeText(getActivity(), "Refresh App", Toast.LENGTH_SHORT).show();
         }
-        if(id == R.id.action_new){
-            Toast.makeText(getActivity(), "Create Text", Toast.LENGTH_SHORT).show();
+//        if(id == R.id.action_new){
+//            Toast.makeText(getActivity(), "Create Text", Toast.LENGTH_SHORT).show();
+//        }
+        if(id == R.id.action_log_out){
+            Toast.makeText(getActivity(), R.string.log_out, Toast.LENGTH_SHORT).show();
         }
         return super.onOptionsItemSelected(item);
     }

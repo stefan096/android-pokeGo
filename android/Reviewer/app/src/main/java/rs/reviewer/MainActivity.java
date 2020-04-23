@@ -34,7 +34,11 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+<<<<<<< HEAD
 import rs.reviewer.activities.PokemonListActivity;
+=======
+import rs.reviewer.activities.LoginActivity;
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
 import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
@@ -46,6 +50,8 @@ import rs.reviewer.sync.SyncService;
 import rs.reviewer.tools.FragmentTransition;
 import rs.reviewer.tools.ReviewerTools;
 import rs.reviewer.tools.Util;
+import rs.reviewer.utils.UserUtil;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -195,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.activity_itemdetail, menu);
+        //inflater.inflate(R.menu.activity_itemdetail, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -206,11 +212,21 @@ public class MainActivity extends AppCompatActivity {
                 Intent i = new Intent(this, ReviewerPreferenceActivity.class);
                 startActivity(i);
                 return true;
-            case R.id.action_new:
-                Util.initDB(MainActivity.this);
+//            case R.id.action_new:
+//                Util.initDB(MainActivity.this);
+//                finish();
+//                startActivity(getIntent());
+
+            case R.id.action_log_out:
+                UserUtil.setLogInUser(null, getApplicationContext());
+                Intent login = new Intent(this, LoginActivity.class);
+                startActivity(login);
                 finish();
+<<<<<<< HEAD
                 startActivity(getIntent());
 
+=======
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
         }
 
         return super.onOptionsItemSelected(item);

@@ -25,6 +25,10 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="opacityPercent" value="60" />
+<<<<<<< HEAD
+=======
+                                                <entry key="paddingPercent" value="-10" />
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -35,7 +39,24 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
+<<<<<<< HEAD
                                                 <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/editor/ic_format_list_numbered_black_24dp.xml" />
+=======
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_exit_to_app_black_24dp.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                                <entry key="opacityPercent" value="80" />
+                                                <entry key="paddingPercent" value="-10" />
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -45,6 +66,11 @@
                                   </option>
                                   <option name="values">
                                     <map>
+<<<<<<< HEAD
+=======
+                                      <entry key="imageAsset" value="D:\Downloads\logout.jpg" />
+                                      <entry key="outputName" value="ic_log_out" />
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                       <entry key="themeColor" value="ffffff" />
                                     </map>
                                   </option>
@@ -56,6 +82,32 @@
                                 <PersistentState>
                                   <option name="children">
                                     <map>
+<<<<<<< HEAD
+=======
+                                      <entry key="foregroundClipArt">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="fbf8ff" />
+                                                <entry key="scalingPercent" value="104" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundClipartAsset">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/action/ic_exit_to_app_black_24dp.xml" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                       <entry key="foregroundImage">
                                         <value>
                                           <PersistentState>
@@ -67,11 +119,29 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+<<<<<<< HEAD
+=======
+                                      <entry key="foregroundText">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
+<<<<<<< HEAD
                                       <entry key="outputName" value="ic_action_list" />
+=======
+                                      <entry key="foregroundAssetType" value="CLIP_ART" />
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -93,6 +163,7 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+<<<<<<< HEAD
                                       <entry key="image">
                                         <value>
                                           <PersistentState>
@@ -111,6 +182,8 @@
                                       <entry key="assetType" value="IMAGE" />
                                       <entry key="imageAsset" value="C:\Users\Nevena\Desktop\pikachu.png" />
                                       <entry key="outputName" value="ic_pikachu" />
+=======
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -132,6 +205,26 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+<<<<<<< HEAD
+=======
+                                      <entry key="image">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="color" value="000000" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                    </map>
+                                  </option>
+                                  <option name="values">
+                                    <map>
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="D:\Downloads\sign-out-icon-17997 (1).jpg" />
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -141,7 +234,11 @@
                         </option>
                         <option name="values">
                           <map>
+<<<<<<< HEAD
                             <entry key="outputIconType" value="LAUNCHER_LEGACY" />
+=======
+                            <entry key="outputIconType" value="ACTIONBAR" />
+>>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
                           </map>
                         </option>
                       </PersistentState>

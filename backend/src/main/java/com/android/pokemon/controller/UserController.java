@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.android.pokemon.dto.LoginDTO;
+import com.android.pokemon.dto.UserDTO;
 import com.android.pokemon.model.User;
 import com.android.pokemon.service.UserService;
 import com.android.pokemon.utils.CheckValidity;
@@ -22,18 +23,18 @@ public class UserController {
 	UserService userService;
 
 	@RequestMapping(value = "api/user/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
+	public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
 		User retVal = userService.logIn(loginDTO.getEmail(), loginDTO.getPassword());
-		
+
 		if(retVal == null) {
 			return new ResponseEntity<>(HttpStatus.LOCKED);
 		}
-
-		return new ResponseEntity<>(retVal, HttpStatus.OK);
+		
+		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "api/user/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> register(@RequestBody User userDTO) {
+	public ResponseEntity<UserDTO> register(@RequestBody User userDTO) {
 		
 		if(!CheckValidity.nullOrEmpty(userDTO.getEmail())) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
@@ -56,30 +57,31 @@ public class UserController {
 		if(uniqueUser != null) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); //400
 		}
-		
-		
+
 		User retVal = userService.register(userDTO);
 		
 		if(retVal == null) {
 			return new ResponseEntity<>(HttpStatus.LOCKED);  //423
 		}
 
-		return new ResponseEntity<>(retVal, HttpStatus.CREATED);
+		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.CREATED);
 	}
+
 	
 	@RequestMapping(value = "api/user/{id}", method = RequestMethod.GET)
-	public ResponseEntity<User> getUser(@PathVariable Long id) {
+	public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
 		User retVal = userService.findOne(id);
 		
 		if(retVal == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<>(retVal, HttpStatus.OK);
+		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.OK);
 	}
 	
+
 	@RequestMapping(value = "api/user/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> editUser(@RequestBody User userDTO) {
+	public ResponseEntity<UserDTO> editUser(@RequestBody User userDTO) {
 		
 		if(!CheckValidity.nullOrEmpty(userDTO.getName())) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
@@ -95,9 +97,11 @@ public class UserController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		
-		User savedUser = userService.register(userDTO);
+		retVal.setLastName(userDTO.getLastName());
+		retVal.setName(userDTO.getName());
+		User savedUser = userService.register(retVal);
 		
-		return new ResponseEntity<>(savedUser, HttpStatus.OK);
+		return new ResponseEntity<>(new UserDTO(savedUser), HttpStatus.OK);
 	}
 	
 }
