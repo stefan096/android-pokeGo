@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.android.pokemon.dto.LoginDTO;
+import com.android.pokemon.dto.UserDTO;
 import com.android.pokemon.model.User;
 import com.android.pokemon.service.UserService;
 
@@ -20,25 +21,93 @@ public class UserController {
 	UserService userService;
 
 	@RequestMapping(value = "api/user/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
+	public ResponseEntity<UserDTO> login(@RequestBody LoginDTO loginDTO) {
+		System.out.println("USAOOO");
 		User retVal = userService.logIn(loginDTO.getEmail(), loginDTO.getPassword());
-		
+
 		if(retVal == null) {
 			return new ResponseEntity<>(HttpStatus.LOCKED);
 		}
-
-		return new ResponseEntity<>(retVal, HttpStatus.OK);
+		
+		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "api/user/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+<<<<<<< Updated upstream
 	public ResponseEntity<User> register(@RequestBody User userDTO) {
+=======
+	public ResponseEntity<UserDTO> register(@RequestBody User userDTO) {
+		
+		if(!CheckValidity.nullOrEmpty(userDTO.getEmail())) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
+		}
+		
+		if(!CheckValidity.nullOrEmpty(userDTO.getLastName())) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
+		}
+		
+		if(!CheckValidity.nullOrEmpty(userDTO.getName())) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
+		}
+		
+		if(!CheckValidity.nullOrEmpty(userDTO.getPassword())) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
+		}
+		
+		User uniqueUser = userService.findByEmail(userDTO.getEmail());
+		
+		if(uniqueUser != null) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST); //400
+		}
+		
+		
+>>>>>>> Stashed changes
 		User retVal = userService.register(userDTO);
 		
 		if(retVal == null) {
 			return new ResponseEntity<>(HttpStatus.LOCKED);
 		}
 
-		return new ResponseEntity<>(retVal, HttpStatus.CREATED);
+		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.CREATED);
 	}
+<<<<<<< Updated upstream
 
+=======
+	
+	@RequestMapping(value = "api/user/{id}", method = RequestMethod.GET)
+	public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+		User retVal = userService.findOne(id);
+		
+		if(retVal == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "api/user/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<UserDTO> editUser(@RequestBody UserDTO userDTO) {
+		
+		if(!CheckValidity.nullOrEmpty(userDTO.getName())) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
+		}
+		
+		if(!CheckValidity.nullOrEmpty(userDTO.getLastName())) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE); //406
+		}
+		
+		User retVal = userService.findOne(userDTO.getId());
+		
+		if(retVal == null) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		retVal.setLastName(userDTO.getLastName());
+		retVal.setName(userDTO.getName());
+		User savedUser = userService.register(retVal);
+		
+		return new ResponseEntity<>(new UserDTO(savedUser), HttpStatus.OK);
+	}
+	
+>>>>>>> Stashed changes
 }
