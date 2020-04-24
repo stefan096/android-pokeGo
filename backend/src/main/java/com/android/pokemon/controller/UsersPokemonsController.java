@@ -23,18 +23,6 @@ public class UsersPokemonsController {
     @Autowired
     UserService userService;
 
-   /* @RequestMapping(value = "api/user1/{id}", method = RequestMethod.GET)
-    public ResponseEntity<ListPokemon> getUsersPokemons(@PathVariable Long id) {
-        User retVal = userService.findOne(id);
-
-        if(retVal == null) {
-
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-
-        return new ResponseEntity<>(new ListPokemon(retVal), HttpStatus.OK);
-    }*/
-
     @RequestMapping(value = "api/usersIdPokemons/{id}", method = RequestMethod.GET)
     public ResponseEntity<UsersPokemonsDTOList> getUsersPokemons(@PathVariable Long id) {
         List<UsersPokemons> retVal = usersPokemonsService.findByUserId(id);
