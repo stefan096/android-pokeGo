@@ -19,7 +19,9 @@ public class BaseService {
     public static final String USER_REGISTER = "user/register";
     public static final String USER_FIND_BY_ID = "user/{id}";
     public static final String USER_EDIT = "user/{id}";
-    public static final String USER_FOR_POKEMONS = "user1/{id}";
+    public static final String USER_FOR_POKEMONS = "usersIdPokemons/{id}";
+
+
 
     /*
      * Ovo ce nam sluziti za debug, da vidimo da li zahtevi i odgovoru idu

@@ -4,20 +4,22 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class UsersPokemonsDTO implements Serializable {
 
-    @SerializedName("userspokemons")
+    @SerializedName("usersPokemonsDTOList")
     @Expose
-    private List<UsersPokemons> pokemons;
+    private ArrayList<UsersPokemons> usersPokemonsDTOList;
 
-    public List<UsersPokemons> getPokemons() {
-        return pokemons;
+    public ArrayList<UsersPokemons> getPokemons() {
+        return usersPokemonsDTOList;
     }
 
-    public void setPokemons(List<UsersPokemons> pokemons) {
-        this.pokemons = pokemons;
+    public void setPokemons(ArrayList<UsersPokemons> usersPokemonsDTOList) {
+        this.usersPokemonsDTOList = usersPokemonsDTOList;
     }
 
 }

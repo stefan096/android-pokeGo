@@ -18,7 +18,7 @@ public class UsersPokemonsService {
     @Autowired
     UserRepository userRepository;
 
-    public List<UsersPokemons> findByUser(Long id){
+    public List<UsersPokemons> findByUserId(Long id){
         Optional<User> user = userRepository.findById(id);
         return usersPokemonsRepository.findByUser(user);}
 }

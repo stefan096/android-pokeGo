@@ -1,5 +1,6 @@
 package com.android.pokemon.controller;
 
+import com.android.pokemon.dto.ListPokemon;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -79,18 +80,7 @@ public class UserController {
 		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "api/user1/{id}", method = RequestMethod.GET)
-	public ResponseEntity<User> getUsersPokemons(@PathVariable Long id) {
-		User retVal = userService.findOne(id);
 
-		if(retVal == null) {
-
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-
-		return new ResponseEntity<>(retVal, HttpStatus.OK);
-	}
-	
 
 	@RequestMapping(value = "api/user/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDTO> editUser(@RequestBody User userDTO) {

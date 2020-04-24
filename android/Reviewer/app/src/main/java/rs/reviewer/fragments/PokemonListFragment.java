@@ -23,12 +23,14 @@ import androidx.loader.content.Loader;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.Pokemon;
 import model.User;
 import model.UsersPokemons;
+import model.UsersPokemonsDTO;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -91,11 +93,11 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
                          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                              String userJson = null;
                              if (response.code() == 200) {
-                                 Log.d("REZ", "USO U FRAGMENT");
+                                 Log.d("REZ", "USaO U FRAGMENT");
                                  try {
                                      userJson = response.body().string();
-                                     getUser = new Gson().fromJson(userJson, User.class);
-                                     usersPokemons = getUser.getPokemons();
+                                     UsersPokemonsDTO usersPokemonsDTO = new Gson().fromJson(userJson, UsersPokemonsDTO.class );
+                                     usersPokemons = usersPokemonsDTO.getPokemons();
                                      if (usersPokemons.isEmpty()){
                                          UsersPokemons up = new UsersPokemons();
                                          up.setPokemon(pokemon);
