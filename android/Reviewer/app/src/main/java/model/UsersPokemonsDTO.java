@@ -4,22 +4,76 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
 
 public class UsersPokemonsDTO implements Serializable {
-
-    @SerializedName("usersPokemonsDTOList")
+    @SerializedName("id")
     @Expose
-    private ArrayList<UsersPokemons> usersPokemonsDTOList;
+    private Long id;
 
-    public ArrayList<UsersPokemons> getPokemons() {
-        return usersPokemonsDTOList;
+    @SerializedName("pokemon")
+    @Expose
+    private Pokemon pokemon;
+
+    @SerializedName("level")
+    @Expose
+    private int level;
+
+    @SerializedName("experience")
+    @Expose
+    private double experience;
+
+    @SerializedName("cooldown")
+    @Expose
+    private Instant cooldown;
+
+    public UsersPokemonsDTO(){
+
     }
 
-    public void setPokemons(ArrayList<UsersPokemons> usersPokemonsDTOList) {
-        this.usersPokemonsDTOList = usersPokemonsDTOList;
+    public UsersPokemonsDTO(Pokemon pokemon){
+        this.setPokemon(pokemon);
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+
+
+    public Pokemon getPokemon() {
+        return pokemon;
+    }
+
+    public void setPokemon(Pokemon pokemon) {
+        this.pokemon = pokemon;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public double getExperience() {
+        return experience;
+    }
+
+    public void setExperience(double experience) {
+        this.experience = experience;
+    }
+
+    public Instant getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(Instant cooldown) {
+        this.cooldown = cooldown;
+    }
 }

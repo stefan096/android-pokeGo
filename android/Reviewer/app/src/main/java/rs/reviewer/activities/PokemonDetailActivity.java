@@ -1,11 +1,10 @@
 package rs.reviewer.activities;
 
-import android.app.Activity;
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,40 +13,62 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
 
-import model.Pokemon;
-import model.User;
-import rs.reviewer.MainActivity;
+import java.io.IOException;
+
+import model.UsersPokemonsDTO;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rs.reviewer.R;
-import rs.reviewer.fragments.MyFragment;
-import rs.reviewer.fragments.PokemonListFragment;
-import rs.reviewer.tools.FragmentTransition;
-import rs.reviewer.utils.UserUtil;
+import rs.reviewer.rest.BaseService;
+
+import static android.content.ContentValues.TAG;
 
 public class PokemonDetailActivity extends AppCompatActivity {
 
-   private Pokemon pokemon;
+   private Uri id;
    Toolbar toolbar;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.pokemon_detail);
+      Bundle extras = getIntent().getExtras();
 
-      TextView editTextName = findViewById(R.id.pokemon_name);
-      TextView editTextAtk = findViewById(R.id.atk);
-      TextView editTextDefense = findViewById(R.id.defense);
-      TextView editTextCp = findViewById(R.id.hp);
-      ImageView imageView = findViewById(R.id.item_image);
+      id = extras.getParcelable("id");
+      fillData(Long.parseLong(id.toString()));
 
-      editTextName.setText("Pikachu");
-      editTextAtk.setText("3231");
-      editTextCp.setText("3231");
-      editTextDefense.setText("3231");
-      toolbar = findViewById(R.id.toolbar);
-      setSupportActionBar(toolbar);
-      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setDisplayShowHomeEnabled(true);
-      getSupportActionBar().setTitle("Pokemon details");
+   }
+
+   private void fillData(Long id) {
+      Call<ResponseBody> call = BaseService.userService.findUsersPokemonById(id);
+      call.enqueue(new Callback<ResponseBody>() {
+         @Override
+         public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            String usersPokemon = null;
+            if (response.code() == 200) {
+               Log.d("REZ", "Usao petlju");
+               try {
+                  usersPokemon = response.body().string();
+                  UsersPokemonsDTO usersPokemonsDTO = new Gson().fromJson(usersPokemon, UsersPokemonsDTO.class );
+                  setUpScreen(usersPokemonsDTO);
+
+               } catch (IOException e) {
+                  e.printStackTrace();
+               }
+            }else{
+               Log.d("pokes","error: "+response.code());
+
+            }
+
+         }
+
+         @Override
+         public void onFailure(Call<ResponseBody> call, Throwable t) {
+            Log.d(TAG, "onFailure: NISTAA");
+         }
+      });
 
    }
 
@@ -62,4 +83,29 @@ public class PokemonDetailActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
       }
    }
+
+   public void setUpScreen(UsersPokemonsDTO usersPokemonsDTO){
+      TextView editTextName = findViewById(R.id.pokemon_name);
+      TextView editTextAtk = findViewById(R.id.atk);
+      TextView editTextDefense = findViewById(R.id.defense);
+      TextView editTextHp = findViewById(R.id.hp);
+      ImageView imageView = findViewById(R.id.item_image);
+      TextView atk_text =  findViewById(R.id.atk_text);
+      TextView defense_text =  findViewById(R.id.defense_text);
+      TextView hp_text =  findViewById(R.id.hp_text);
+
+      toolbar = findViewById(R.id.toolbar);
+      setSupportActionBar(toolbar);
+      getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setDisplayShowHomeEnabled(true);
+      getSupportActionBar().setTitle("Pokemon details");
+      hp_text.setText(R.string.hp);
+      atk_text.setText(R.string.atk);
+      defense_text.setText(R.string.defense);
+      editTextName.setText(usersPokemonsDTO.getPokemon().getName());
+      editTextAtk.setText(Double.toString(usersPokemonsDTO.getPokemon().getAtk()));
+      editTextHp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()));
+      editTextDefense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
+   }
+
 }

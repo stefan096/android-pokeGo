@@ -77,9 +77,6 @@
     <string name="defense">Defense:</string>
     <string name="atk">Attack:</string>
     <string name="hp">Health:</string>
-
-=======
     <string name="action_log_out">Log out</string>
     <string name="log_out">Log out</string>
->>>>>>> e07013d2b1d4937fdd879acb98863b19a7c41505
 </resources>

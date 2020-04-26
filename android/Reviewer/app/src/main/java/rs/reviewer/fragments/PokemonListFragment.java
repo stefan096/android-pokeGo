@@ -2,6 +2,7 @@ package rs.reviewer.fragments;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,14 +24,12 @@ import androidx.loader.content.Loader;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Pokemon;
 import model.User;
 import model.UsersPokemons;
-import model.UsersPokemonsDTO;
+import model.UsersPokemonsDTOList;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,9 +45,10 @@ import static android.content.ContentValues.TAG;
 public class PokemonListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private SimpleCursorAdapter adapter;
-    private User getUser = new User();
     private List < UsersPokemons > usersPokemons = new ArrayList<>();
-    private Pokemon pokemon = new Pokemon();
+    private UsersPokemons pokemon = new UsersPokemons();
+    private String userId;
+    private User user;
 
 
     public static PokemonListFragment newInstance() {
@@ -69,40 +69,30 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Intent intent = new Intent(getActivity(), PokemonDetailActivity.class);
-        //Uri todoUri = Uri.parse(DBContentProvider.CONTENT_URI_CINEMA + "/" + id);
-        // intent.putExtra("id", todoUri);
+        Uri todoUri = Uri.parse(Long.toString(id));
+        intent.putExtra("id", todoUri);
         startActivity(intent);
     }
+
+
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         //Toast.makeText(getActivity(), "onActivityCreated()", Toast.LENGTH_SHORT).show();
-        String userId = UserUtil.getLogInUser(getActivity().getApplicationContext());
-        final User user = new Gson().fromJson(userId, User.class);
-        Long id = user.getId();
-        pokemon.setAtk(55);
-        pokemon.setHp(431);
-        pokemon.setName("Pikachu");
-        pokemon.setDefense(322);
-        final UsersPokemons usersPokemons1 = new UsersPokemons(pokemon);
-
-        Call<ResponseBody> call = BaseService.userService.findByIdForPokemons(id);
+        userId = UserUtil.getLogInUser(getActivity().getApplicationContext());
+        user = new Gson().fromJson(userId, User.class);
+        Call<ResponseBody> call = BaseService.userService.findByIdForPokemons(user.getId());
         call.enqueue(new Callback<ResponseBody>() {
                          @Override
                          public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                              String userJson = null;
                              if (response.code() == 200) {
-                                 Log.d("REZ", "USaO U FRAGMENT");
+                                 Log.d("REZ", "Usao petlju");
                                  try {
                                      userJson = response.body().string();
-                                     UsersPokemonsDTO usersPokemonsDTO = new Gson().fromJson(userJson, UsersPokemonsDTO.class );
+                                     UsersPokemonsDTOList usersPokemonsDTO = new Gson().fromJson(userJson, UsersPokemonsDTOList.class );
                                      usersPokemons = usersPokemonsDTO.getPokemons();
-                                     if (usersPokemons.isEmpty()){
-                                         UsersPokemons up = new UsersPokemons();
-                                         up.setPokemon(pokemon);
-                                         usersPokemons.add(up);
-                                     }
                                      PokemonListAdapter adapter = new PokemonListAdapter(getActivity(), usersPokemons);
                                      setListAdapter(adapter);
                                  } catch (IOException e) {
@@ -124,6 +114,9 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
 
 
     }
+
+
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -169,5 +162,7 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
     }
+
+
 
 }

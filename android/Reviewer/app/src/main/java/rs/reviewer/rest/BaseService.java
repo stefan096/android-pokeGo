@@ -20,6 +20,7 @@ public class BaseService {
     public static final String USER_FIND_BY_ID = "user/{id}";
     public static final String USER_EDIT = "user/{id}";
     public static final String USER_FOR_POKEMONS = "usersIdPokemons/{id}";
+    public static final String USERS_POKEMON = "usersPokemon/{id}";
 
 
 

@@ -1,5 +1,6 @@
 package com.android.pokemon.controller;
 
+import com.android.pokemon.dto.UsersPokemonsDTO;
 import com.android.pokemon.dto.UsersPokemonsDTOList;
 import com.android.pokemon.model.UsersPokemons;
 import com.android.pokemon.service.UserService;
@@ -27,6 +28,18 @@ public class UsersPokemonsController {
     public ResponseEntity<UsersPokemonsDTOList> getUsersPokemons(@PathVariable Long id) {
         List<UsersPokemons> retVal = usersPokemonsService.findByUserId(id);
         UsersPokemonsDTOList retvalDTO = new UsersPokemonsDTOList(retVal);
+        if(retVal == null) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<>(retvalDTO, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "api/usersPokemon/{id}", method = RequestMethod.GET)
+    public ResponseEntity<UsersPokemonsDTO> getPokemons(@PathVariable Long id) {
+        UsersPokemons retVal = usersPokemonsService.findById(id);
+        UsersPokemonsDTO retvalDTO = new UsersPokemonsDTO(retVal);
         if(retVal == null) {
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
