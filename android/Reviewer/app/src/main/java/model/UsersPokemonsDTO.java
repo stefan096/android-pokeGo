@@ -23,9 +23,9 @@ public class UsersPokemonsDTO implements Serializable {
     @Expose
     private double experience;
 
-    @SerializedName("cooldown")
-    @Expose
-    private Instant cooldown;
+//    @SerializedName("cooldown")
+//    @Expose
+//    private Instant cooldown;
 
     public UsersPokemonsDTO(){
 
@@ -69,11 +69,11 @@ public class UsersPokemonsDTO implements Serializable {
         this.experience = experience;
     }
 
-    public Instant getCooldown() {
-        return cooldown;
-    }
-
-    public void setCooldown(Instant cooldown) {
-        this.cooldown = cooldown;
-    }
+//    public Instant getCooldown() {
+//        return cooldown;
+//    }
+//
+//    public void setCooldown(Instant cooldown) {
+//        this.cooldown = cooldown;
+//    }
 }
