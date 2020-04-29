@@ -78,7 +78,8 @@ public class UserController {
 		
 		return new ResponseEntity<>(new UserDTO(retVal), HttpStatus.OK);
 	}
-	
+
+
 
 	@RequestMapping(value = "api/user/{id}", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<UserDTO> editUser(@RequestBody User userDTO) {

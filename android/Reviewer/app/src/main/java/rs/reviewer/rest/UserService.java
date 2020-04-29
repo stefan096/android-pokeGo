@@ -48,4 +48,18 @@ public interface UserService {
     @PUT(BaseService.USER_EDIT)
     Call<ResponseBody> editUser(@Path("id") Long id, @Body User user);
 
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @GET(BaseService.USER_FOR_POKEMONS)
+    Call<ResponseBody> findByIdForPokemons(@Path("id") Long id);
+
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @GET(BaseService.USERS_POKEMON)
+    Call<ResponseBody> findUsersPokemonById(@Path("id") Long id);
+
 }

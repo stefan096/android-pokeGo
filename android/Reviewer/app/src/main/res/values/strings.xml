@@ -72,6 +72,11 @@
     <string name="profile_long">User\'s profile</string>
     <string name="save_changes">Save Changes</string>
     <string name="poke_go">POKE GOO</string>
+    <string name="pokemon_list">My pokemons</string>
+    <string name="pokemon_list_long">See the list of pokemons</string>
+    <string name="defense">Defense:</string>
+    <string name="atk">Attack:</string>
+    <string name="hp">Health:</string>
     <string name="action_log_out">Log out</string>
     <string name="log_out">Log out</string>
 </resources>
