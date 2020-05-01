@@ -9,6 +9,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,13 +22,28 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import model.PokeBoss;
+import model.PokeBossList;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rs.reviewer.R;
 import rs.reviewer.dialogs.LocationDialog;
+import rs.reviewer.rest.BaseService;
+
+import static android.content.ContentValues.TAG;
 
 public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback {
 
@@ -39,12 +55,55 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private AlertDialog dialog;
     private Marker home;
     private GoogleMap map;
+    private Location currentLocation;
 
     public static MapFragment newInstance() {
 
         MapFragment mpf = new MapFragment();
 
         return mpf;
+    }
+
+    public void getPokemons() {
+
+        if (currentLocation == null) {
+            Log.d("REZ", "NEMA LOKACIJE");
+            return;
+        }
+        Call<ResponseBody> call = BaseService.userService.getPokemonMap(currentLocation.getLatitude(), currentLocation.getLongitude());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String responseJson = null;
+                if (response.code() == 200) {
+                    Log.d("REZ", "Usao petlju");
+                    try {
+                        responseJson = response.body().string();
+                        PokeBossList bosses = new Gson().fromJson(responseJson, PokeBossList.class);
+                        ArrayList<PokeBoss> pokemons = bosses.getPokemonBosses();
+
+                        for(PokeBoss boss: pokemons) {
+                            addPokemonToMap(boss);
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Log.d("pokes","error: "+response.code());
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailure: NISTAA");
+            }
+        });
+
+
     }
 
     /**
@@ -252,8 +311,19 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         }
 
         if (location != null) {
-//            addMarker(location);
+            currentLocation = location;
+            addMarker(location);
+            getPokemons();
         }
+    }
+
+    private void addPokemonToMap(PokeBoss pokemon) {
+        LatLng loc = new LatLng(pokemon.getLatitude(), pokemon.getLongitude());
+
+        map.addMarker(new MarkerOptions()
+            .title(pokemon.getPokemon().getName())
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                .position(loc));
     }
 
     private void addMarker(Location location) {
@@ -265,7 +335,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         home = map.addMarker(new MarkerOptions()
                 .title("YOUR_POSITON")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
                 .position(loc));
         home.setFlat(true);
 

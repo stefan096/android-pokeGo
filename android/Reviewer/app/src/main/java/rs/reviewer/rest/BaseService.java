@@ -22,6 +22,7 @@ public class BaseService {
     public static final String USER_FOR_POKEMONS = "usersIdPokemons/{id}";
     public static final String USERS_POKEMON = "usersPokemon/{id}";
     public static final String LAST_CAUGHT_POKEMON = "user/{id}/lastPokemonCaught";
+    public static final String POKEMON_MAP = "getPokemonsOnMap";
 
 
 

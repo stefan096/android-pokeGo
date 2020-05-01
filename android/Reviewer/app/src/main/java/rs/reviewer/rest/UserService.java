@@ -5,6 +5,7 @@ import model.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.Query;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -68,5 +69,14 @@ public interface UserService {
     })
     @GET(BaseService.LAST_CAUGHT_POKEMON)
     Call<ResponseBody> getLatestCaughtPokemon(@Path("id") Long id);
+
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @GET(BaseService.POKEMON_MAP)
+    Call<ResponseBody> getPokemonMap(@Query("lat") double lat, @Query("lng") double lng);
+
+
 
 }
