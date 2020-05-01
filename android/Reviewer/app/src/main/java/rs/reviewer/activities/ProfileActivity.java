@@ -1,6 +1,6 @@
 package rs.reviewer.activities;
 
-import android.app.Activity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +22,7 @@ import rs.reviewer.rest.BaseService;
 import rs.reviewer.utils.UserUtil;
 
 
-public class ProfileActivity extends Activity {
+public class ProfileActivity extends AppCompatActivity {
 
     private User user;
 

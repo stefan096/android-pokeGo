@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <PreferenceCategory 
-        android:title="Auto data sync" 
+    <PreferenceCategory
+        android:title="Auto data sync"
         android:key="sync_settings">
         
-        <CheckBoxPreference
+        <SwitchPreference
             android:defaultValue="false"
             android:key="@string/pref_sync"
             android:summary="@string/pref_sync_summ"
@@ -22,5 +22,21 @@
             android:defaultValue="1"/>
         
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Map settings"
+        android:key="map_settings">
+
+        <ListPreference
+            android:dialogTitle="@string/pref_radiusConnectionType"
+            android:entries="@array/pref_radiusConnectionTypes_entries"
+            android:entryValues="@array/pref_radiusConnectionTypes_values"
+            android:key="@string/pref_map_list"
+            android:title="@string/pref_radiusConnectionType"
+            android:summary="@string/pref_radiusConnectionSumm"
+            android:defaultValue="1"/>
+
+    </PreferenceCategory>
+
 
 </PreferenceScreen>
