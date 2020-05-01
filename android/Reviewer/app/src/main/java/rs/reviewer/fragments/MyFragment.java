@@ -60,11 +60,10 @@ public class MyFragment extends Fragment implements LoaderManager.LoaderCallback
         String userId = UserUtil.getLogInUser(getActivity().getApplicationContext());
         user = new Gson().fromJson(userId, User.class);
 
-
-        TextView loggedUser = view.findViewById(R.id.name);
-
-        loggedUser.setText(" " + user.getName() + " " + user.getLastName());
-
+        if (user != null) {
+            TextView loggedUser = view.findViewById(R.id.name);
+            loggedUser.setText(" " + user.getName() + " " + user.getLastName());
+        }
 		return view;
 	}
 
