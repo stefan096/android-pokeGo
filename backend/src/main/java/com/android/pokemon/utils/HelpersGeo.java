@@ -99,7 +99,7 @@ public class HelpersGeo {
 	/**
 	 * scheduler with initial delay and fixed after that, update pokemon and level on boss
 	 */
-	@Scheduled(fixedDelay = 1000*60, initialDelay = 1000)
+	@Scheduled(fixedDelay = 1000*60*100, initialDelay = 1000)
 	public void scheduleFixedRateWithInitialDelayTask() {
 		Random valueGenerator = new Random();
 	  

@@ -20,9 +20,7 @@ public class UsersPokemonsDTOList {
         for(UsersPokemons up : usersPokemons){
             UsersPokemonsDTO usersPokemonsDTO = new UsersPokemonsDTO(up);
             usersPokemonsDTOList.add(usersPokemonsDTO);
+        }
     }
-}
-
-
 
 }

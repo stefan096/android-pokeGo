@@ -18,6 +18,10 @@ public class PokemonService {
 		return pokemonRepository.findAll();
 	}
 	
+	public Pokemon findById(Long id){
+		return pokemonRepository.findById(id).get();
+	}
+	
 	public Pokemon save(Pokemon pokemon){
 		return pokemonRepository.save(pokemon);
 	}

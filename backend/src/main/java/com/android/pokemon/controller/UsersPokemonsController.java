@@ -32,8 +32,8 @@ public class UsersPokemonsController {
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        // TODO : Actually return latest catch
-        UsersPokemonsDTO retvalDTO = new UsersPokemonsDTO(retVal.get(0));
+
+        UsersPokemonsDTO retvalDTO = new UsersPokemonsDTO(retVal.get(retVal.size()-1));
 
         return new ResponseEntity<>(retvalDTO, HttpStatus.OK);
     }

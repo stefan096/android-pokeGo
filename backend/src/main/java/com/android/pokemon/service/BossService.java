@@ -18,6 +18,10 @@ public class BossService {
 		return bossRepository.findAll();
 	}
 	
+	public Boss findById(Long id){
+		return bossRepository.findById(id).get();
+	}
+	
 	public Boss save(Boss boss){
 		return bossRepository.save(boss);
 	}

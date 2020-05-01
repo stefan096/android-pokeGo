@@ -25,5 +25,7 @@ public class Boss {
     private int level;
     private double latitude;
     private double longitude;
+    
+    private double fightHealt;
  
 }

@@ -22,6 +22,10 @@ public class UsersPokemonsService {
     public UsersPokemons findById(Long id){
        return usersPokemonsRepository.findById(id).get();
     }
+    
+    public UsersPokemons save(UsersPokemons usersPokemon){
+        return usersPokemonsRepository.save(usersPokemon);
+     }
 
     public List<UsersPokemons> findByUserId(Long id){
         Optional<User> user = userRepository.findById(id);
