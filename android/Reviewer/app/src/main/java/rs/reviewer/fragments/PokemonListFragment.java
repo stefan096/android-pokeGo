@@ -79,7 +79,6 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //Toast.makeText(getActivity(), "onActivityCreated()", Toast.LENGTH_SHORT).show();
         userId = UserUtil.getLogInUser(getActivity().getApplicationContext());
         user = new Gson().fromJson(userId, User.class);
         Call<ResponseBody> call = BaseService.userService.findByIdForPokemons(user.getId());

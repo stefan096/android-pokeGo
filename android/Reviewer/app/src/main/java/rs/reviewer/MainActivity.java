@@ -31,6 +31,7 @@ import rs.reviewer.activities.LoginActivity;
 import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
+import rs.reviewer.fragments.MapFragment;
 import rs.reviewer.fragments.MyFragment;
 import rs.reviewer.fragments.PokemonListFragment;
 import rs.reviewer.sync.SyncReceiver;
@@ -87,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setIcon(R.drawable.ic_launcher);
             actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer);
             actionBar.setHomeButtonEnabled(true);
         }
@@ -107,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
 
             public void onDrawerOpened(View drawerView) {
 //                getActionBar().setTitle(mDrawerTitle);
-                getSupportActionBar().setTitle("iReviewer");
+                getSupportActionBar().setTitle("PokeGO");
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
@@ -165,7 +165,6 @@ public class MainActivity extends AppCompatActivity {
         if(allowSync){
             int interval = ReviewerTools.calculateTimeTillNextSync(Integer.parseInt(synctime));
             manager.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);
-            Toast.makeText(this, "Alarm Set", Toast.LENGTH_SHORT).show();
         }
 
         IntentFilter filter = new IntentFilter();
@@ -175,13 +174,11 @@ public class MainActivity extends AppCompatActivity {
     }
     
     private void prepareMenu(ArrayList<NavItem> mNavItems ){
-    	mNavItems.add(new NavItem(getString(R.string.home), getString(R.string.home_long), R.drawable.ic_action_map));
-        mNavItems.add(new NavItem(getString(R.string.profile), getString(R.string.profile_long), R.drawable.ic_action_person));
-        mNavItems.add(new NavItem(getString(R.string.places), getString(R.string.places_long), R.drawable.ic_action_place));
-        mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
-        mNavItems.add(new NavItem(getString(R.string.about), getString(R.string.about_long), R.drawable.ic_action_about));
-        mNavItems.add(new NavItem(getString(R.string.sync_data), getString(R.string.sync_data_long), R.drawable.ic_action_refresh));
+    	mNavItems.add(new NavItem(getString(R.string.home), getString(R.string.home_long), R.drawable.ic_action_group));
         mNavItems.add(new NavItem(getString(R.string.pokemon_list), getString(R.string.pokemon_list_long), R.drawable.ic_action_name));
+        mNavItems.add(new NavItem(getString(R.string.map), getString(R.string.map), R.drawable.ic_action_map));
+        mNavItems.add(new NavItem(getString(R.string.profile), getString(R.string.profile_long), R.drawable.ic_action_person));
+        mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
 
     }
     
@@ -195,15 +192,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                Intent i = new Intent(this, ReviewerPreferenceActivity.class);
-                startActivity(i);
-                return true;
-//            case R.id.action_new:
-//                Util.initDB(MainActivity.this);
-//                finish();
-//                startActivity(getIntent());
-
             case R.id.action_log_out:
                 UserUtil.setLogInUser(null, getApplicationContext());
                 Intent login = new Intent(this, LoginActivity.class);
@@ -228,31 +216,23 @@ public class MainActivity extends AppCompatActivity {
     private void selectItemFromDrawer(int position) {
         if(position == 0){
             FragmentTransition.to(MyFragment.newInstance(), this, false);
-        }else if(position == 1){ //profile
+        }else if(position == 1){ //list of pokemons
+            FragmentTransition.to(PokemonListFragment.newInstance(), this, false);
+            //..
+        }else if(position == 2){ //map
+            FragmentTransition.to(MapFragment.newInstance(), this, false);
+        }else if(position == 3){ //profile
             Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(profile);
-            //..
-        }else if(position == 2){ //places
+        }else if(position == 4){ //preferences
             Intent preference = new Intent(MainActivity.this,ReviewerPreferenceActivity.class);
             startActivity(preference);
-        }else if(position == 3){ //preferences
-            //.
-        }else if(position == 4){ //about
-            //..
-        }else if(position == 5){ //sync data
-            //...
-        }else if(position == 6){ // list of pokemons
-            FragmentTransition.to(PokemonListFragment.newInstance(), this, false);
-            //startActivity(pokemonsList);
         }else{
             Log.e("DRAWER", "Nesto van opsega!");
         }
 
         mDrawerList.setItemChecked(position, true);
-        if(position != 5) // za sve osim za sync
-        {
-            setTitle(mNavItems.get(position).getmTitle());
-        }
+        setTitle(mNavItems.get(position).getmTitle());
         mDrawerLayout.closeDrawer(mDrawerPane);
     }
 
