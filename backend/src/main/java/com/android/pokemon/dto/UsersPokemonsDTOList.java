@@ -1,14 +1,13 @@
 package com.android.pokemon.dto;
 
-import com.android.pokemon.model.Pokemon;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.android.pokemon.model.UsersPokemons;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
 
 @NoArgsConstructor
 @Getter
