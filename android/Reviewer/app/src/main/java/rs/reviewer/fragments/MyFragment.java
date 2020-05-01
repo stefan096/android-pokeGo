@@ -37,7 +37,7 @@ public class MyFragment extends ListFragment implements LoaderManager.LoaderCall
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle data) {
         setHasOptionsMenu(true);
-		View view = inflater.inflate(R.layout.map_layout, vg, false);
+		View view = inflater.inflate(R.layout.list_layout, vg, false);
 
 		return view;
 	}
@@ -83,12 +83,6 @@ public class MyFragment extends ListFragment implements LoaderManager.LoaderCall
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        if(id == R.id.action_refresh){
-            Toast.makeText(getActivity(), "Refresh App", Toast.LENGTH_SHORT).show();
-        }
-//        if(id == R.id.action_new){
-//            Toast.makeText(getActivity(), "Create Text", Toast.LENGTH_SHORT).show();
-//        }
         if(id == R.id.action_log_out){
             Toast.makeText(getActivity(), R.string.log_out, Toast.LENGTH_SHORT).show();
         }

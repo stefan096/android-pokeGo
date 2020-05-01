@@ -61,7 +61,7 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle data) {
         setHasOptionsMenu(true);
-        View view = inflater.inflate(R.layout.map_layout, vg, false);
+        View view = inflater.inflate(R.layout.list_layout, vg, false);
         return view;
     }
 
@@ -131,10 +131,6 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        if (id == R.id.action_refresh) {
-            Toast.makeText(getActivity(), "Refresh App", Toast.LENGTH_SHORT).show();
-        }
 
         return super.onOptionsItemSelected(item);
     }
