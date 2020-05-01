@@ -24,6 +24,20 @@ public class UsersPokemonsController {
     @Autowired
     UserService userService;
 
+
+    @RequestMapping(value = "api/user/{id}/lastPokemonCaught", method = RequestMethod.GET)
+    public ResponseEntity<UsersPokemonsDTO> getLastCaught(@PathVariable Long id) {
+        List<UsersPokemons> retVal = usersPokemonsService.findByUserId(id);
+        if(retVal == null || retVal.size() == 0) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        // TODO : Actually return latest catch
+        UsersPokemonsDTO retvalDTO = new UsersPokemonsDTO(retVal.get(0));
+
+        return new ResponseEntity<>(retvalDTO, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "api/usersIdPokemons/{id}", method = RequestMethod.GET)
     public ResponseEntity<UsersPokemonsDTOList> getUsersPokemons(@PathVariable Long id) {
         List<UsersPokemons> retVal = usersPokemonsService.findByUserId(id);

@@ -62,4 +62,11 @@ public interface UserService {
     @GET(BaseService.USERS_POKEMON)
     Call<ResponseBody> findUsersPokemonById(@Path("id") Long id);
 
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @GET(BaseService.LAST_CAUGHT_POKEMON)
+    Call<ResponseBody> getLatestCaughtPokemon(@Path("id") Long id);
+
 }
