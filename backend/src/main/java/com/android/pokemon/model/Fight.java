@@ -1,7 +1,6 @@
 package com.android.pokemon.model;
 
 import java.time.Instant;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -11,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.android.pokemon.enums.FightStateMove;
 
@@ -33,8 +31,8 @@ public class Fight {
     @ManyToOne
     @JoinColumn(name = "boss_id")
 	private Boss boss;
-    @OneToMany(mappedBy = "fight")
-	private List<UsersPokemons> pokemons;
+//    @OneToMany(mappedBy = "fight")
+//	private List<UsersPokemons> pokemons;
 	private Instant timeOfFight;
 	private boolean caught;
 	
@@ -43,4 +41,6 @@ public class Fight {
 	private UsersPokemons pokemonOnMove;
     @Enumerated(EnumType.STRING)
 	private FightStateMove fightStateMove;
+    private int counterForTurn;
+    private int counterForPokemon;
 }

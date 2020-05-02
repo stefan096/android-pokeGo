@@ -30,7 +30,7 @@ public class UsersPokemons {
     private double experience;
     private Instant cooldown;
     
-    @ManyToOne()
-    private Fight fight;
+//    @ManyToOne()
+//    private Fight fight;
     private double fightHealt;
 }
