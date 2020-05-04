@@ -12,19 +12,21 @@ import java.time.Instant;
 @Setter
 public class UsersPokemonsDTO {
 
-        private Long id;
-        private Pokemon pokemon;
-        private int level;
-        private double experience;
-        private Instant cooldown;
+    private Long id;
+    private Pokemon pokemon;
+    private int level;
+    private double experience;
+    private Instant cooldown;
+    
+    private double fightHealt;
 
-        public UsersPokemonsDTO(UsersPokemons usersPokemons) {
-            this.id = usersPokemons.getId();
-            this.pokemon = usersPokemons.getPokemon();
-            this.level = usersPokemons.getLevel();
-            this.experience = usersPokemons.getExperience();
-            this.cooldown = usersPokemons.getCooldown();
-        }
-
+    public UsersPokemonsDTO(UsersPokemons usersPokemons) {
+        this.id = usersPokemons.getId();
+        this.pokemon = usersPokemons.getPokemon();
+        this.level = usersPokemons.getLevel();
+        this.experience = usersPokemons.getExperience();
+        this.cooldown = usersPokemons.getCooldown();
+        this.fightHealt = usersPokemons.getFightHealt();
+    }
 
 }

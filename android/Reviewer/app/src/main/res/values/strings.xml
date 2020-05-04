@@ -84,4 +84,5 @@
     <string name="hp">Health:</string>
     <string name="action_log_out">Log out</string>
     <string name="log_out">Log out</string>
+    <string name="takePicture">Take a picture</string>
 </resources>

@@ -17,11 +17,14 @@ public class BossDTO {
     private double latitude;
     private double longitude;
     
+    private double fightHealt;
+    
     public BossDTO(Boss boss) {
         this.id = boss.getId();
         this.pokemon = boss.getPokemon();
         this.level = boss.getLevel();
         this.latitude = boss.getLatitude();
         this.longitude = boss.getLongitude();
+        this.fightHealt = boss.getFightHealt();
     }
 }

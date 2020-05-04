@@ -1,7 +1,5 @@
 package com.android.pokemon.model;
 
-import java.time.Instant;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,5 +25,7 @@ public class Boss {
     private int level;
     private double latitude;
     private double longitude;
+    
+    private double fightHealt;
  
 }

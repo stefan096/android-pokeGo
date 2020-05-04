@@ -2,7 +2,6 @@ package com.android.pokemon.service;
 
 import java.util.List;
 
-import com.android.pokemon.model.UsersPokemons;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

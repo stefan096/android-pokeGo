@@ -29,4 +29,8 @@ public class UsersPokemons {
     private int level;
     private double experience;
     private Instant cooldown;
+    
+//    @ManyToOne()
+//    private Fight fight;
+    private double fightHealt;
 }
