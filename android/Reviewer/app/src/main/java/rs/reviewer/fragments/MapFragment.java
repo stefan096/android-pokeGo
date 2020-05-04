@@ -22,7 +22,6 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -41,11 +40,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rs.reviewer.R;
 import rs.reviewer.dialogs.LocationDialog;
+import rs.reviewer.dialogs.FightDialog;
 import rs.reviewer.rest.BaseService;
 
 import static android.content.ContentValues.TAG;
 
-public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback {
+public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
 
@@ -56,6 +56,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private Marker home;
     private GoogleMap map;
     private Location currentLocation;
+    private ArrayList<PokeBoss> pokemons;
 
     public static MapFragment newInstance() {
 
@@ -80,7 +81,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                     try {
                         responseJson = response.body().string();
                         PokeBossList bosses = new Gson().fromJson(responseJson, PokeBossList.class);
-                        ArrayList<PokeBoss> pokemons = bosses.getPokemonBosses();
+                        pokemons = bosses.getPokemonBosses();
 
                         for(PokeBoss boss: pokemons) {
                             addPokemonToMap(boss);
@@ -188,7 +189,13 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
      * */
     @Override
     public void onLocationChanged(Location location) {
-        if (map != null) {
+
+        if (
+            map != null &&
+            currentLocation != null &&
+            currentLocation.getLatitude() != location.getLatitude() &&
+            currentLocation.getLongitude() != location.getLongitude()
+        ) {
             addMarker(location);
         }
     }
@@ -292,8 +299,36 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
 
     @Override
+    public boolean onMarkerClick(final Marker marker) {
+
+        if (!marker.equals(home))
+        {
+            for (PokeBoss boss : pokemons) {
+                if (
+                    marker.getPosition().latitude == boss.getLatitude() &&
+                    marker.getPosition().longitude == boss.getLongitude()
+                ) {
+
+                    if (dialog != null && dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                    FightDialog dlg = new FightDialog(getActivity());
+                    dlg.prepareDialog(boss);
+                    dlg.show();
+                    return true;
+                }
+            }
+            //handle click here
+        }
+        return false;
+    }
+
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+
+        googleMap.setOnMarkerClickListener(this);
         Location location = null;
 
         if (checkLocationPermission()) {
@@ -311,7 +346,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         }
 
         if (location != null) {
-            currentLocation = location;
+            Log.d("Location", "lat " + location.getLatitude() + " LNG " + location.getLongitude());
             addMarker(location);
             getPokemons();
         }
@@ -327,8 +362,10 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     }
 
     private void addMarker(Location location) {
+        currentLocation = location;
         LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
 
+        boolean shouldAnimate = home == null;
         if (home != null) {
             home.remove();
         }
@@ -339,10 +376,12 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                 .position(loc));
         home.setFlat(true);
 
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(loc).zoom(14).build();
+        if (shouldAnimate) {
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(loc).zoom(14).build();
 
-        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
     }
 
     /**
