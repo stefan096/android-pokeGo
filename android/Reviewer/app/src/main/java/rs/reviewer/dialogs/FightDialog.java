@@ -8,7 +8,10 @@ import androidx.appcompat.app.AlertDialog;
 
 import android.util.Log;
 import model.PokeBoss;
+import rs.reviewer.MainActivity;
 import rs.reviewer.R;
+import rs.reviewer.activities.FightBossActivity;
+import rs.reviewer.activities.ProfileActivity;
 
 public class FightDialog extends AlertDialog.Builder {
 
@@ -28,7 +31,9 @@ public class FightDialog extends AlertDialog.Builder {
 
         setPositiveButton(R.string.catchBtn, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                Log.d("boss", boss.getPokemon().getName());
+                Intent fightIntent = new Intent(getContext(), FightBossActivity.class);
+                fightIntent.putExtra("bossId", boss.getId());
+                getContext().startActivity(fightIntent);
                 dialog.dismiss();
             }
         });
