@@ -85,4 +85,7 @@
     <string name="action_log_out">Log out</string>
     <string name="log_out">Log out</string>
     <string name="takePicture">Take a picture</string>
+    <string name="lvl">Level:</string>
+    <string name="details">POKEMON DETAILS</string>
+
 </resources>
