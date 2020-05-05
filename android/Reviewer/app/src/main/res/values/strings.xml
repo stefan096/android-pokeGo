@@ -57,6 +57,11 @@
     <string name="turn_notif_on">Stop notification</string>
     <string name="welcome_back">Welcome back,</string>
     <string name="latest_catch">Your latest catch:</string>
+    <string name="near_fight">You\'re near pokemon</string>
+    <string name="wanna_catch">Wanna try and catch him?</string>
+    <string name="catchBtn">Catch!</string>
+    <string name="ignoreBtn">Ignore</string>
+    <string name="boss_fight_start">Start fight with boss</string>
 
     <string name="email">Email</string>
     <string name="password">Password</string>
