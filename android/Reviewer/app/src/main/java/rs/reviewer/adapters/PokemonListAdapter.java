@@ -49,23 +49,15 @@ public class PokemonListAdapter extends BaseAdapter {
         }
 
         TextView name =  view.findViewById(R.id.pokemon_name);
-        TextView atk =  view.findViewById(R.id.atk);
-        TextView defence =  view.findViewById(R.id.defense);
-        TextView hp =  view.findViewById(R.id.hp);
-        TextView atk_text =  view.findViewById(R.id.atk_text);
-        TextView defense_text =  view.findViewById(R.id.defense_text);
-        TextView hp_text =  view.findViewById(R.id.hp_text);
+        TextView levelText = view.findViewById(R.id.level_txt);
+        TextView level = view.findViewById(R.id.level);
+
         ImageView image =  view.findViewById(R.id.item_image);
 
 
         name.setText( mpokemons.get(position).getPokemon().getName() );
-        hp.setText(Double.toString(mpokemons.get(position).getPokemon().getHp()));
-        atk.setText(Double.toString(mpokemons.get(position).getPokemon().getAtk()));
-        defence.setText(Double.toString(mpokemons.get(position).getPokemon().getDefense()));
-        hp_text.setText(R.string.hp);
-        atk_text.setText(R.string.atk);
-        defense_text.setText(R.string.defense);
-
+        levelText.setText(R.string.lvl);
+        level.setText(String.valueOf(mpokemons.get(position).getLevel()));
 
 
         return view;

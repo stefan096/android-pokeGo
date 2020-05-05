@@ -35,7 +35,6 @@ public class PokemonDetailActivity extends AppCompatActivity {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.pokemon_detail);
       Bundle extras = getIntent().getExtras();
-
       id = extras.getParcelable("id");
       fillData(Long.parseLong(id.toString()));
 
@@ -66,7 +65,7 @@ public class PokemonDetailActivity extends AppCompatActivity {
 
          @Override
          public void onFailure(Call<ResponseBody> call, Throwable t) {
-            Log.d(TAG, "onFailure: NISTAA");
+            Log.d(TAG, "onFailure: fail");
          }
       });
 
@@ -85,27 +84,33 @@ public class PokemonDetailActivity extends AppCompatActivity {
    }
 
    public void setUpScreen(UsersPokemonsDTO usersPokemonsDTO){
-      TextView editTextName = findViewById(R.id.pokemon_name);
-      TextView editTextAtk = findViewById(R.id.atk);
-      TextView editTextDefense = findViewById(R.id.defense);
-      TextView editTextHp = findViewById(R.id.hp);
+      TextView name = findViewById(R.id.pokemon_name);
+      TextView attack = findViewById(R.id.atk);
+      TextView defense = findViewById(R.id.defense);
+      TextView hp = findViewById(R.id.hp);
       ImageView imageView = findViewById(R.id.item_image);
       TextView atk_text =  findViewById(R.id.atk_text);
       TextView defense_text =  findViewById(R.id.defense_text);
       TextView hp_text =  findViewById(R.id.hp_text);
+      TextView level_text = findViewById(R.id.level_text);
+      TextView level = findViewById(R.id.level);
 
       toolbar = findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       getSupportActionBar().setDisplayShowHomeEnabled(true);
-      getSupportActionBar().setTitle("Pokemon details");
+      getSupportActionBar().setTitle(R.string.details);
+      toolbar.setNavigationIcon(R.drawable.ic_action_back);
       hp_text.setText(R.string.hp);
       atk_text.setText(R.string.atk);
       defense_text.setText(R.string.defense);
-      editTextName.setText(usersPokemonsDTO.getPokemon().getName());
-      editTextAtk.setText(Double.toString(usersPokemonsDTO.getPokemon().getAtk()));
-      editTextHp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()));
-      editTextDefense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
+      level_text.setText(R.string.lvl);
+      name.setText(usersPokemonsDTO.getPokemon().getName());
+      attack.setText(Double.toString(usersPokemonsDTO.getPokemon().getAtk()));
+      hp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()));
+      defense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
+      level.setText(Double.toString(usersPokemonsDTO.getLevel()));
+
    }
 
 }
