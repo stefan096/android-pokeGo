@@ -31,55 +31,22 @@
         android:padding="5dp"/>
 
     <TextView
-        android:id="@+id/hp_text"
-        android:textColor="#FF0000"
+        android:id="@+id/level_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#000"
         android:layout_below="@+id/pokemon_name"
         android:layout_toRightOf="@+id/item_image"
         android:padding="5dp"/>
 
     <TextView
-        android:id="@+id/hp"
+        android:id="@+id/level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/pokemon_name"
-        android:layout_toRightOf="@+id/hp_text"
+        android:layout_toRightOf="@+id/level_txt"
         android:padding="5dp"/>
 
-    <TextView
-        android:id="@+id/atk_text"
-        android:textColor="#0000FF"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/hp"
-        android:layout_toRightOf="@+id/item_image"
-        android:padding="5dp"/>
-
-    <TextView
-        android:id="@+id/atk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/hp"
-        android:layout_toRightOf="@+id/atk_text"
-        android:padding="5dp"/>
-
-    <TextView
-        android:id="@+id/defense_text"
-        android:textColor="#008000"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/atk"
-        android:layout_toRightOf="@+id/item_image"
-        android:padding="5dp"/>
-
-    <TextView
-        android:id="@+id/defense"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/atk"
-        android:layout_toRightOf="@+id/defense_text"
-        android:padding="5dp"/>
 
 
 

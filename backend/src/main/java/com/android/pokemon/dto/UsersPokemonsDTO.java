@@ -29,4 +29,14 @@ public class UsersPokemonsDTO {
         this.fightHealt = usersPokemons.getFightHealt();
     }
 
+
+    public Instant getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(Instant cooldown) {
+        this.cooldown = cooldown;
+    }
+
+
 }
