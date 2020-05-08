@@ -30,4 +30,5 @@ public class UsersPokemonsService {
     public List<UsersPokemons> findByUserId(Long id){
         Optional<User> user = userRepository.findById(id);
         return usersPokemonsRepository.findByUser(user);}
+
 }

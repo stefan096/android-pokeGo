@@ -25,6 +25,13 @@ public class FightService {
 	public Fight save(Fight fight){
 		return fightRepository.save(fight);
 	}
+
+	public void deleteAll() {
+		List<Fight> fights = fightRepository.findAll();
+		fights.forEach(fight -> {
+			fightRepository.delete(fight);
+		});
+	}
 	
 
 }

@@ -17,7 +17,9 @@ import com.android.pokemon.dto.GenerateGeoDataDTO;
 import com.android.pokemon.model.Boss;
 import com.android.pokemon.model.GeoPoint;
 import com.android.pokemon.service.BossService;
+import com.android.pokemon.service.FightService;
 import com.android.pokemon.service.PokemonService;
+import com.android.pokemon.service.UsersPokemonsService;
 import com.android.pokemon.utils.HelpersGeo;
 
 @Controller
@@ -26,6 +28,12 @@ public class BossController {
 	
 	@Autowired
 	PokemonService pokemonService;
+	
+	@Autowired
+	UsersPokemonsService usersPokemonsService;
+	
+	@Autowired
+	FightService fightService;
 	
 	@Autowired
 	BossService bossService;
@@ -96,6 +104,8 @@ public class BossController {
      */
     @RequestMapping(value = "api/data", method = RequestMethod.POST)
     public ResponseEntity<BossListDTO> getData(@RequestBody GenerateGeoDataDTO dataDTO) {
+    	//moram obrisati sve borbe zbog referenciranja boss-ova
+    	fightService.deleteAll();
     	bossService.deleteAll();
     	HelpersGeo.randomGeneratePokemonsCoordinates(dataDTO.getNumberOfData(), dataDTO.getGeopoint(), dataDTO.getRadius());
 
