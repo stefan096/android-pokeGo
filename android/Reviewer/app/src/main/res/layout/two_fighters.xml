@@ -11,6 +11,40 @@
         android:layout_alignParentRight="true"
         android:background= "#00000000"/>
 
+    <TextView
+        android:id="@+id/onTheMove"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:textColor="#32E91E"
+        android:gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:layout_below="@id/btn_close"/>
+    <TextView
+        android:id="@+id/counterForTurn_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_toRightOf="@id/counterForTurn_text"
+        android:textColor="#0A0A0A"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:text="@string/atk_num"
+        android:layout_below="@id/btn_close"/>
+    <TextView
+        android:id="@+id/counterForTurn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_toRightOf="@id/counterForTurn_text"
+        android:textColor="#0A0A0A"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:padding="5dp"
+        android:layout_below="@id/btn_close"/>
 
     <TextView
         android:id="@+id/text"
@@ -21,7 +55,7 @@
         android:gravity="center"
         android:layout_centerHorizontal="true"
         android:padding="15dp"
-        android:layout_below="@id/btn_close"/>
+        android:layout_below="@id/counterForTurn"/>
 
     <ImageView
         android:id="@+id/item_image"

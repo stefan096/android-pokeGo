@@ -102,6 +102,10 @@
     <string name="lost">You`ve missed it!</string>
     <string name="won_btn">SUCCESS!</string>
     <string name="won_long">You`ve caught a pokemon!</string>
+    <string name="boss_atks">***BOSS ATTACKS***</string>
+    <string name="use_atks">***POKEMON ATTACKS***</string>
+    <string name="atk_num">Attack number:</string>
+
 
 
 </resources>

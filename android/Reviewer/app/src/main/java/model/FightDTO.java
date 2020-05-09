@@ -28,6 +28,14 @@ public class FightDTO implements Serializable {
     @Expose
     private UsersPokemonsDTO pokemonOnMove;
 
+    @SerializedName("fightStateMove")
+    @Expose
+    private String fightStateMove;
+
+    @SerializedName("counterForTurn")
+    @Expose
+    private int counterForTurn;
+
     public FightDTO() {}
 
 
@@ -35,8 +43,7 @@ public class FightDTO implements Serializable {
         return pokemonOnMove;
     }
 
-    public void setPokemonOnMove(UsersPokemonsDTO pokemonOnMove) {
-        this.pokemonOnMove = pokemonOnMove;
+    public void setPokemonOnMove(UsersPokemonsDTO pokemonOnMove) {this.pokemonOnMove = pokemonOnMove;
     }
 
     public Long getId() {
@@ -70,5 +77,17 @@ public class FightDTO implements Serializable {
     public void setCaught(boolean caught) {
         this.caught = caught;
     }
+
+    public String getFightStateMove() {
+        return fightStateMove;
+    }
+
+    public void setFightStateMove(String fightStateMove) {
+        this.fightStateMove = fightStateMove;
+    }
+
+    public int getCounterForTurn() { return counterForTurn; }
+
+    public void setCounterForTurn(int counterForTurn) {this.counterForTurn = counterForTurn; }
 
 }

@@ -30,6 +30,7 @@ import rs.reviewer.rest.BaseService;
 import rs.reviewer.utils.UserUtil;
 
 import static android.content.ContentValues.TAG;
+import static android.os.SystemClock.sleep;
 
 public class FightActivity extends AppCompatActivity {
 
@@ -39,10 +40,10 @@ public class FightActivity extends AppCompatActivity {
     private UsersPokemonsDTO usersPokemonsDTO;
     private PokeBoss pokeBoss;
     private Pokemon pokemonBoss, pokemonUser;
-    private Long userId;
-    private Button button;
     private FightDTO fightDTO;
     private double healthBoss, healthUser;
+    private String attackTurn;
+    private int counterForTurn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -169,6 +170,19 @@ public class FightActivity extends AppCompatActivity {
 
     }
 
+    public void updateMove(String attacks){
+        TextView onTheMove = findViewById(R.id.onTheMove);
+        if (attacks.equals("BOSS_ATTACKS")) {
+            onTheMove.setText(R.string.boss_atks);
+        } else {
+            onTheMove.setText(R.string.use_atks);
+        }
+    }
+
+    public void updateCounterForTurn(int counter){
+        TextView counterForTurn = findViewById(R.id.counterForTurn);
+        counterForTurn.setText("[" + counter +  "]");
+    }
 
     public void callMethod() {
         Call<ResponseBody> call2 = BaseService.userService.fight(fightDTO);
@@ -182,39 +196,36 @@ public class FightActivity extends AppCompatActivity {
                     try {
                         fight = response.body().string();
                         FightDTO fightDTO = new Gson().fromJson(fight, FightDTO.class);
+                        attackTurn = fightDTO.getFightStateMove();
+                        counterForTurn = fightDTO.getCounterForTurn();
                         healthBoss = fightDTO.getBoss().getFightHealt();
                         healthUser = fightDTO.getPokemonOnMove().getFightHealt();
+
                         while (healthBoss > 0 && healthUser > 0) {
-                            Handler handler = new Handler();
-                            handler.postDelayed(new Runnable() {
-                                public void run() {
-                                    updateHealth(healthBoss,healthUser);
-                                }
-                            }, 3000);   //2 seconds
+                            updateHealth(healthBoss,healthUser);
+                            updateMove(attackTurn);
+                            updateCounterForTurn(counterForTurn);
+                            sleep(2000);
                             callMethod();
                             break;
+
                         }
 
-                        if ( healthUser > 0 ) {
+                        if ( healthUser > 0 && healthBoss <=0 ) {
 
                             Intent intent = new Intent(getApplicationContext(), CaughtPokemonActivity.class);
                             intent.putExtra("bossId", bossId);
                             intent.putExtra("id", id);
                             startActivity(intent);
 
-
-                        }else{
+                        }else if (healthBoss > 0 && healthUser <= 0){
 
                             Intent intent = new Intent(getApplicationContext(), LostFightActivity.class);
                             intent.putExtra("bossId", bossId);
                             intent.putExtra("id", id);
                             startActivity(intent);
 
-
-
                         }
-
-
 
                     } catch (IOException e) {
                         e.printStackTrace();

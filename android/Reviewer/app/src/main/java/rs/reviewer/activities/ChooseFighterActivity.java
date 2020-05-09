@@ -73,7 +73,6 @@ public class ChooseFighterActivity extends ListActivity {
 
                 }
 
-
             }
 
             @Override
@@ -83,12 +82,6 @@ public class ChooseFighterActivity extends ListActivity {
         });
 
     }
-
-
-
-
-
-
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
