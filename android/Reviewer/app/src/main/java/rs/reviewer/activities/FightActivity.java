@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -130,6 +131,9 @@ public class FightActivity extends AppCompatActivity {
         name1.setText(pokemon1.getName());
         hp_text1.setText(R.string.hp);
         hp1.setText(Double.toString(pokemon1.getHp()));
+        Picasso.get()
+                .load(pokemon1.getImage_path())
+                .into(imageView1);
 
 
     }
@@ -142,6 +146,9 @@ public class FightActivity extends AppCompatActivity {
         name2.setText(pokemon2.getName());
         hp_text2.setText(R.string.hp);
         hp2.setText(Double.toString(pokemon2.getHp()));
+        Picasso.get()
+                .load(pokemon2.getImage_path())
+                .into(imageView2);
 
     }
 

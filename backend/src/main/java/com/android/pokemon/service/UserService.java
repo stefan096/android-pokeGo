@@ -14,6 +14,9 @@ public class UserService {
 	@Autowired
 	UserRepository userRepository;
 	
+	@Autowired
+	UsersPokemonsService userPokemonsService;
+	
 	public List<User> findAll(){
 		return userRepository.findAll();
 	}
@@ -23,7 +26,9 @@ public class UserService {
 	}
 
 	public User register(User user){
-		return userRepository.save(user);
+		User result = userRepository.save(user);
+		userPokemonsService.getFirstPokemon(result);
+		return result;
 	}
 	
 	public User findByEmail(String email) {

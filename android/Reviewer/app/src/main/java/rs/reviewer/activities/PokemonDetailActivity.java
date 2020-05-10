@@ -22,6 +22,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rs.reviewer.R;
 import rs.reviewer.rest.BaseService;
+import com.squareup.picasso.Picasso;
 
 import static android.content.ContentValues.TAG;
 
@@ -110,6 +111,10 @@ public class PokemonDetailActivity extends AppCompatActivity {
       hp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()));
       defense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
       level.setText(Double.toString(usersPokemonsDTO.getLevel()));
+
+      Picasso.get()
+              .load(usersPokemonsDTO.getPokemon().getImage_path())
+              .into(imageView);
 
    }
 

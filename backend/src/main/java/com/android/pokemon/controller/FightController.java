@@ -161,6 +161,7 @@ public class FightController {
 		//ukoliko je boss spao na 0 uhvacen je
 		if(fight.getBoss().getFightHealt() <= 0) {
 			fight.setCaught(true);
+			usersPokemonService.saveCaughtPokemon(fight.getBoss(), fight.getPokemonOnMove().getUser());
 		}
 		
 		fight.setCounterForTurn(fight.getCounterForTurn() + 1);
