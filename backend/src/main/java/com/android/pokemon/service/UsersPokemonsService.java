@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.android.pokemon.model.Boss;
-import com.android.pokemon.model.GeoPoint;
 import com.android.pokemon.model.Pokemon;
 import com.android.pokemon.model.User;
 import com.android.pokemon.model.UsersPokemons;

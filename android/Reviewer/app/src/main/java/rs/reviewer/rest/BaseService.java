@@ -10,9 +10,9 @@ public class BaseService {
 
     //EXAMPLE: http://192.168.43.73:8080/rs.ftn.reviewer.rest/rest/proizvodi/
     //kristina 192.168.1.103
-    //stefan maglic 192.168.1.6 / novi sad 192.168.1.30
+    //stefan maglic 192.168.1.6 / novi sad 192.168.0.36
     //nevena 192.168.1.103
-    public static final String SERVICE_IP_ADDRESS = "192.168.43.246";
+    public static final String SERVICE_IP_ADDRESS = "192.168.0.36";
     public static final String SERVICE_PORT = "8000";
     public static final String SERVICE_BASE_URI = "api/";
     public static final String SERVICE_API_PATH = "http://" + SERVICE_IP_ADDRESS + ":" + SERVICE_PORT  + "/" +
