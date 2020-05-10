@@ -20,6 +20,8 @@ import java.io.IOException;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+
 import model.UsersPokemons;
 import static android.content.ContentValues.TAG;
 
@@ -163,5 +165,9 @@ public class MyFragment extends Fragment implements LoaderManager.LoaderCallback
         editTextAtk.setText(Double.toString(usersPokemonsDTO.getPokemon().getAtk()));
         editTextHp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()));
         editTextDefense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
+
+        Picasso.get()
+                .load(usersPokemonsDTO.getPokemon().getImage_path())
+                .into(imageView);
     }
 }
