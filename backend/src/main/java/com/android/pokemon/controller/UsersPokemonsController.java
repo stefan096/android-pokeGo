@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.android.pokemon.dto.UsersPokemonsDTO;
 import com.android.pokemon.dto.UsersPokemonsDTOList;
+import com.android.pokemon.model.User;
 import com.android.pokemon.model.UsersPokemons;
 import com.android.pokemon.service.UserService;
 import com.android.pokemon.service.UsersPokemonsService;
@@ -62,4 +63,15 @@ public class UsersPokemonsController {
         return new ResponseEntity<>(retvalDTO, HttpStatus.OK);
     }
 
+
+
+    @RequestMapping(value = "api/populateUserPokemons/{id}", method = RequestMethod.POST)
+    public ResponseEntity<String> populateUserPokemons(@PathVariable Long id) {
+    	User user = userService.findOne(id);
+    	usersPokemonsService.populateUsersPokemon(user);
+
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+    
 }
