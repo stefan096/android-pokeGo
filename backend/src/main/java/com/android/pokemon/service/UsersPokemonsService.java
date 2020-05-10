@@ -1,5 +1,7 @@
 package com.android.pokemon.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -32,7 +34,39 @@ public class UsersPokemonsService {
     
     public UsersPokemons save(UsersPokemons usersPokemon){
         return usersPokemonsRepository.save(usersPokemon);
-     }
+    }
+    
+    
+    
+    public UsersPokemons saveCaughtPokemon(Boss caughtBoss, User user) {
+    	UsersPokemons newPokemon = new UsersPokemons();
+    	newPokemon.setPokemon(caughtBoss.getPokemon());
+    	newPokemon.setLevel(caughtBoss.getLevel());
+    	newPokemon.setUser(user);
+    	newPokemon.setExperience(0);
+    	newPokemon.setFightHealt(caughtBoss.getPokemon().getHp());
+    	return usersPokemonsRepository.save(newPokemon);
+    }
+    
+    public UsersPokemons getLastCaught(Long id) {
+    	List<UsersPokemons> userPokemon = this.findByUserId(id);
+    	Comparator<UsersPokemons> byDateComparator = new Comparator<UsersPokemons>() {
+
+			@Override
+			public int compare(UsersPokemons o1, UsersPokemons o2) {
+				if (o1.getCreatedAt() == null) {
+					return 1;
+				}
+				if (o2.getCreatedAt() == null) {
+					return -1;
+				}
+				return o2.getCreatedAt().compareTo(o1.getCreatedAt());
+			}
+    	};
+    	
+    	Collections.sort(userPokemon, byDateComparator);
+    	return userPokemon.get(0);
+    }
 
     public List<UsersPokemons> findByUserId(Long id){
         Optional<User> user = userRepository.findById(id);

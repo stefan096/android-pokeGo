@@ -1,5 +1,6 @@
 package com.android.pokemon.controller;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class UsersPokemonsController {
 
     @RequestMapping(value = "api/user/{id}/lastPokemonCaught", method = RequestMethod.GET)
     public ResponseEntity<UsersPokemonsDTO> getLastCaught(@PathVariable Long id) {
-        List<UsersPokemons> retVal = usersPokemonsService.findByUserId(id);
-        if(retVal == null || retVal.size() == 0) {
+        UsersPokemons retVal = usersPokemonsService.getLastCaught(id);
+        if(retVal == null) {
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
-        UsersPokemonsDTO retvalDTO = new UsersPokemonsDTO(retVal.get(retVal.size()-1));
+        UsersPokemonsDTO retvalDTO = new UsersPokemonsDTO(retVal);
 
         return new ResponseEntity<>(retvalDTO, HttpStatus.OK);
     }
@@ -42,11 +43,14 @@ public class UsersPokemonsController {
     @RequestMapping(value = "api/usersIdPokemons/{id}", method = RequestMethod.GET)
     public ResponseEntity<UsersPokemonsDTOList> getUsersPokemons(@PathVariable Long id) {
         List<UsersPokemons> retVal = usersPokemonsService.findByUserId(id);
-        UsersPokemonsDTOList retvalDTO = new UsersPokemonsDTOList(retVal);
         if(retVal == null) {
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        
+        Collections.sort(retVal);
+
+        UsersPokemonsDTOList retvalDTO = new UsersPokemonsDTOList(retVal);
 
         return new ResponseEntity<>(retvalDTO, HttpStatus.OK);
     }
