@@ -48,6 +48,32 @@ public class UsersPokemonsService {
     	return usersPokemonsRepository.save(newPokemon);
     }
     
+    public UsersPokemons getFirstPokemon(User user) {
+    	long[] possibleIds = new long[] {
+    		79, // bulbasaur
+    		99, // charmander
+    		570 // squirtle
+    	};
+
+		Random valueGenerator = new Random();
+		int randomId = valueGenerator.nextInt(possibleIds.length - 1);
+		Optional<Pokemon> pokemon = pokemonRepository.findById(possibleIds[randomId]);
+		
+		int pokeLevel = valueGenerator.nextInt(20);
+		if (pokeLevel < 10) {
+			pokeLevel = 10;
+		}
+		
+		UsersPokemons newPokemon = new UsersPokemons();
+    	newPokemon.setPokemon(pokemon.get());
+    	newPokemon.setLevel(pokeLevel);
+    	newPokemon.setUser(user);
+    	newPokemon.setExperience(0);
+    	newPokemon.setFightHealt(pokemon.get().getHp());
+    	
+    	return usersPokemonsRepository.save(newPokemon);		
+    }
+    
     public UsersPokemons getLastCaught(Long id) {
     	List<UsersPokemons> userPokemon = this.findByUserId(id);
     	Comparator<UsersPokemons> byDateComparator = new Comparator<UsersPokemons>() {
