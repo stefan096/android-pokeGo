@@ -191,8 +191,7 @@ public class FightController {
     	}
     	
     	damage = (((2 * level / 5 + 2) * power * attack / defense ) /50 + 2) * modifier * factorToDecrease;
-    	System.out.println(damage);
-    	return damage;
+    	return Math.round(damage);
     }
 
 }
