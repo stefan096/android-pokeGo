@@ -87,10 +87,27 @@
             android:name=".activities.PokemonDetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity
+            android:name=".activities.ChooseFighterActivity"
+            android:label="@string/choose_fighter"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.FightBossActivity"
             android:label="@string/boss_fight_start"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activities.FightActivity"
+            android:label="@string/fgtn"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".activities.LostFightActivity"
+            android:label="@string/lost"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.CaughtPokemonActivity"
+            android:label="@string/won_long"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".activities.DetailActivity"
@@ -115,6 +132,7 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAxw924E8y7CW_jdSY4_xcHsJ-tIl_FlXg" />
+
 
     </application>
 

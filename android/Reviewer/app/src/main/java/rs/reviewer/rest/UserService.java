@@ -1,5 +1,6 @@
 package rs.reviewer.rest;
 
+import model.FightDTO;
 import model.LoginDTO;
 import model.User;
 import okhttp3.ResponseBody;
@@ -77,6 +78,18 @@ public interface UserService {
     @GET(BaseService.POKEMON_MAP)
     Call<ResponseBody> getPokemonMap(@Query("lat") double lat, @Query("lng") double lng);
 
+    @Headers({
+        "User-Agent: Mobile-Android",
+                "Content-Type:application/json"
+    })
+    @GET(BaseService.BOSS)
+    Call<ResponseBody> getBossById(@Query("id") Long id);
 
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @PUT(BaseService.FIGHT)
+    Call<ResponseBody> fight(@Body FightDTO fightDTO);
 
 }

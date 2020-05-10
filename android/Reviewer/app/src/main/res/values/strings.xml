@@ -61,7 +61,7 @@
     <string name="wanna_catch">Wanna try and catch him?</string>
     <string name="catchBtn">Catch!</string>
     <string name="ignoreBtn">Ignore</string>
-    <string name="boss_fight_start">Start fight with boss</string>
+
 
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -92,5 +92,20 @@
     <string name="takePicture">Take a picture</string>
     <string name="lvl">Level:</string>
     <string name="details">POKEMON DETAILS</string>
+    <string name="try_catch">You`re trying to catch:</string>
+    <string name="btn_choose_f">CHOOSE FIGHTER</string>
+    <string name="fgtn">You`re fighting:</string>
+    <string name="yr_pok">Your pokemon:</string>
+    <string name="boss_fight_start">Start fight with boss</string>
+    <string name="choose_fighter">Choose your fighter:</string>
+    <string name="lost_btn">TRY AGAIN</string>
+    <string name="lost">You`ve missed it!</string>
+    <string name="won_btn">SUCCESS!</string>
+    <string name="won_long">You`ve caught a pokemon!</string>
+    <string name="boss_atks">***BOSS ATTACKS***</string>
+    <string name="use_atks">***POKEMON ATTACKS***</string>
+    <string name="atk_num">Attack number:</string>
+
+
 
 </resources>
