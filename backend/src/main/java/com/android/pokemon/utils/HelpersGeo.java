@@ -81,7 +81,7 @@ public class HelpersGeo {
 	public Boss makeOneBoss(GeoPoint generated, Pokemon pokemon, Random valueGenerator) {
     	Boss boss = new Boss();
     	boss.setPokemon(pokemon);
-    	boss.setLevel(valueGenerator.nextInt(100));
+    	boss.setLevel(generateLevelWithProbability(7, 30)); //70% to 30 lvl
     	boss.setLatitude(generated.getLatitude());
     	boss.setLongitude(generated.getLongitude());
     	
@@ -123,6 +123,18 @@ public class HelpersGeo {
 				System.out.println("updated: "  + savedBoss.getId());
 			}
 		}
+	}
+	
+	private int generateLevelWithProbability(int probabilility, int border){ //probabilility from 0 to 9, border for level
+	    Random random = new Random();
+	    int val = random.nextInt(10);
+
+	    if (val < probabilility) {
+	        return random.nextInt(border) + 1;      // random range 1 to 30
+	    }
+	    else {
+	        return random.nextInt(border + 1) + 70;     // random range 30 to 100
+	    }
 	}
 
 }

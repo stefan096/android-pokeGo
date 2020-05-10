@@ -29,7 +29,22 @@ public class PokeBoss implements Serializable {
     private double longitude;
 
 
+    @SerializedName("fightHealt")
+    @Expose
+    private double fightHealt;
 
+
+
+
+    public PokeBoss(){}
+
+    public double getFightHealt() {
+        return fightHealt;
+    }
+
+    public void setFightHealt(double fightHealt) {
+        this.fightHealt = fightHealt;
+    }
     public PokeBoss(Pokemon pokemon){
         this.setPokemon(pokemon);
     }

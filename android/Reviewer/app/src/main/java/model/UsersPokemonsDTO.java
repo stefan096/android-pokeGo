@@ -23,14 +23,25 @@ public class UsersPokemonsDTO implements Serializable {
     @Expose
     private double experience;
 
+    @SerializedName("fightHealt")
+    @Expose
+    private double fightHealt;
+
 //    @SerializedName("cooldown")
 //    @Expose
 //    private Instant cooldown;
 
-    public UsersPokemonsDTO(){
+    public UsersPokemonsDTO(Long id){
+        this.id = id;
 
     }
+    public double getFightHealt() {
+        return fightHealt;
+    }
 
+    public void setFightHealt(double fightHealt) {
+        this.fightHealt = fightHealt;
+    }
     public UsersPokemonsDTO(Pokemon pokemon){
         this.setPokemon(pokemon);
     }
@@ -42,8 +53,6 @@ public class UsersPokemonsDTO implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-
-
 
     public Pokemon getPokemon() {
         return pokemon;

@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
@@ -13,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -22,18 +27,24 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.PokeBoss;
 import model.PokeBossList;
+import model.Pokemon;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -48,6 +59,7 @@ import static android.content.ContentValues.TAG;
 public class MapFragment extends Fragment implements LocationListener, OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
+    private final List<Target> targets = new ArrayList<>();
 
     private LocationManager locationManager;
     private String provider;
@@ -353,12 +365,29 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     }
 
     private void addPokemonToMap(PokeBoss pokemon) {
-        LatLng loc = new LatLng(pokemon.getLatitude(), pokemon.getLongitude());
+        final Marker marker = map.addMarker(new MarkerOptions()
+                .title(pokemon.getPokemon().getName())
+                .position(new LatLng(pokemon.getLatitude(), pokemon.getLongitude())));
+        Target target = new Target() {
+            @Override
+            public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                marker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
+            }
 
-        map.addMarker(new MarkerOptions()
-            .title(pokemon.getPokemon().getName())
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE))
-                .position(loc));
+            @Override
+            public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+
+            }
+
+            @Override
+            public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+            }
+        };
+        Picasso.get()
+                .load(pokemon.getPokemon().getImage_path())
+                .into(target);
+        targets.add(target);
     }
 
     private void addMarker(Location location) {
@@ -369,6 +398,8 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
         if (home != null) {
             home.remove();
         }
+
+        Log.d("Location", "lat " + location.getLatitude() + " Lon " + location.getLongitude());
 
         home = map.addMarker(new MarkerOptions()
                 .title("YOUR_POSITON")

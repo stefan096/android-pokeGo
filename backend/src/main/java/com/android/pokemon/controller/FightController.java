@@ -21,6 +21,7 @@ import com.android.pokemon.service.FightService;
 import com.android.pokemon.service.PokemonService;
 import com.android.pokemon.service.UserService;
 import com.android.pokemon.service.UsersPokemonsService;
+import com.android.pokemon.utils.Constants;
 
 @Controller
 public class FightController {
@@ -93,7 +94,8 @@ public class FightController {
     	if(fightDTO.getId() == null || fightDTO.getId() == 0) {
     		//napravi novi posto je pocetak borbe
     		Boss boss = bossService.findById(fightDTO.getBoss().getId());
-    		boss.setFightHealt(boss.getPokemon().getHp());
+    		boss.setFightHealt(setFightHealtBasedOnLevel(Constants.BORDER_FOR_ADDING_HEALT, 
+    				boss.getPokemon().getHp(), boss.getLevel()));
     		boss = bossService.save(boss);
     		User user = userService.findOne(fightDTO.getUser().getId());
     		
@@ -129,14 +131,16 @@ public class FightController {
 			//znaci izabran je pokemon za borbu prvi put
 			UsersPokemons pokemonOnMove = usersPokemonService.findById(fightDTO.getPokemonOnMove().getId()); 
 			fight.setPokemonOnMove(pokemonOnMove);
-			fight.getPokemonOnMove().setFightHealt(pokemonOnMove.getPokemon().getHp());
+			fight.getPokemonOnMove().setFightHealt(setFightHealtBasedOnLevel(Constants.BORDER_FOR_ADDING_HEALT, 
+					fight.getPokemonOnMove().getPokemon().getHp(), fight.getPokemonOnMove().getLevel()));
 			fight.setCounterForPokemon(1);
 		}
 		else if(fight.getPokemonOnMove().getId() != fightDTO.getPokemonOnMove().getId()){ 
 			//ako nije null znaci nije prvi put, sad me zanima da li se pokemon promenio
 			UsersPokemons pokemonOnMove = usersPokemonService.findById(fightDTO.getPokemonOnMove().getId()); 
 			fight.setPokemonOnMove(pokemonOnMove);
-			fight.getPokemonOnMove().setFightHealt(pokemonOnMove.getPokemon().getHp());
+			fight.getPokemonOnMove().setFightHealt(setFightHealtBasedOnLevel(Constants.BORDER_FOR_ADDING_HEALT, 
+					fight.getPokemonOnMove().getPokemon().getHp(), fight.getPokemonOnMove().getLevel()));
 			fight.setCounterForPokemon(fight.getCounterForPokemon() + 1);
 		}
 
@@ -157,6 +161,7 @@ public class FightController {
 		//ukoliko je boss spao na 0 uhvacen je
 		if(fight.getBoss().getFightHealt() <= 0) {
 			fight.setCaught(true);
+			usersPokemonService.saveCaughtPokemon(fight.getBoss(), fight.getPokemonOnMove().getUser());
 		}
 		
 		fight.setCounterForTurn(fight.getCounterForTurn() + 1);
@@ -191,8 +196,18 @@ public class FightController {
     	}
     	
     	damage = (((2 * level / 5 + 2) * power * attack / defense ) /50 + 2) * modifier * factorToDecrease;
-    	System.out.println(damage);
-    	return damage;
+    	return Math.round(damage);
+    }
+    
+    private double setFightHealtBasedOnLevel(int paramForBorderToAdd, double healt, int level) {
+    	double retHealt = healt;
+    	int multiplyConstant = level / paramForBorderToAdd;
+    	
+    	if(multiplyConstant > 0) {
+    		retHealt *= multiplyConstant;
+    	}
+    	
+    	return retHealt;
     }
 
 }

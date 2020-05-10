@@ -12,12 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.android.pokemon.dto.BossDTO;
 import com.android.pokemon.dto.BossListDTO;
 import com.android.pokemon.dto.GenerateGeoDataDTO;
 import com.android.pokemon.model.Boss;
 import com.android.pokemon.model.GeoPoint;
 import com.android.pokemon.service.BossService;
+import com.android.pokemon.service.FightService;
 import com.android.pokemon.service.PokemonService;
+import com.android.pokemon.service.UsersPokemonsService;
 import com.android.pokemon.utils.HelpersGeo;
 
 @Controller
@@ -28,11 +31,29 @@ public class BossController {
 	PokemonService pokemonService;
 	
 	@Autowired
+	UsersPokemonsService usersPokemonsService;
+	
+	@Autowired
+	FightService fightService;
+	
+	@Autowired
 	BossService bossService;
 	
 	@Autowired
 	HelpersGeo HelpersGeo;
 
+    @RequestMapping(value = "api/boss", method = RequestMethod.GET)
+    public ResponseEntity<BossDTO> getBoss(@RequestParam Long id) {
+        Boss boss = bossService.findById(id);
+        BossDTO bossDTO = new BossDTO(boss);
+        if(boss == null) {
+
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        else {
+            return new ResponseEntity<>(bossDTO, HttpStatus.OK);
+        }
+    }
 
 	/**
 	 * 
@@ -96,9 +117,13 @@ public class BossController {
      */
     @RequestMapping(value = "api/data", method = RequestMethod.POST)
     public ResponseEntity<BossListDTO> getData(@RequestBody GenerateGeoDataDTO dataDTO) {
+    	//moram obrisati sve borbe zbog referenciranja boss-ova
+    	fightService.deleteAll();
     	bossService.deleteAll();
     	HelpersGeo.randomGeneratePokemonsCoordinates(dataDTO.getNumberOfData(), dataDTO.getGeopoint(), dataDTO.getRadius());
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+
 }

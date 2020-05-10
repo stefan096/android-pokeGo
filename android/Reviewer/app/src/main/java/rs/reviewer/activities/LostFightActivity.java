@@ -1,12 +1,9 @@
 package rs.reviewer.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
@@ -24,19 +20,20 @@ import java.io.IOException;
 import model.FightDTO;
 import model.PokeBoss;
 import model.User;
-import model.UsersPokemonsDTO;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rs.reviewer.MainActivity;
 import rs.reviewer.R;
 import rs.reviewer.rest.BaseService;
 import rs.reviewer.utils.UserUtil;
 
 import static android.content.ContentValues.TAG;
 
-public class FightBossActivity extends AppCompatActivity {
+public class LostFightActivity extends AppCompatActivity {
 
+    private Uri id;
     private Uri bossId;
 
 
@@ -45,10 +42,12 @@ public class FightBossActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pokemon_boss);
         Bundle extras = getIntent().getExtras();
+        id = extras.getParcelable("id");
         bossId = extras.getParcelable("bossId");
         fillData(Long.parseLong(bossId.toString()));
         setUpCloseButton();
         setUpChooseFButton();
+
     }
 
     private void fillData(Long id) {
@@ -82,33 +81,6 @@ public class FightBossActivity extends AppCompatActivity {
 
     }
 
-    public void setUpCloseButton(){
-        ImageButton imageButton = findViewById(R.id.btn_close);
-        imageButton.setImageResource(R.drawable.ic_action_close);
-        imageButton.setOnClickListener( new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                finish();
-            }
-        });
-    }
-
-    public void setUpChooseFButton( ){
-        Button choose_fighter = findViewById(R.id.btn_choose_fighter);
-        choose_fighter.setText(R.string.btn_choose_f);
-        choose_fighter.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent chooseFighter = new Intent(v.getContext(), ChooseFighterActivity.class);
-                chooseFighter.putExtra("bossId", bossId);
-                startActivity(chooseFighter);
-            }
-        });
-
-    }
 
 
     public void setUpScreen(PokeBoss pokeBoss){
@@ -122,7 +94,10 @@ public class FightBossActivity extends AppCompatActivity {
         TextView hp_text =  findViewById(R.id.hp_text);
         TextView level_text = findViewById(R.id.level_text);
         TextView level = findViewById(R.id.level);
+        TextView text = findViewById(R.id.text);
 
+
+        text.setText(R.string.lost);
         hp_text.setText(R.string.hp);
         atk_text.setText(R.string.atk);
         defense_text.setText(R.string.defense);
@@ -132,18 +107,41 @@ public class FightBossActivity extends AppCompatActivity {
         hp.setText(Double.toString(pokeBoss.getPokemon().getHp()));
         defense.setText(Double.toString(pokeBoss.getPokemon().getDefense()));
         level.setText(Double.toString(pokeBoss.getLevel()));
-
         Picasso.get()
                 .load(pokeBoss.getPokemon().getImage_path())
                 .into(imageView);
 
     }
 
+    public void setUpChooseFButton(){
+        Button choose_fighter = findViewById(R.id.btn_choose_fighter);
+        choose_fighter.setText(R.string.lost_btn);
+        choose_fighter.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Intent chooseFighter = new Intent(v.getContext(), ChooseFighterActivity.class);
+                chooseFighter.putExtra("bossId", bossId);
+                startActivity(chooseFighter);
+            }
+        });
 
+    }
 
+    public void setUpCloseButton(){
+        ImageButton x_button = findViewById(R.id.btn_close);
+        x_button.setImageResource(R.drawable.ic_action_close);
+        x_button.setOnClickListener( new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                finish();
+                Intent main = new Intent(v.getContext(), MainActivity.class);
+                startActivity(main);
+                finish();
 
-
-
+            }
+        });
+    }
 }
