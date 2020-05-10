@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 
@@ -131,6 +132,10 @@ public class FightBossActivity extends AppCompatActivity {
         hp.setText(Double.toString(pokeBoss.getPokemon().getHp()));
         defense.setText(Double.toString(pokeBoss.getPokemon().getDefense()));
         level.setText(Double.toString(pokeBoss.getLevel()));
+
+        Picasso.get()
+                .load(pokeBoss.getPokemon().getImage_path())
+                .into(imageView);
 
     }
 

@@ -8,6 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
+import com.squareup.picasso.Picasso;
+
+import model.Pokemon;
 import model.UsersPokemons;
 import rs.reviewer.R;
 
@@ -48,6 +51,8 @@ public class PokemonListAdapter extends BaseAdapter {
             view = convertView;
         }
 
+        Pokemon pokemon = mpokemons.get(position).getPokemon();
+
         TextView name =  view.findViewById(R.id.pokemon_name);
         TextView levelText = view.findViewById(R.id.level_txt);
         TextView level = view.findViewById(R.id.level);
@@ -55,9 +60,14 @@ public class PokemonListAdapter extends BaseAdapter {
         ImageView image =  view.findViewById(R.id.item_image);
 
 
-        name.setText( mpokemons.get(position).getPokemon().getName() );
+        name.setText( pokemon.getName() );
         levelText.setText(R.string.lvl);
         level.setText(String.valueOf(mpokemons.get(position).getLevel()));
+        Picasso.get()
+                .load(pokemon.getImage_path())
+                .resize(300, 300)
+                .centerCrop()
+                .into(image);
 
 
         return view;
