@@ -55,7 +55,7 @@ public class FightActivity extends AppCompatActivity {
         bossId = extras.getParcelable("bossId");
         fightId = extras.getParcelable("fightId");
         getBoss(Long.parseLong(bossId.toString()));
-        getPokemon(Long.parseLong(id.toString()));
+        getPokemon(Long.parseLong(id.toString()), true);
     }
 
 
@@ -89,8 +89,9 @@ public class FightActivity extends AppCompatActivity {
         });
 
     }
-    private void getPokemon(Long id) {
+    private void getPokemon(Long id, boolean firstTime) {
 
+        final boolean tempFirstTime = firstTime;
         Call<ResponseBody> call = BaseService.userService.findUsersPokemonById(id);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -101,7 +102,7 @@ public class FightActivity extends AppCompatActivity {
                     try {
                         usersPokemon = response.body().string();
                         usersPokemonsDTO = new Gson().fromJson(usersPokemon, UsersPokemonsDTO.class);
-                        setUpScreen2(usersPokemonsDTO);
+                        setUpScreen2(usersPokemonsDTO, tempFirstTime);
                         startFight(usersPokemonsDTO);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -137,14 +138,20 @@ public class FightActivity extends AppCompatActivity {
 
     }
 
-    public void setUpScreen2(UsersPokemonsDTO pokemon2){
+    public void setUpScreen2(UsersPokemonsDTO pokemon2, boolean firstTime){
         TextView name2 = findViewById(R.id.pokemon_name2);
         TextView hp2 = findViewById(R.id.hp2);
         TextView hp_text2 = findViewById(R.id.hp_text2);
         ImageView imageView2 = findViewById(R.id.item_image2);
         name2.setText(pokemon2.getPokemon().getName());
         hp_text2.setText(R.string.hp);
-        hp2.setText(Double.toString(pokemon2.getFightHealt()));
+        if(firstTime){
+            hp2.setText(Double.toString(pokemon2.getPokemon().getHp()));
+        }
+        else{
+            hp2.setText(Double.toString(pokemon2.getFightHealt()));
+        }
+
         Picasso.get()
                 .load(pokemon2.getPokemon().getImage_path())
                 .into(imageView2);
