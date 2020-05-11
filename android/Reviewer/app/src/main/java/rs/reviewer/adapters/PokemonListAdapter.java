@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso;
 
 import model.Pokemon;
 import model.UsersPokemons;
+import retrofit2.http.HEAD;
 import rs.reviewer.R;
 
 public class PokemonListAdapter extends BaseAdapter {
@@ -56,10 +57,7 @@ public class PokemonListAdapter extends BaseAdapter {
         TextView name =  view.findViewById(R.id.pokemon_name);
         TextView levelText = view.findViewById(R.id.level_txt);
         TextView level = view.findViewById(R.id.level);
-
         ImageView image =  view.findViewById(R.id.item_image);
-
-
         name.setText( pokemon.getName() );
         levelText.setText(R.string.lvl);
         level.setText(String.valueOf(mpokemons.get(position).getLevel()));

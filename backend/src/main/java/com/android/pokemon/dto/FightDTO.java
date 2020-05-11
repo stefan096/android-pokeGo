@@ -44,4 +44,13 @@ public class FightDTO {
 		this.counterForPokemon = fight.getCounterForPokemon();
 		this.counterForTurn = fight.getCounterForTurn();
 	}
+
+	@Override
+	public String toString() {
+		return "FightDTO [id=" + id + ", user=" + user + ", boss=" + boss + ", timeOfFight=" + timeOfFight + ", caught="
+				+ caught + ", pokemonOnMove=" + pokemonOnMove + ", fightStateMove=" + fightStateMove
+				+ ", counterForTurn=" + counterForTurn + ", counterForPokemon=" + counterForPokemon + "]";
+	}
+	
+	
 }

@@ -27,4 +27,10 @@ public class BossDTO {
         this.longitude = boss.getLongitude();
         this.fightHealt = boss.getFightHealt();
     }
+
+	@Override
+	public String toString() {
+		return "BossDTO [id=" + id + ", pokemon=" + pokemon + ", level=" + level + ", latitude=" + latitude
+				+ ", longitude=" + longitude + ", fightHealt=" + fightHealt + "]";
+	}
 }

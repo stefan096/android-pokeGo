@@ -55,7 +55,7 @@ public class FightActivity extends AppCompatActivity {
         bossId = extras.getParcelable("bossId");
         fightId = extras.getParcelable("fightId");
         getBoss(Long.parseLong(bossId.toString()));
-        getPokemon(Long.parseLong(id.toString()));
+        getPokemon(Long.parseLong(id.toString()), true);
     }
 
 
@@ -71,8 +71,7 @@ public class FightActivity extends AppCompatActivity {
                     try {
                         boss = response.body().string();
                         pokeBoss = new Gson().fromJson(boss, PokeBoss.class );
-                        pokemonBoss = pokeBoss.getPokemon();
-                        setUpScreen1(pokemonBoss);
+                        setUpScreen1(pokeBoss);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -90,8 +89,9 @@ public class FightActivity extends AppCompatActivity {
         });
 
     }
-    private void getPokemon(Long id) {
+    private void getPokemon(Long id, boolean firstTime) {
 
+        final boolean tempFirstTime = firstTime;
         Call<ResponseBody> call = BaseService.userService.findUsersPokemonById(id);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -102,8 +102,7 @@ public class FightActivity extends AppCompatActivity {
                     try {
                         usersPokemon = response.body().string();
                         usersPokemonsDTO = new Gson().fromJson(usersPokemon, UsersPokemonsDTO.class);
-                        pokemonUser = usersPokemonsDTO.getPokemon();
-                        setUpScreen2(pokemonUser);
+                        setUpScreen2(usersPokemonsDTO, tempFirstTime);
                         startFight(usersPokemonsDTO);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -122,32 +121,39 @@ public class FightActivity extends AppCompatActivity {
         });
     }
 
-    public void setUpScreen1(Pokemon pokemon1){
+    public void setUpScreen1(PokeBoss pokemon1){
         TextView name1 = findViewById(R.id.pokemon_name);
         TextView hp1 = findViewById(R.id.hp);
         TextView hp_text1 = findViewById(R.id.hp_text);
         ImageView imageView1 = findViewById(R.id.item_image);
+        Pokemon pokemon = pokemon1.getPokemon();
 
-        name1.setText(pokemon1.getName());
+        name1.setText(pokemon.getName());
         hp_text1.setText(R.string.hp);
-        hp1.setText(Double.toString(pokemon1.getHp()));
+        hp1.setText(Double.toString(pokemon1.getFightHealt()));
         Picasso.get()
-                .load(pokemon1.getImage_path())
+                .load(pokemon.getImage_path())
                 .into(imageView1);
 
 
     }
 
-    public void setUpScreen2(Pokemon pokemon2){
+    public void setUpScreen2(UsersPokemonsDTO pokemon2, boolean firstTime){
         TextView name2 = findViewById(R.id.pokemon_name2);
         TextView hp2 = findViewById(R.id.hp2);
         TextView hp_text2 = findViewById(R.id.hp_text2);
         ImageView imageView2 = findViewById(R.id.item_image2);
-        name2.setText(pokemon2.getName());
+        name2.setText(pokemon2.getPokemon().getName());
         hp_text2.setText(R.string.hp);
-        hp2.setText(Double.toString(pokemon2.getHp()));
+        if(firstTime){
+            hp2.setText(Double.toString(pokemon2.getPokemon().getHp()));
+        }
+        else{
+            hp2.setText(Double.toString(pokemon2.getFightHealt()));
+        }
+
         Picasso.get()
-                .load(pokemon2.getImage_path())
+                .load(pokemon2.getPokemon().getImage_path())
                 .into(imageView2);
 
     }

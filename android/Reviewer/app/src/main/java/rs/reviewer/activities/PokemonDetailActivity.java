@@ -112,6 +112,7 @@ public class PokemonDetailActivity extends AppCompatActivity {
       defense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
       level.setText(Double.toString(usersPokemonsDTO.getLevel()));
 
+
       Picasso.get()
               .load(usersPokemonsDTO.getPokemon().getImage_path())
               .into(imageView);
