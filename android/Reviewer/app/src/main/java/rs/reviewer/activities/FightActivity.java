@@ -54,13 +54,14 @@ public class FightActivity extends AppCompatActivity {
         id = extras.getParcelable("id");
         bossId = extras.getParcelable("bossId");
         fightId = extras.getParcelable("fightId");
-        getBoss(Long.parseLong(bossId.toString()));
+        getBoss(Long.parseLong(bossId.toString()), true);
         getPokemon(Long.parseLong(id.toString()), true);
     }
 
 
-    private void getBoss(Long bossId) {
+    private void getBoss(Long bossId, boolean firstTime) {
 
+        final boolean tempFirstTime = firstTime;
         Call<ResponseBody> call = BaseService.userService.getBossById(bossId);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -71,7 +72,7 @@ public class FightActivity extends AppCompatActivity {
                     try {
                         boss = response.body().string();
                         pokeBoss = new Gson().fromJson(boss, PokeBoss.class );
-                        setUpScreen1(pokeBoss);
+                        setUpScreen1(pokeBoss, tempFirstTime);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -121,7 +122,7 @@ public class FightActivity extends AppCompatActivity {
         });
     }
 
-    public void setUpScreen1(PokeBoss pokemon1){
+    public void setUpScreen1(PokeBoss pokemon1, boolean firstTime){
         TextView name1 = findViewById(R.id.pokemon_name);
         TextView hp1 = findViewById(R.id.hp);
         TextView hp_text1 = findViewById(R.id.hp_text);
@@ -130,7 +131,12 @@ public class FightActivity extends AppCompatActivity {
 
         name1.setText(pokemon.getName());
         hp_text1.setText(R.string.hp);
-        hp1.setText(Double.toString(pokemon1.getFightHealt()));
+        if(firstTime){
+            hp1.setText(Double.toString(pokemon1.getPokemon().getHp()));
+        }
+        else{
+            hp1.setText(Double.toString(pokemon1.getFightHealt()));
+        }
         Picasso.get()
                 .load(pokemon.getImage_path())
                 .into(imageView1);
