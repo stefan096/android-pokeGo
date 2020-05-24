@@ -4,33 +4,38 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-/**
- * Created by skapl on 13-Apr-16.
- */
-public class ReviewerSQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String TABLE_CINEMA = "cinema";
+public class PokeBossSQLiteHelper extends SQLiteOpenHelper {
+
+    public static final String TABLE_POKEBOSS = "pokeboss";
     public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_LEVEL = "level";
+    public static final String COLUMN_LATITUDE = "latitude";
+    public static final String COLUMN_LONGITUDE = "longitude";
+    public static final String COLUMN_FIGHT_HEALT = "fightHealt";
+    public static final String COLUMN_IMAGE_PATH = "imagePath";
     public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_DESCRIPTION = "description";
-    public static final String COLUMN_AVATAR = "avatar";
+
 
     //Dajemo ime bazi
-    public static final String DATABASE_NAME = "cinema.db";
+    public static final String DATABASE_NAME = "pokeboss.db";
     //i pocetnu verziju baze. Obicno krece od 1
     private static final int DATABASE_VERSION = 1;
 
     private static final String DB_CREATE = "create table "
-            + TABLE_CINEMA + "("
+            + TABLE_POKEBOSS + "("
             + COLUMN_ID  + " integer primary key autoincrement , "
-            + COLUMN_NAME + " text, "
-            + COLUMN_DESCRIPTION + " text, "
-            + COLUMN_AVATAR + " integer"
+            + COLUMN_LEVEL + " integer, "
+            + COLUMN_LATITUDE + " double, "
+            + COLUMN_LONGITUDE + " double, "
+            + COLUMN_FIGHT_HEALT + " double, "
+            + COLUMN_IMAGE_PATH + " text, "
+            + COLUMN_NAME + " text "
             + ")";
 
 
     //Potrebno je dodati konstruktor zbog pravilne inicijalizacije
-    public ReviewerSQLiteHelper(Context context) {
+    public PokeBossSQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -44,7 +49,7 @@ public class ReviewerSQLiteHelper extends SQLiteOpenHelper {
     //kada zelimo da izmenomo tabele, moramo pozvati drop table za sve tabele koje imamo
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_CINEMA);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_POKEBOSS);
         onCreate(db);
     }
 
