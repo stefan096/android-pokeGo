@@ -146,6 +146,10 @@ public class MainActivity extends AppCompatActivity {
         // Gets the data repository in write mode
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
+        //db.execSQL("DROP TABLE IF EXISTS " + PokeBossSQLiteHelper.TABLE_POKEBOSS);
+        db.execSQL(PokeBossSQLiteHelper.DB_CREATE);
+
+
         DatabaseHelper.printTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
         PokeBossList pokeBossList = DatabaseHelper.readTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
         Log.d("STEFAN","count: " + pokeBossList.getPokemonBosses().size());

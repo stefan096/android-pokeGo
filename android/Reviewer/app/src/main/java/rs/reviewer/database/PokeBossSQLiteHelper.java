@@ -22,7 +22,7 @@ public class PokeBossSQLiteHelper extends SQLiteOpenHelper {
     //i pocetnu verziju baze. Obicno krece od 1
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DB_CREATE = "create table "
+    public static final String DB_CREATE = "create table if not exists "
             + TABLE_POKEBOSS + "("
             + COLUMN_ID  + " integer primary key autoincrement , "
             + COLUMN_LEVEL + " integer, "
