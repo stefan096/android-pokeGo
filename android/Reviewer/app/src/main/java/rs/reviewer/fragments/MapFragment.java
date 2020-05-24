@@ -87,18 +87,19 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
     public void getPokemons() {
 
+        Log.d("STEFAN","countSS: " + "USAO");
+
         if (currentLocation == null) {
             Log.d("REZ", "NEMA LOKACIJE");
             return;
         }
-
 
         PokeBossSQLiteHelper dbHelper = new PokeBossSQLiteHelper(getContext());
         // Gets the data repository in write mode
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
 
-        Call<ResponseBody> call = BaseService.userService.getPokemonMap(currentLocation.getLatitude(), currentLocation.getLongitude());
+        /*Call<ResponseBody> call = BaseService.userService.getPokemonMap(currentLocation.getLatitude(), currentLocation.getLongitude());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -146,9 +147,17 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailure: NISTAA");
             }
-        });
+        });*/
 
+        //DatabaseHelper.printTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+        PokeBossList pokeBossList = DatabaseHelper.readTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+        Log.d("STEFAN","countSS: " + pokeBossList.getPokemonBosses().size());
 
+        pokemons = pokeBossList.getPokemonBosses();
+
+        for(PokeBoss boss: pokemons) {
+            addPokemonToMap(boss);
+        }
     }
 
     /**

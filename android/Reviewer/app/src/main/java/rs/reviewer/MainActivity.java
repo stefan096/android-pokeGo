@@ -2,11 +2,13 @@ package rs.reviewer;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -26,21 +28,36 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.google.gson.Gson;
+
 import model.NavItem;
+import model.PokeBoss;
+import model.PokeBossList;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import rs.reviewer.activities.LoginActivity;
 import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
+import rs.reviewer.database.DatabaseHelper;
+import rs.reviewer.database.PokeBossSQLiteHelper;
 import rs.reviewer.fragments.MapFragment;
 import rs.reviewer.fragments.MyFragment;
 import rs.reviewer.fragments.PokemonListFragment;
+import rs.reviewer.rest.BaseService;
 import rs.reviewer.sync.SyncReceiver;
 import rs.reviewer.sync.SyncService;
 import rs.reviewer.tools.FragmentTransition;
 import rs.reviewer.tools.ReviewerTools;
 import rs.reviewer.utils.UserUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
@@ -118,6 +135,74 @@ public class MainActivity extends AppCompatActivity {
 
         setUpReceiver();
         consultPreferences();
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        PokeBossSQLiteHelper dbHelper = new PokeBossSQLiteHelper(this);
+        // Gets the data repository in write mode
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        DatabaseHelper.printTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+        PokeBossList pokeBossList = DatabaseHelper.readTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+        Log.d("STEFAN","count: " + pokeBossList.getPokemonBosses().size());
+
+        //treba da se odradi punjenje baze samo ako je prazna
+        if(pokeBossList.getPokemonBosses().size() != 0){
+            return;
+        }
+
+
+        Call<ResponseBody> call = BaseService.userService.getPokemonMap(/*currentLocation.getLatitude(),
+                currentLocation.getLongitude()*/ 0, 0);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String responseJson = null;
+                if (response.code() == 200) {
+                    Log.d("REZ", "Usao petlju");
+                    try {
+                        responseJson = response.body().string();
+                        PokeBossList bosses = new Gson().fromJson(responseJson, PokeBossList.class);
+                        List<PokeBoss> pokemons = bosses.getPokemonBosses();
+
+                        for(PokeBoss boss: pokemons) {
+
+                            // Create a new map of values, where column names are the keys
+                            ContentValues values = new ContentValues();
+                            values.put(PokeBossSQLiteHelper.COLUMN_ID, boss.getId());
+                            values.put(PokeBossSQLiteHelper.COLUMN_NAME, boss.getPokemon().getName());
+                            values.put(PokeBossSQLiteHelper.COLUMN_LATITUDE, boss.getLatitude());
+                            values.put(PokeBossSQLiteHelper.COLUMN_LONGITUDE, boss.getLongitude());
+                            values.put(PokeBossSQLiteHelper.COLUMN_LEVEL, boss.getLevel());
+                            values.put(PokeBossSQLiteHelper.COLUMN_FIGHT_HEALT, boss.getFightHealt());
+                            values.put(PokeBossSQLiteHelper.COLUMN_IMAGE_PATH, boss.getPokemon().getImage_path());
+
+                            long id = db.replace(PokeBossSQLiteHelper.TABLE_POKEBOSS, null, values);
+
+                            Log.d("STEFAN","replacing: ");
+                        }
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    Log.d("pokes","error: "+response.code());
+
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailure: NISTAA");
+            }
+        });
+
     }
 
     private void setUpReceiver(){
