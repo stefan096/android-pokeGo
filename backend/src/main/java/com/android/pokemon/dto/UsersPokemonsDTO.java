@@ -39,4 +39,11 @@ public class UsersPokemonsDTO {
     }
 
 
+	@Override
+	public String toString() {
+		return "UsersPokemonsDTO [id=" + id + ", pokemon=" + pokemon + ", level=" + level + ", experience=" + experience
+				+ ", cooldown=" + cooldown + ", fightHealt=" + fightHealt + "]";
+	}
+
+
 }

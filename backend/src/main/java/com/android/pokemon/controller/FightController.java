@@ -119,7 +119,7 @@ public class FightController {
 //    		
 //    		fight.setPokemons(pokemons);
     		Fight savedFight = fightService.save(fight);
-    		
+    		System.out.println(new FightDTO(savedFight));
     		return new ResponseEntity<>(new FightDTO(savedFight), HttpStatus.OK);
     	}
     	
@@ -167,6 +167,7 @@ public class FightController {
 		fight.setCounterForTurn(fight.getCounterForTurn() + 1);
 		Fight savedFight = fightService.save(fight);
 		
+		System.out.println(new FightDTO(savedFight));
 		return new ResponseEntity<>(new FightDTO(savedFight), HttpStatus.OK);
 
     }
