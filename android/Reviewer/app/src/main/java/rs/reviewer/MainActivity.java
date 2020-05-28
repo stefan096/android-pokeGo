@@ -138,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -237,8 +238,13 @@ public class MainActivity extends AppCompatActivity {
         * ako nesto pod tim kljucem se ne nalazi u storage-u, da dobijemo podrazumevanu
         * vrednost nazad, i to nam je signal da nista nije sacuvano pod tim kljucem.
         * */
-        synctime = sharedPreferences.getString(getString(R.string.pref_sync_list), "1");// pola minuta
+        synctime = sharedPreferences.getString(getString(R.string.pref_sync_list), "1");
         allowSync = sharedPreferences.getBoolean(getString(R.string.pref_sync), false);
+        int kilometres = Integer.valueOf(sharedPreferences.getString(getString(R.string.pref_map_list), "1"));
+
+        Log.e("SYNC", "citanje " + synctime);
+        Log.e("SYNC", "citanje " + allowSync);
+        Log.e("SYNC", "citanje " + kilometres);
     }
     
     @Override

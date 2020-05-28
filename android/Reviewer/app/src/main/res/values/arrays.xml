@@ -3,6 +3,7 @@
     
     <string-array name="pref_syncConnectionTypes_entries">
         <item>1 min</item>
+        <item>2 min</item>
         <item>10 min</item>
         <item>30 min</item>
         <item>60 min</item>
@@ -10,6 +11,7 @@
     
     <string-array name="pref_syncConnectionTypes_values">
         <item>1</item>
+        <item>2</item>
         <item>10</item>
         <item>30</item>
         <item>60</item>
@@ -20,13 +22,17 @@
         <item>3 km</item>
         <item>5 km</item>
         <item>10 km</item>
+        <item>20 km</item>
+        <item>50 km</item>
     </string-array>
     
     <string-array name="pref_radiusConnectionTypes_values">
         <item>1</item>
-        <item>2</item>
         <item>3</item>
+        <item>5</item>
         <item>10</item>
+        <item>20</item>
+        <item>50</item>
     </string-array>
     
 </resources>
