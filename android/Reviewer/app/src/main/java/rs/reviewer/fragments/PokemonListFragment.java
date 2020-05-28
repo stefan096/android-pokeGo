@@ -92,7 +92,7 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
                                      userJson = response.body().string();
                                      UsersPokemonsDTOList usersPokemonsDTO = new Gson().fromJson(userJson, UsersPokemonsDTOList.class );
                                      usersPokemons = usersPokemonsDTO.getPokemons();
-                                     PokemonListAdapter adapter = new PokemonListAdapter(getActivity(), usersPokemons);
+                                     PokemonListAdapter adapter = new PokemonListAdapter(getActivity(), usersPokemons, false);
                                      setListAdapter(adapter);
                                  } catch (IOException e) {
                                      e.printStackTrace();

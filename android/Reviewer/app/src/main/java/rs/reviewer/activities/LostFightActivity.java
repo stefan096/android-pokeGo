@@ -35,6 +35,9 @@ public class LostFightActivity extends AppCompatActivity {
 
     private Uri id;
     private Uri bossId;
+    private Uri fightId;
+    private Uri attackCounter;
+
 
 
     @Override
@@ -44,6 +47,8 @@ public class LostFightActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         id = extras.getParcelable("id");
         bossId = extras.getParcelable("bossId");
+        fightId = extras.getParcelable("fightId");
+        attackCounter = extras.getParcelable("attackCounter");
         fillData(Long.parseLong(bossId.toString()));
         setUpCloseButton();
         setUpChooseFButton();
@@ -83,6 +88,8 @@ public class LostFightActivity extends AppCompatActivity {
 
 
 
+
+
     public void setUpScreen(PokeBoss pokeBoss){
         TextView name = findViewById(R.id.pokemon_name);
         TextView attack = findViewById(R.id.atk);
@@ -115,16 +122,24 @@ public class LostFightActivity extends AppCompatActivity {
 
     public void setUpChooseFButton(){
         Button choose_fighter = findViewById(R.id.btn_choose_fighter);
-        choose_fighter.setText(R.string.lost_btn);
-        choose_fighter.setOnClickListener(new View.OnClickListener() {
+        if(Integer.parseInt(attackCounter.toString()) < 3) {
+            choose_fighter.setText(R.string.lost_btn);
+            choose_fighter.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                Intent chooseFighter = new Intent(v.getContext(), ChooseFighterActivity.class);
-                chooseFighter.putExtra("bossId", bossId);
-                startActivity(chooseFighter);
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    Intent chooseFighter = new Intent(v.getContext(), ChooseFighterActivity.class);
+                    chooseFighter.putExtra("bossId", bossId);
+                    chooseFighter.putExtra("fightId", fightId);
+                    chooseFighter.putExtra("attackCounter", attackCounter);
+                    startActivity(chooseFighter);
+                }
+            });
+        }else{
+            choose_fighter.setEnabled(false);
+            choose_fighter.setText(R.string.cd);
+
+        }
 
     }
 
@@ -144,4 +159,6 @@ public class LostFightActivity extends AppCompatActivity {
             }
         });
     }
+
+
 }

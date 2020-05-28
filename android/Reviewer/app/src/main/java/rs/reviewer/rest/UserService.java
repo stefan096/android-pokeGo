@@ -2,7 +2,9 @@ package rs.reviewer.rest;
 
 import model.FightDTO;
 import model.LoginDTO;
+import model.PokeBoss;
 import model.User;
+import model.UsersPokemons;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -79,8 +81,8 @@ public interface UserService {
     Call<ResponseBody> getPokemonMap(@Query("lat") double lat, @Query("lng") double lng);
 
     @Headers({
-        "User-Agent: Mobile-Android",
-                "Content-Type:application/json"
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
     })
     @GET(BaseService.BOSS)
     Call<ResponseBody> getBossById(@Query("id") Long id);
@@ -89,7 +91,14 @@ public interface UserService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
+
     @PUT(BaseService.FIGHT)
     Call<ResponseBody> fight(@Body FightDTO fightDTO);
 
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @PUT(BaseService.COOLDOWN)
+    Call<ResponseBody> cooldown(@Query("id") Long id);
 }

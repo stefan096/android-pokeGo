@@ -38,6 +38,7 @@ public class FightActivity extends AppCompatActivity {
     private Uri id;
     private Uri bossId;
     private Uri fightId;
+    private int attackCounter;
     private UsersPokemonsDTO usersPokemonsDTO;
     private PokeBoss pokeBoss;
     private Pokemon pokemonBoss, pokemonUser;
@@ -45,17 +46,23 @@ public class FightActivity extends AppCompatActivity {
     private double healthBoss, healthUser;
     private String attackTurn;
     private int counterForTurn;
+    private boolean firstTime;
+    private Uri pokeListSize;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.two_fighters);
         Bundle extras = getIntent().getExtras();
-        id = extras.getParcelable("id");
+        id = extras.getParcelable("id"); //chosen pokemon id
         bossId = extras.getParcelable("bossId");
         fightId = extras.getParcelable("fightId");
-        getBoss(Long.parseLong(bossId.toString()), true);
-        getPokemon(Long.parseLong(id.toString()), true);
+        pokeListSize = extras.getParcelable("pokeListSize");
+        getBoss(Long.parseLong(bossId.toString()), false);
+        getPokemon(Long.parseLong(id.toString()), false);
+
     }
 
 
@@ -104,6 +111,7 @@ public class FightActivity extends AppCompatActivity {
                         usersPokemon = response.body().string();
                         usersPokemonsDTO = new Gson().fromJson(usersPokemon, UsersPokemonsDTO.class);
                         setUpScreen2(usersPokemonsDTO, tempFirstTime);
+
                         startFight(usersPokemonsDTO);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -176,7 +184,6 @@ public class FightActivity extends AppCompatActivity {
         User user = new Gson().fromJson(usrid, User.class);
         fightDTO.setUser(user);
         fightDTO.setPokemonOnMove(usersPokemonsDTO);
-
         callMethod();
 
     }
@@ -203,6 +210,8 @@ public class FightActivity extends AppCompatActivity {
         counterForTurn.setText("[" + counter +  "]");
     }
 
+
+
     public void callMethod() {
         Call<ResponseBody> call2 = BaseService.userService.fight(fightDTO);
         call2.enqueue(new Callback<ResponseBody>() {
@@ -219,7 +228,7 @@ public class FightActivity extends AppCompatActivity {
                         counterForTurn = fightDTO.getCounterForTurn();
                         healthBoss = fightDTO.getBoss().getFightHealt();
                         healthUser = fightDTO.getPokemonOnMove().getFightHealt();
-
+                        attackCounter = fightDTO.getCounterForPokemon();
                         while (healthBoss > 0 && healthUser > 0) {
                             updateHealth(healthBoss,healthUser);
                             updateMove(attackTurn);
@@ -233,6 +242,7 @@ public class FightActivity extends AppCompatActivity {
                         if ( healthUser > 0 && healthBoss <=0 ) {
 
                             Intent intent = new Intent(getApplicationContext(), CaughtPokemonActivity.class);
+                            setCooldownPokemon(Long.parseLong(id.toString()));
                             intent.putExtra("bossId", bossId);
                             intent.putExtra("id", id);
                             startActivity(intent);
@@ -240,8 +250,19 @@ public class FightActivity extends AppCompatActivity {
                         }else if (healthBoss > 0 && healthUser <= 0){
 
                             Intent intent = new Intent(getApplicationContext(), LostFightActivity.class);
+                            setCooldownPokemon(Long.parseLong(id.toString()));
                             intent.putExtra("bossId", bossId);
                             intent.putExtra("id", id);
+                            intent.putExtra("fightId", fightId);
+
+                            if (Integer.parseInt(pokeListSize.toString()) == 2) {
+                                attackCounter += 1;
+
+                            }else if (Integer.parseInt(pokeListSize.toString()) == 1){
+                                attackCounter+=2;
+                            }
+
+                            intent.putExtra("attackCounter", Uri.parse(Integer.toString(attackCounter)));
                             startActivity(intent);
 
                         }
@@ -265,4 +286,31 @@ public class FightActivity extends AppCompatActivity {
 
         });
     }
+
+    public void setCooldownPokemon(Long id){
+
+        Call<ResponseBody> call2 = BaseService.userService.cooldown(id);
+        call2.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call2, Response<ResponseBody> response) {
+                String fight = null;
+                if (response.code() == 200) {
+                    Log.d("cooldown", "Usao petlju");
+
+
+                } else {
+                    Log.d("cooldown", "error: " + response.code());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailure: fail");
+            }
+
+        });
+    }
+
 }

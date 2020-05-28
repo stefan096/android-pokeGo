@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
+
 @Entity
 @NoArgsConstructor
 @Getter
@@ -25,7 +27,6 @@ public class Boss {
     private int level;
     private double latitude;
     private double longitude;
-    
     private double fightHealt;
  
 }

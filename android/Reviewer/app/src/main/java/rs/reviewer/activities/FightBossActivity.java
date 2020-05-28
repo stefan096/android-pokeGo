@@ -38,6 +38,7 @@ import static android.content.ContentValues.TAG;
 public class FightBossActivity extends AppCompatActivity {
 
     private Uri bossId;
+    private Uri fightId;
 
 
     @Override
@@ -98,13 +99,50 @@ public class FightBossActivity extends AppCompatActivity {
     public void setUpChooseFButton( ){
         Button choose_fighter = findViewById(R.id.btn_choose_fighter);
         choose_fighter.setText(R.string.btn_choose_f);
+
         choose_fighter.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                Intent chooseFighter = new Intent(v.getContext(), ChooseFighterActivity.class);
-                chooseFighter.putExtra("bossId", bossId);
-                startActivity(chooseFighter);
+                PokeBoss pokeBoss = new PokeBoss();
+                pokeBoss.setId(Long.parseLong(bossId.toString()));
+                String userId = UserUtil.getLogInUser(getApplicationContext());
+                User user = new Gson().fromJson(userId, User.class);
+                FightDTO fightDTO = new FightDTO();
+                fightDTO.setUser(user);
+                fightDTO.setBoss(pokeBoss);
+                Call<ResponseBody> call2 = BaseService.userService.fight(fightDTO);
+                call2.enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call2, Response<ResponseBody> response) {
+                        String fight = null;
+                        if (response.code() == 200) {
+                            Log.d("REZ", "Usao petlju");
+                            try {
+                                fight = response.body().string();
+                                FightDTO fightDTO = new Gson().fromJson(fight, FightDTO.class);
+                                fightId = Uri.parse(Long.toString(fightDTO.getId()));
+                                Intent chooseFighter = new Intent(getApplicationContext(), ChooseFighterActivity.class);
+                                chooseFighter.putExtra("bossId", bossId);
+                                chooseFighter.putExtra("fightId", fightId);
+                                startActivity(chooseFighter);
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Log.d("pokes", "error: " + response.code());
+
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        Log.d(TAG, "onFailure: fail");
+                    }
+                });
+
             }
         });
 
