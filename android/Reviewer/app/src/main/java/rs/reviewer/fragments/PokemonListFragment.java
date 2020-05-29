@@ -102,7 +102,6 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
 
                              }
 
-
                          }
 
                          @Override
@@ -111,10 +110,7 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
                          }
                      });
 
-
     }
-
-
 
 
     @Override

@@ -21,6 +21,16 @@
         android:src="@drawable/pikachu" />
 
     <TextView
+        android:id="@+id/cooldown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_marginLeft="155dp"
+        android:textColor="#E00909"
+        android:layout_toRightOf="@+id/item_image"
+        android:padding="5dp"/>
+
+    <TextView
         android:id="@+id/pokemon_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

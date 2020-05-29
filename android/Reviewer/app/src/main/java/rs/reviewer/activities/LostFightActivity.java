@@ -37,7 +37,7 @@ public class LostFightActivity extends AppCompatActivity {
     private Uri bossId;
     private Uri fightId;
     private Uri attackCounter;
-
+    private Uri pokeListSize;
 
 
     @Override
@@ -49,6 +49,7 @@ public class LostFightActivity extends AppCompatActivity {
         bossId = extras.getParcelable("bossId");
         fightId = extras.getParcelable("fightId");
         attackCounter = extras.getParcelable("attackCounter");
+        pokeListSize = extras.getParcelable("pokeListSize");
         fillData(Long.parseLong(bossId.toString()));
         setUpCloseButton();
         setUpChooseFButton();
@@ -122,7 +123,10 @@ public class LostFightActivity extends AppCompatActivity {
 
     public void setUpChooseFButton(){
         Button choose_fighter = findViewById(R.id.btn_choose_fighter);
-        if(Integer.parseInt(attackCounter.toString()) < 3) {
+        int atkCounter = Integer.parseInt(attackCounter.toString());
+        int pokeLSize = Integer.parseInt(pokeListSize.toString());
+
+        if(atkCounter <= 3 && pokeLSize > 1) {
             choose_fighter.setText(R.string.lost_btn);
             choose_fighter.setOnClickListener(new View.OnClickListener() {
 
@@ -137,7 +141,7 @@ public class LostFightActivity extends AppCompatActivity {
             });
         }else{
             choose_fighter.setEnabled(false);
-            choose_fighter.setText(R.string.cd);
+            choose_fighter.setText(R.string.over);
 
         }
 

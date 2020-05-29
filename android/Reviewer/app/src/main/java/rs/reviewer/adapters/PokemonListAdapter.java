@@ -40,11 +40,17 @@ public class PokemonListAdapter extends BaseAdapter {
         Instant instantCooldown = Instant.parse(cooldown);
         Instant currentTime = Instant.now();
         int result = instantCooldown.compareTo(currentTime);
-        System.out.println(result >=1 ? "Cooldown time is greater than current time[cooldown is still on]."
+        System.out.println(result >= 1 ? "Cooldown time is greater than current time[cooldown is still on]."
                 :"Current time is greater than cooldown[cooldown done!].");
 
         return(result >= 1);//isInCooldown = true
 
+    }
+
+    @Override
+    public int getViewTypeCount() {
+
+        return getCount();
     }
 
     @Override
@@ -58,10 +64,19 @@ public class PokemonListAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+
+        return position;
+    }
+    @Override
     public long getItemId(int position) {
         return mpokemons.get(position).getId();
     }
 
+    @Override
+    public boolean areAllItemsEnabled() {
+        return true;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -108,9 +123,12 @@ public class PokemonListAdapter extends BaseAdapter {
                 .resize(300, 300)
                 .centerCrop()
                 .into(image);
-        if (isInCooldown(mpokemons.get(position).getCooldown()) && mforFight) {
-            RelativeLayout relativeLayout = view.findViewById(R.id.mylayout);
-            relativeLayout.setBackgroundColor(Color.parseColor("#C2BFBF"));//kada se skroluje, svi postanu zatamnjeni??
+        if(mpokemons.get(position).getCooldown()!=null){
+            if (isInCooldown(mpokemons.get(position).getCooldown())  && mforFight) {
+                TextView cooldown =  view.findViewById(R.id.cooldown);
+                cooldown.setText(R.string.cd);
+
+            }
 
         }
 

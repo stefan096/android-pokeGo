@@ -70,6 +70,13 @@ public class ChooseFighterActivity extends ListActivity {
                         userJson = response.body().string();
                         UsersPokemonsDTOList usersPokemonsDTO = new Gson().fromJson(userJson, UsersPokemonsDTOList.class );
                         usersPokemons = usersPokemonsDTO.getPokemons();
+                        List<UsersPokemons> upNoCooldown = new ArrayList<>();
+                        for (UsersPokemons up : usersPokemons) {
+                            if(!isInCooldown(up.getCooldown())){
+                                upNoCooldown.add(up);
+                            }
+                        }
+                        pokeListSize = upNoCooldown.size();
                         PokemonListAdapter adapter = new PokemonListAdapter(getApplicationContext(), usersPokemons, true);
                         setListAdapter(adapter);
 
@@ -91,7 +98,23 @@ public class ChooseFighterActivity extends ListActivity {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public boolean isInCooldown(String cooldown){
+        if(cooldown != null){
+            Instant instantCooldown = Instant.parse(cooldown);
+            Instant currentTime = Instant.now();
+            int result = instantCooldown.compareTo(currentTime);
+            System.out.println(result >= 1 ? "Cooldown time is greater than current time[cooldown is still on]."
+                    :"Current time is greater than cooldown[cooldown done!].");
 
+            return(result >= 1);//isInCooldown = true
+        }
+       else{
+
+           return false;
+        }
+
+    }
 
 
     @Override
@@ -125,11 +148,13 @@ public class ChooseFighterActivity extends ListActivity {
                     try {
                         fight = response.body().string();
                         FightDTO fightDTO2 = new Gson().fromJson(fight, FightDTO.class);
+                        attackCounter = fightDTO2.getCounterForPokemon();
                         attackCounterUri = Uri.parse(String.valueOf(attackCounter));
                         Intent intent = new Intent(getApplicationContext(), FightActivity.class);
                         intent.putExtra("id", chosenPokemonId);
                         intent.putExtra("bossId", bossId);
                         intent.putExtra("fightId", fightId);
+                        intent.putExtra("attackCounter", attackCounterUri);
                         intent.putExtra("pokeListSize", Uri.parse(String.valueOf(pokeListSize)));
 
                         startActivity(intent);

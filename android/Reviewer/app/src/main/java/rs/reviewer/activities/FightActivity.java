@@ -47,6 +47,7 @@ public class FightActivity extends AppCompatActivity {
     private String attackTurn;
     private int counterForTurn;
     private boolean firstTime;
+    private Uri atkCounter;
     private Uri pokeListSize;
 
 
@@ -60,6 +61,8 @@ public class FightActivity extends AppCompatActivity {
         bossId = extras.getParcelable("bossId");
         fightId = extras.getParcelable("fightId");
         pokeListSize = extras.getParcelable("pokeListSize");
+        atkCounter = extras.getParcelable("attackCounter");
+        attackCounter = Integer.valueOf(atkCounter.toString());
         getBoss(Long.parseLong(bossId.toString()), false);
         getPokemon(Long.parseLong(id.toString()), false);
 
@@ -228,7 +231,6 @@ public class FightActivity extends AppCompatActivity {
                         counterForTurn = fightDTO.getCounterForTurn();
                         healthBoss = fightDTO.getBoss().getFightHealt();
                         healthUser = fightDTO.getPokemonOnMove().getFightHealt();
-                        attackCounter = fightDTO.getCounterForPokemon();
                         while (healthBoss > 0 && healthUser > 0) {
                             updateHealth(healthBoss,healthUser);
                             updateMove(attackTurn);
@@ -248,20 +250,12 @@ public class FightActivity extends AppCompatActivity {
                             startActivity(intent);
 
                         }else if (healthBoss > 0 && healthUser <= 0){
-
                             Intent intent = new Intent(getApplicationContext(), LostFightActivity.class);
                             setCooldownPokemon(Long.parseLong(id.toString()));
                             intent.putExtra("bossId", bossId);
                             intent.putExtra("id", id);
                             intent.putExtra("fightId", fightId);
-
-                            if (Integer.parseInt(pokeListSize.toString()) == 2) {
-                                attackCounter += 1;
-
-                            }else if (Integer.parseInt(pokeListSize.toString()) == 1){
-                                attackCounter+=2;
-                            }
-
+                            intent.putExtra("pokeListSize", pokeListSize);
                             intent.putExtra("attackCounter", Uri.parse(Integer.toString(attackCounter)));
                             startActivity(intent);
 

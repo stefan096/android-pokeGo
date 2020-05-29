@@ -106,10 +106,6 @@
             android:label="@string/lost"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activities.CooldownActivity"
-            android:label="@string/lost"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
             android:name=".activities.CaughtPokemonActivity"
             android:label="@string/won_long"
             android:theme="@style/AppTheme.NoActionBar"/>
