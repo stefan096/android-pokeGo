@@ -79,7 +79,9 @@ public class BossController {
     @RequestMapping(value = "api/getPokemonsOnMap/specific", method = RequestMethod.PUT)
     public ResponseEntity<BossListDTO> getBosses(@RequestBody GenerateGeoDataDTO dataDTO) {
     	
-    	System.out.println(dataDTO);
+    	System.out.println("lat: " + dataDTO.getGeopoint().getLatitude());
+    	System.out.println("long: " + dataDTO.getGeopoint().getLongitude());
+    	System.out.println("radius: " + dataDTO.getRadius());
    	
         List<Boss> list = new ArrayList<Boss>();
         List<Boss> retVal = new ArrayList<Boss>();

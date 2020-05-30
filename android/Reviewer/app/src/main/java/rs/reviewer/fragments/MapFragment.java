@@ -167,29 +167,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
-
-//        Log.d("STEFAN","" + "usao");
-//
-//        ReviewerSQLiteHelper dbHelper = new ReviewerSQLiteHelper(getContext());
-//
-//        // Gets the data repository in write mode
-//        SQLiteDatabase db = dbHelper.getWritableDatabase();
-//
-//        // Create a new map of values, where column names are the keys
-//        ContentValues values = new ContentValues();
-//        //values.put(ReviewerSQLiteHelper.COLUMN_ID, 21);
-//        values.put(ReviewerSQLiteHelper.COLUMN_NAME, "nazivSS");
-//        values.put(ReviewerSQLiteHelper.COLUMN_DESCRIPTION, "opisSS");
-//
-//        long id = db.replace(ReviewerSQLiteHelper.TABLE_CINEMA, null, values);
-//        System.out.println(id);
-//        Log.d("STEFAN","" + id);
-
-        //DatabaseHelper.printTableDataCinema(ReviewerSQLiteHelper.TABLE_CINEMA, db);
-        //List<Cinema> cinemas = DatabaseHelper.readTableDataCinema(ReviewerSQLiteHelper.TABLE_CINEMA, db);
-        //Log.d("STEFAN","count" + cinemas.size());
-
     }
 
     /**

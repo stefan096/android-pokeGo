@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -63,7 +66,6 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
 
         Log.d("SYNC","sync happened: " );
         try {
-            //Thread.sleep(1000);
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
             int kilometres = Integer.valueOf(sharedPreferences.getString("pref_map_list", "1"));
@@ -144,15 +146,32 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
     }
 
     private GenerateGeoDataDTO populateCoordinate(int kilometres){
-
         GenerateGeoDataDTO generatedDTO = new GenerateGeoDataDTO();
         generatedDTO.setRadius(kilometres*1000);
         generatedDTO.setNumberOfData(100);
 
-        //TODO: ubaciti moju trenutnu lokaciju
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String provider = locationManager.getBestProvider(criteria, true);
+        Location location = null;
+        try {
+            location = locationManager.getLastKnownLocation(provider);
+            Log.e("LOCATION", "lng: " + location.getLongitude());
+            Log.e("LOCATION", "lat: " + location.getLatitude());
+        }
+        catch (SecurityException e){
+
+        }
+
         Geopoint geopoint = new Geopoint();
-        geopoint.setLatitude(45.3622);
-        geopoint.setLongitude(19.5317);
+        if(location == null){
+            geopoint.setLatitude(45.3622);
+            geopoint.setLongitude(19.5317);
+        }
+        else{
+            geopoint.setLatitude(location.getLatitude());
+            geopoint.setLongitude(location.getLongitude());
+        }
         generatedDTO.setGeopoint(geopoint);
 
         return generatedDTO;
