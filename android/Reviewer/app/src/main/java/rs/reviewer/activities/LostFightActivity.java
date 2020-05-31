@@ -16,10 +16,7 @@ import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
-
-import model.FightDTO;
 import model.PokeBoss;
-import model.User;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +24,6 @@ import retrofit2.Response;
 import rs.reviewer.MainActivity;
 import rs.reviewer.R;
 import rs.reviewer.rest.BaseService;
-import rs.reviewer.utils.UserUtil;
 
 import static android.content.ContentValues.TAG;
 
@@ -45,11 +41,13 @@ public class LostFightActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.pokemon_boss);
         Bundle extras = getIntent().getExtras();
+
         id = extras.getParcelable("id");
         bossId = extras.getParcelable("bossId");
         fightId = extras.getParcelable("fightId");
         attackCounter = extras.getParcelable("attackCounter");
         pokeListSize = extras.getParcelable("pokeListSize");
+
         fillData(Long.parseLong(bossId.toString()));
         setUpCloseButton();
         setUpChooseFButton();
@@ -57,6 +55,7 @@ public class LostFightActivity extends AppCompatActivity {
     }
 
     private void fillData(Long id) {
+
         Call<ResponseBody> call = BaseService.userService.getBossById(id);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -64,6 +63,7 @@ public class LostFightActivity extends AppCompatActivity {
                 String boss = null;
                 if (response.code() == 200) {
                     Log.d("REZ", "Usao u petlju(boss)");
+
                     try {
                         boss = response.body().string();
                         PokeBoss pokeBoss = new Gson().fromJson(boss, PokeBoss.class );
@@ -72,6 +72,7 @@ public class LostFightActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
                 }else{
                     Log.d("pokes","error: "+response.code());
 
