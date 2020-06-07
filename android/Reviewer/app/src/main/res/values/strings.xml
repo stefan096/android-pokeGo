@@ -106,6 +106,8 @@
     <string name="boss_atks">***BOSS ATTACKS***</string>
     <string name="use_atks">***POKEMON ATTACKS***</string>
     <string name="atk_num">Attack number:</string>
+    <string name="over">FIGHT OVER!</string>
+    <string name="cd">COOLDOWN!</string>
 
 
 

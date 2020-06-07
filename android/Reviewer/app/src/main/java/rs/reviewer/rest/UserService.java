@@ -3,7 +3,9 @@ package rs.reviewer.rest;
 import model.FightDTO;
 import model.GenerateGeoDataDTO;
 import model.LoginDTO;
+import model.PokeBoss;
 import model.User;
+import model.UsersPokemons;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -97,7 +99,14 @@ public interface UserService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
+
     @PUT(BaseService.FIGHT)
     Call<ResponseBody> fight(@Body FightDTO fightDTO);
 
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @PUT(BaseService.COOLDOWN)
+    Call<ResponseBody> cooldown(@Query("id") Long id);
 }

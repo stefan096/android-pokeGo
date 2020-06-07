@@ -36,6 +36,11 @@ public class FightDTO implements Serializable {
     @Expose
     private int counterForTurn;
 
+    @SerializedName("counterForPokemon")
+    @Expose
+    private int counterForPokemon;
+
+
     public FightDTO() {}
 
 
@@ -89,5 +94,10 @@ public class FightDTO implements Serializable {
     public int getCounterForTurn() { return counterForTurn; }
 
     public void setCounterForTurn(int counterForTurn) {this.counterForTurn = counterForTurn; }
+
+    public int getCounterForPokemon() {return counterForPokemon; }
+
+    public void setCounterForPokemon(int counterForPokemon) {this.counterForPokemon = counterForPokemon;}
+
 
 }
