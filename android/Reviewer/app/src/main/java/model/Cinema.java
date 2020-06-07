@@ -13,6 +13,14 @@ public class Cinema {
 
     }
 
+    public Cinema(long id, String name, String description) {
+
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.avatar = avatar;
+    }
+
     public Cinema(String name, String description, int avatar) {
 
         this.name = name;

@@ -1,6 +1,7 @@
 package rs.reviewer.rest;
 
 import model.FightDTO;
+import model.GenerateGeoDataDTO;
 import model.LoginDTO;
 import model.PokeBoss;
 import model.User;
@@ -83,6 +84,13 @@ public interface UserService {
     @Headers({
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
+    })
+    @PUT(BaseService.POKEMON_MAP_SPECIFIC)
+    Call<ResponseBody> getPokemonMapSpecific(@Body GenerateGeoDataDTO generateGeoDataDTO);
+
+    @Headers({
+        "User-Agent: Mobile-Android",
+                "Content-Type:application/json"
     })
     @GET(BaseService.BOSS)
     Call<ResponseBody> getBossById(@Query("id") Long id);

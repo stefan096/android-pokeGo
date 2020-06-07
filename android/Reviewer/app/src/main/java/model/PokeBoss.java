@@ -34,9 +34,43 @@ public class PokeBoss implements Serializable {
     private double fightHealt;
 
 
+    @SerializedName("imagePath")
+    @Expose
+    private String imagePath;
 
+    @SerializedName("name")
+    @Expose
+    private String name;
+
+    public PokeBoss(Long id, Pokemon pokemon, int level, double latitude, double longitude,
+                    double fightHealt, String imagePath, String name) {
+        this.id = id;
+        this.pokemon = pokemon;
+        this.level = level;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.fightHealt = fightHealt;
+        this.imagePath = imagePath;
+        this.name = name;
+    }
 
     public PokeBoss(){}
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public double getFightHealt() {
         return fightHealt;

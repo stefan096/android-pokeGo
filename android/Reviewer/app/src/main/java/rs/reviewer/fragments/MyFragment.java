@@ -1,4 +1,5 @@
 package rs.reviewer.fragments;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 
 import model.User;
 import rs.reviewer.R;
+import rs.reviewer.activities.LoginActivity;
 import rs.reviewer.database.DBContentProvider;
 import rs.reviewer.database.ReviewerSQLiteHelper;
 import rs.reviewer.utils.UserUtil;
@@ -73,6 +75,9 @@ public class MyFragment extends Fragment implements LoaderManager.LoaderCallback
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if(user == null){
+            return;
+        }
         Call<ResponseBody> call = BaseService.userService.getLatestCaughtPokemon(user.getId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -120,7 +125,11 @@ public class MyFragment extends Fragment implements LoaderManager.LoaderCallback
         int id = item.getItemId();
 
         if(id == R.id.action_log_out){
-            Toast.makeText(getActivity(), R.string.log_out, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), R.string.log_out, Toast.LENGTH_SHORT).show();
+
+            UserUtil.setLogInUser(null, getActivity().getApplicationContext());
+            Intent login = new Intent(getActivity().getApplicationContext(), LoginActivity.class);
+            startActivity(login);
         }
         return super.onOptionsItemSelected(item);
     }
