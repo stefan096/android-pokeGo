@@ -60,6 +60,7 @@ import rs.reviewer.database.PokeBossSQLiteHelper;
 import rs.reviewer.database.ReviewerSQLiteHelper;
 import rs.reviewer.dialogs.LocationDialog;
 import rs.reviewer.dialogs.FightDialog;
+import rs.reviewer.location.LocationTask;
 import rs.reviewer.rest.BaseService;
 
 import static android.content.ContentValues.TAG;
@@ -151,6 +152,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         //DatabaseHelper.printTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
         PokeBossList pokeBossList = DatabaseHelper.readTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+        db.close();
         Log.d("STEFAN","countSS: " + pokeBossList.getPokemonBosses().size());
 
         pokemons = pokeBossList.getPokemonBosses();
@@ -353,25 +355,25 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
-        if (!marker.equals(home))
-        {
-            for (PokeBoss boss : pokemons) {
-                if (
-                    marker.getPosition().latitude == boss.getLatitude() &&
-                    marker.getPosition().longitude == boss.getLongitude()
-                ) {
-
-                    if (dialog != null && dialog.isShowing()) {
-                        dialog.dismiss();
-                    }
-                    FightDialog dlg = new FightDialog(getActivity());
-                    dlg.prepareDialog(boss);
-                    dlg.show();
-                    return true;
-                }
-            }
-            //handle click here
-        }
+//        if (!marker.equals(home))
+//        {
+//            for (PokeBoss boss : pokemons) {
+//                if (
+//                    marker.getPosition().latitude == boss.getLatitude() &&
+//                    marker.getPosition().longitude == boss.getLongitude()
+//                ) {
+//
+//                    if (dialog != null && dialog.isShowing()) {
+//                        dialog.dismiss();
+//                    }
+//                    FightDialog dlg = new FightDialog(getActivity());
+//                    dlg.prepareDialog(boss);
+//                    dlg.show();
+//                    return true;
+//                }
+//            }
+//            //handle click here
+//        }
         return false;
     }
 
@@ -405,12 +407,14 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     }
 
     private void addPokemonToMap(PokeBoss pokemon) {
-        final Marker marker = map.addMarker(new MarkerOptions()
-                .title(pokemon.getPokemon().getName())
-                .position(new LatLng(pokemon.getLatitude(), pokemon.getLongitude())));
+        final LatLng location = new LatLng(pokemon.getLatitude(), pokemon.getLongitude());
+        final Pokemon pokefinal = pokemon.getPokemon();
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                final Marker marker = map.addMarker(new MarkerOptions()
+                        .title(pokefinal.getName())
+                        .position(location));
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
             }
 

@@ -31,6 +31,7 @@ import rs.reviewer.MainActivity;
 import rs.reviewer.R;
 import rs.reviewer.database.DatabaseHelper;
 import rs.reviewer.database.PokeBossSQLiteHelper;
+import rs.reviewer.location.LocationTask;
 import rs.reviewer.rest.BaseService;
 import rs.reviewer.tools.ReviewerTools;
 
@@ -68,7 +69,7 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
         try {
 
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            int kilometres = Integer.valueOf(sharedPreferences.getString("pref_map_list", "1"));
+            double kilometres = Double.valueOf(sharedPreferences.getString("pref_map_list", "1"));
             Log.e("STEFAN km","kilometres: " + kilometres);
 
 
@@ -82,8 +83,9 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
             PokeBossList pokeBossList = DatabaseHelper.readTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
             Log.d("STEFAN BRISANJE","BRISANJE count: " + pokeBossList.getPokemonBosses().size());
 
-            GenerateGeoDataDTO generated = this.populateCoordinate(kilometres);
+            final GenerateGeoDataDTO generated = this.populateCoordinate(kilometres);
             Call<ResponseBody> call = BaseService.userService.getPokemonMapSpecific(generated);
+            final Context context = this.context;
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -108,17 +110,26 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
 
                                 long id = db.replace(PokeBossSQLiteHelper.TABLE_POKEBOSS, null, values);
 
+                                LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+                                Criteria criteria = new Criteria();
+                                String provider = locationManager.getBestProvider(criteria, true);
+                                Location location = locationManager.getLastKnownLocation(provider);
+                                LocationTask task = new LocationTask(context, location);
+                                task.execute();
+
                                 Log.d("STEFAN","replacing: SYNC");
                             }
 
                         } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (SecurityException e){
                             e.printStackTrace();
                         }
                     }else{
                         Log.d("pokes","error: "+response.code());
 
                     }
-
+                    db.close();
 
                 }
 
@@ -145,7 +156,7 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
         context.sendBroadcast(ints);
     }
 
-    private GenerateGeoDataDTO populateCoordinate(int kilometres){
+    private GenerateGeoDataDTO populateCoordinate(double kilometres){
         GenerateGeoDataDTO generatedDTO = new GenerateGeoDataDTO();
         generatedDTO.setRadius(kilometres*1000);
         generatedDTO.setNumberOfData(100);
