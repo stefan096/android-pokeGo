@@ -13,4 +13,11 @@ public class GenerateGeoDataDTO {
 	private int numberOfData; 
 	private GeoPoint geopoint; //start point
 	private double radius; //in metres
+	
+	
+	@Override
+	public String toString() {
+		return "GenerateGeoDataDTO [numberOfData=" + numberOfData + ", geopoint=" + geopoint + ", radius=" + radius
+				+ "]";
+	}
 }

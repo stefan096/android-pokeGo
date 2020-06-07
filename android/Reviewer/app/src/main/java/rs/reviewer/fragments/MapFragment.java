@@ -1,9 +1,11 @@
 package rs.reviewer.fragments;
 
 import android.Manifest;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -11,6 +13,7 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +45,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Cinema;
 import model.PokeBoss;
 import model.PokeBossList;
 import model.Pokemon;
@@ -50,6 +54,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rs.reviewer.R;
+import rs.reviewer.database.DBContentProvider;
+import rs.reviewer.database.DatabaseHelper;
+import rs.reviewer.database.PokeBossSQLiteHelper;
+import rs.reviewer.database.ReviewerSQLiteHelper;
 import rs.reviewer.dialogs.LocationDialog;
 import rs.reviewer.dialogs.FightDialog;
 import rs.reviewer.rest.BaseService;
@@ -79,11 +87,19 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
     public void getPokemons() {
 
+        Log.d("STEFAN","countSS: " + "USAO");
+
         if (currentLocation == null) {
             Log.d("REZ", "NEMA LOKACIJE");
             return;
         }
-        Call<ResponseBody> call = BaseService.userService.getPokemonMap(currentLocation.getLatitude(), currentLocation.getLongitude());
+
+        PokeBossSQLiteHelper dbHelper = new PokeBossSQLiteHelper(getContext());
+        // Gets the data repository in write mode
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+
+        /*Call<ResponseBody> call = BaseService.userService.getPokemonMap(currentLocation.getLatitude(), currentLocation.getLongitude());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -96,8 +112,25 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
                         pokemons = bosses.getPokemonBosses();
 
                         for(PokeBoss boss: pokemons) {
+
+                            // Create a new map of values, where column names are the keys
+                            ContentValues values = new ContentValues();
+                            values.put(PokeBossSQLiteHelper.COLUMN_ID, boss.getId());
+                            values.put(PokeBossSQLiteHelper.COLUMN_NAME, boss.getPokemon().getName());
+                            values.put(PokeBossSQLiteHelper.COLUMN_LATITUDE, boss.getLongitude());
+                            values.put(PokeBossSQLiteHelper.COLUMN_LONGITUDE, boss.getLatitude());
+                            values.put(PokeBossSQLiteHelper.COLUMN_LEVEL, boss.getLevel());
+                            values.put(PokeBossSQLiteHelper.COLUMN_FIGHT_HEALT, boss.getFightHealt());
+                            values.put(PokeBossSQLiteHelper.COLUMN_IMAGE_PATH, boss.getPokemon().getImage_path());
+
+                            long id = db.replace(PokeBossSQLiteHelper.TABLE_POKEBOSS, null, values);
+
                             addPokemonToMap(boss);
                         }
+
+                        DatabaseHelper.printTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+                        PokeBossList pokeBossList = DatabaseHelper.readTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+                        Log.d("STEFAN","count: " + pokeBossList.getPokemonBosses().size());
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -114,9 +147,17 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.d(TAG, "onFailure: NISTAA");
             }
-        });
+        });*/
 
+        //DatabaseHelper.printTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+        PokeBossList pokeBossList = DatabaseHelper.readTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
+        Log.d("STEFAN","countSS: " + pokeBossList.getPokemonBosses().size());
 
+        pokemons = pokeBossList.getPokemonBosses();
+
+        for(PokeBoss boss: pokemons) {
+            addPokemonToMap(boss);
+        }
     }
 
     /**
@@ -126,7 +167,6 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-
     }
 
     /**

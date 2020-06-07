@@ -71,7 +71,7 @@ public class FightActivity extends AppCompatActivity {
                     Log.d("REZ", "Usao petlju");
                     try {
                         boss = response.body().string();
-                        pokeBoss = new Gson().fromJson(boss, PokeBoss.class );
+                        pokeBoss = new Gson().fromJson(boss, PokeBoss.class);
                         setUpScreen1(pokeBoss, tempFirstTime);
                     } catch (IOException e) {
                         e.printStackTrace();

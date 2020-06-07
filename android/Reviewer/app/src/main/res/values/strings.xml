@@ -53,6 +53,7 @@
     <string name="pref_map_list">pref_map_list</string>
     <string name="pref_radius">pref_radius</string>
     <string name="pref_sync">pref_sync</string>
+    <string name="pref_radius_map">pref_radius_map</string>
     <string name="notif_on_sync_key">notif_on_sync</string>
     <string name="turn_notif_on">Stop notification</string>
     <string name="welcome_back">Welcome back,</string>

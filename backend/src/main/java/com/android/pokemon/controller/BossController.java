@@ -76,8 +76,12 @@ public class BossController {
      * @param dataDTO.radius - radius to look up pokemons
 	 * @return Bosses on specified starting point and radius
 	 */
-    @RequestMapping(value = "api/getPokemonsOnMap/specific", method = RequestMethod.GET)
+    @RequestMapping(value = "api/getPokemonsOnMap/specific", method = RequestMethod.PUT)
     public ResponseEntity<BossListDTO> getBosses(@RequestBody GenerateGeoDataDTO dataDTO) {
+    	
+    	System.out.println("lat: " + dataDTO.getGeopoint().getLatitude());
+    	System.out.println("long: " + dataDTO.getGeopoint().getLongitude());
+    	System.out.println("radius: " + dataDTO.getRadius());
    	
         List<Boss> list = new ArrayList<Boss>();
         List<Boss> retVal = new ArrayList<Boss>();
@@ -86,6 +90,7 @@ public class BossController {
         for (Boss boss : list) {
         	GeoPoint geopoint = new GeoPoint(boss.getLatitude(), boss.getLongitude());
         	double distance = HelpersGeo.distanceBetweenTwoGeopoints(dataDTO.getGeopoint(), geopoint);
+        	System.out.println("distance: " + distance);
 			if(distance < dataDTO.getRadius()) {
 				retVal.add(boss);
 			}
