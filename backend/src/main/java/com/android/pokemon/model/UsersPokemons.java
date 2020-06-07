@@ -33,6 +33,8 @@ public class UsersPokemons implements Comparable<UsersPokemons> {
     private int level;
     private double experience;
     private Instant cooldown;
+
+
     @Column(name = "`createdAt`")
 	@CreationTimestamp
 	private Date createdAt;
@@ -46,6 +48,22 @@ public class UsersPokemons implements Comparable<UsersPokemons> {
 		// TODO Auto-generated method stub
 		return o.getLevel() - this.level;
 	}
-   
-    
+
+    public Instant getCooldown() {
+        return cooldown;
+    }
+
+    public void setCooldown(Instant cooldown) {
+        this.cooldown = cooldown;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
 }

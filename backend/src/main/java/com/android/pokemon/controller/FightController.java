@@ -163,7 +163,7 @@ public class FightController {
 			fight.setCaught(true);
 			usersPokemonService.saveCaughtPokemon(fight.getBoss(), fight.getPokemonOnMove().getUser());
 		}
-		
+
 		fight.setCounterForTurn(fight.getCounterForTurn() + 1);
 		Fight savedFight = fightService.save(fight);
 		
