@@ -9,6 +9,8 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.location.Location;
+import android.location.LocationListener;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -19,7 +21,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
@@ -43,9 +45,11 @@ import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
 import rs.reviewer.database.DatabaseHelper;
 import rs.reviewer.database.PokeBossSQLiteHelper;
+import rs.reviewer.dialogs.FightDialog;
 import rs.reviewer.fragments.MapFragment;
 import rs.reviewer.fragments.MyFragment;
 import rs.reviewer.fragments.PokemonListFragment;
+import rs.reviewer.location.LocationTask;
 import rs.reviewer.rest.BaseService;
 import rs.reviewer.sync.SyncReceiver;
 import rs.reviewer.sync.SyncService;
@@ -59,7 +63,7 @@ import java.util.List;
 
 import static android.content.ContentValues.TAG;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LocationListener {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -74,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
 
     private SyncReceiver sync;
     public static String SYNC_DATA = "SYNC_DATA";
+    public static String LOCATION_DATA = "LOCATION_DATA";
     private String synctime;
     private boolean allowSync;
     private SharedPreferences sharedPreferences;
@@ -135,7 +140,22 @@ public class MainActivity extends AppCompatActivity {
 
         setUpReceiver();
         consultPreferences();
+        onNewIntent(getIntent()) ;
 
+    }
+
+    @Override
+    protected void onNewIntent (Intent intent) {
+        super .onNewIntent(intent) ;
+        Bundle extras = intent.getExtras() ;
+        if (extras != null ) {
+            if (extras.containsKey( "pokemonId" )) {
+                FightDialog dlg = new FightDialog(this);
+                dlg.prepareDialog((PokeBoss) extras.get("pokeBoss"));
+                dlg.show();
+                Log.d("NOTIFICATION OPEN", extras.get("pokemonId") + "");
+            }
+        }
     }
 
 
@@ -240,13 +260,39 @@ public class MainActivity extends AppCompatActivity {
         * */
         synctime = sharedPreferences.getString(getString(R.string.pref_sync_list), "1");
         allowSync = sharedPreferences.getBoolean(getString(R.string.pref_sync), false);
-        int kilometres = Integer.valueOf(sharedPreferences.getString(getString(R.string.pref_map_list), "1"));
+        double kilometres = Double.valueOf(sharedPreferences.getString(getString(R.string.pref_map_list), "1"));
 
         Log.e("SYNC", "citanje " + synctime);
         Log.e("SYNC", "citanje " + allowSync);
         Log.e("SYNC", "citanje " + kilometres);
     }
-    
+
+    /**
+     * Svaki put kada uredjaj dobijee novu informaciju o lokaciji ova metoda se poziva
+     * i prosledjuje joj se nova informacija o kordinatamad
+     * */
+    @Override
+    public void onLocationChanged(Location location) {
+        LocationTask task = new LocationTask(getApplicationContext(), location);
+        task.execute();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+    }
+
+
     @Override
     protected void onResume() {
     	// TODO Auto-generated method stub
@@ -264,6 +310,8 @@ public class MainActivity extends AppCompatActivity {
 
         IntentFilter filter = new IntentFilter();
         filter.addAction(SYNC_DATA);
+        IntentFilter locFilter = new IntentFilter();
+        filter.addAction(LOCATION_DATA);
 
         registerReceiver(sync, filter);
     }
