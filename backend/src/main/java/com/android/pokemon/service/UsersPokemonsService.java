@@ -55,7 +55,7 @@ public class UsersPokemonsService {
     	newPokemon.setExperience(0);
     	newPokemon.setFightHealt(caughtBoss.getPokemon().getHp());
     	Instant instant = Instant.now();
-		Instant value  = instant.plus(3, ChronoUnit.HOURS);
+		Instant value  = instant.plus(3, ChronoUnit.MINUTES);
 		newPokemon.setCooldown(value);
     	return usersPokemonsRepository.save(newPokemon);
     }
@@ -64,7 +64,7 @@ public class UsersPokemonsService {
     	UsersPokemons newPoke;
 		newPoke = usersPokemonsRepository.findById(id).get();
 		Instant instant = Instant.now();
-		Instant value = instant.plus(2, ChronoUnit.HOURS);
+		Instant value = instant.plus(2, ChronoUnit.MINUTES);
 		newPoke.setCooldown(value);
 		return usersPokemonsRepository.save(newPoke);
 	}

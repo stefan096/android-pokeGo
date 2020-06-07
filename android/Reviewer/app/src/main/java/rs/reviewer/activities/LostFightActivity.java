@@ -127,7 +127,8 @@ public class LostFightActivity extends AppCompatActivity {
         int atkCounter = Integer.parseInt(attackCounter.toString());
         int pokeLSize = Integer.parseInt(pokeListSize.toString());
 
-        if(atkCounter <= 3 && pokeLSize > 1) {
+        Log.d("Attack counter", atkCounter + "");
+        if(atkCounter <= 2 && pokeLSize > 1) {
             choose_fighter.setText(R.string.lost_btn);
             choose_fighter.setOnClickListener(new View.OnClickListener() {
 
