@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/register"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <ImageView
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/logo"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:src="@drawable/background" />
+    <RelativeLayout
+        android:id="@+id/login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:windowSoftInputMode="adjustPan"
         android:orientation="vertical">
 
         <ImageView
@@ -16,11 +34,12 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
             android:contentDescription="@string/logo"
-            android:layout_marginTop="10px"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginLeft="170px"
+            android:layout_marginRight="170px"
             android:src="@drawable/logo" />
 
         <EditText
@@ -29,12 +48,16 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:hint="@string/first_name"
             android:id="@+id/first_name"
-            android:layout_alignParentTop="true"
+            android:textColor="@color/white"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="100px"
-            android:layout_marginBottom="100px"
-            android:layout_marginRight="100px"
+            android:fontFamily="sans-serif"
+            android:layout_below="@+id/logo"
+            android:backgroundTint="@color/white"
+            android:foregroundTint="@color/white"
+            android:textColorHint="#eee"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             />
 
         <EditText
@@ -43,11 +66,16 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:hint="@string/last_name"
             android:id="@+id/last_name"
-            android:layout_alignParentTop="true"
+            android:textColor="@color/white"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="100px"
-            android:layout_marginRight="100px"
+            android:fontFamily="sans-serif"
+            android:layout_below="@+id/first_name"
+            android:backgroundTint="@color/white"
+            android:foregroundTint="@color/white"
+            android:textColorHint="#eee"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             />
 
         <EditText
@@ -56,10 +84,16 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:hint="@string/email"
             android:id="@+id/email"
-            android:layout_alignParentTop="true"
+            android:textColor="@color/white"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="100px"
+            android:fontFamily="sans-serif"
+            android:layout_below="@+id/last_name"
+            android:backgroundTint="@color/white"
+            android:foregroundTint="@color/white"
+            android:textColorHint="#eee"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             />
 
 
@@ -70,11 +104,16 @@
             android:inputType="textPassword"
             android:hint="@string/password"
             android:id="@+id/password"
-            android:layout_alignParentTop="true"
+            android:textColor="@color/white"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="100px"
-            android:layout_marginRight="100px"
+            android:fontFamily="sans-serif"
+            android:layout_below="@+id/email"
+            android:backgroundTint="@color/white"
+            android:foregroundTint="@color/white"
+            android:textColorHint="#eee"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
             />
 
         <Button
@@ -83,10 +122,15 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/btn_register"
             android:id="@+id/btn_register"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="50px"
+            android:layout_above="@+id/already_have_account"
+            android:background="@drawable/button"
+            android:textColor="@color/white"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:fontFamily="sans-serif"
+            android:layout_marginBottom="100dp"
+            android:radius="10dp"
             android:onClick="register"
             />
 
@@ -96,13 +140,15 @@
             android:text="@string/already_have_account"
             android:autoLink="web"
             android:id="@+id/already_have_account"
-            android:layout_centerInParent="true"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="50px"
             android:gravity="center"
-            android:textColor="@color/blue"
+            android:textSize="18dp"
+            android:textColor="@color/white"
             android:linksClickable="true"
             android:onClick="alreadyHaveAccount"
             />
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

@@ -4,40 +4,68 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_gravity="center">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:popupTheme="@style/AppTheme.NoActionBar" />
+    <androidx.appcompat.widget.Toolbar android:id="@+id/toolbar"
+        android:layout_width="match_parent" android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:layout_scrollFlags="scroll|enterAlways"/>
+        <ImageView
+            android:id="@+id/background"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:contentDescription="@string/logo"
+            android:src="@drawable/background_faded" />
 
         <ImageView
             android:id="@+id/item_image"
-            android:layout_width="261dp"
-            android:layout_height="342dp"
+            android:layout_height="300dp"
+            android:layout_width="250dp"
+            android:scaleType="fitCenter"
             android:layout_below="@id/toolbar"
             android:layout_alignBaseline="@id/toolbar"
             android:layout_centerHorizontal="true"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="5dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="5dp"
             android:contentDescription="@null"
             android:gravity="center"
+            android:elevation="2dp"
             android:src="@drawable/pikachu" />
 
+    <androidx.cardview.widget.CardView
+        android:layout_below="@+id/item_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:backgroundTint="#e8ebff"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="-100dp"
+        android:layout_marginBottom="120dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="1dp"
+        >
+
+        <RelativeLayout
+            android:id="@+id/profile_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="80dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
         <TextView
             android:id="@+id/pokemon_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:gravity="center"
-            android:layout_alignBaseline="@id/item_image"
-            android:textColor="#990E0E"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
             android:layout_centerHorizontal="true"
-            android:layout_below="@+id/item_image"
             android:padding="5dp"/>
          <TextView
             android:id="@+id/level_text"
@@ -45,7 +73,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_alignStart="@id/item_image"
             android:layout_below="@+id/pokemon_name"
             android:padding="5dp"/>
 
@@ -64,7 +91,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_alignStart="@id/item_image"
             android:layout_below="@+id/level_text"
             android:padding="5dp"/>
 
@@ -80,7 +106,6 @@
         <TextView
             android:id="@+id/atk_text"
             android:textColor="#0000FF"
-            android:layout_alignStart="@id/item_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/hp_text"
@@ -100,7 +125,6 @@
             android:textColor="#008000"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/item_image"
             android:layout_below="@+id/atk_text"
             android:padding="5dp"/>
 
@@ -111,6 +135,7 @@
             android:layout_below="@+id/atk"
             android:layout_toRightOf="@+id/defense_text"
             android:padding="5dp"/>
-
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
     </RelativeLayout>
 
