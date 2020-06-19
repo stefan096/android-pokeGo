@@ -63,7 +63,7 @@ public class ProfileActivity extends AppCompatActivity {
             editTextLastName.setText(user.getLastName());
 
             takePictureButton = (Button) findViewById(R.id.button_image);
-            imageView = (ImageView) findViewById(R.id.profile_image);
+            imageView = (ImageView) findViewById(R.id.logo);
 
             this.FILE_NAME = user.getEmail();
 

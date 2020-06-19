@@ -47,16 +47,11 @@ public class CaughtPokemonActivity extends AppCompatActivity {
         fillData(Long.parseLong(bossId.toString()));
         setUpCloseButton(x_button);
         setUpChooseFButton(choose_fighter);
-
-        //posalji backu id bossa
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
-        Log.e("NEVENA","NEVENA: "+ "USAO");
-        Log.e("NEVENA","NEVENA: "+ Long.parseLong(bossId.toString()));
 
         Call<ResponseBody> call = BaseService.userService.updateBoss(Long.parseLong(bossId.toString()));
         call.enqueue(new Callback<ResponseBody>() {
