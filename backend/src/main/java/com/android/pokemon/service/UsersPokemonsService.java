@@ -1,15 +1,14 @@
 package com.android.pokemon.service;
 
-import java.time.Duration;
 import java.time.Instant;
-import java.time.Period;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.android.pokemon.model.Boss;
@@ -19,13 +18,6 @@ import com.android.pokemon.model.UsersPokemons;
 import com.android.pokemon.repository.PokemonRepository;
 import com.android.pokemon.repository.UserRepository;
 import com.android.pokemon.repository.UsersPokemonsRepository;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Service
 public class UsersPokemonsService {
