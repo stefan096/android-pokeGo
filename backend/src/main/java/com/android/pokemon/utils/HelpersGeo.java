@@ -2,6 +2,7 @@ package com.android.pokemon.utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -137,6 +138,22 @@ public class HelpersGeo {
 	    else {
 	        return random.nextInt(border + 1) + 70;     // random range 30 to 100
 	    }
+	}
+	
+	//to change one specific boss
+	public void changeOneSpecificBoss(Long id) {
+		Random valueGenerator = new Random();
+	  
+		Optional<Boss> optionalBoss = bossRepository.findById(id);
+		Boss boss = optionalBoss.get();
+		List<Pokemon> pokemons = pokemonRepository.findAll();
+		
+		boss.setLevel(valueGenerator.nextInt(100));
+		Pokemon pokemon = pokemons.get(valueGenerator.nextInt(pokemons.size()));
+		boss.setPokemon(pokemon);
+		
+		Boss savedBoss = bossRepository.save(boss);
+		System.out.println(" ONE updated: "  + savedBoss.getId());
 	}
 
 }

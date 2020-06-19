@@ -28,6 +28,7 @@ public class BaseService {
     public static final String POKEMON_MAP = "getPokemonsOnMap";
     public static final String COOLDOWN = "cooldown";
     public static final String POKEMON_MAP_SPECIFIC = "getPokemonsOnMap/specific";
+    public static final String POKEMON_UPDATE_BOSS = "data/updateboss/{id}";
     public static final String BOSS = "boss";
     public static final String FIGHT = "fight";
 

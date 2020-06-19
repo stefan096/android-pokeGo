@@ -158,7 +158,8 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
 
     private GenerateGeoDataDTO populateCoordinate(double kilometres){
         GenerateGeoDataDTO generatedDTO = new GenerateGeoDataDTO();
-        generatedDTO.setRadius(kilometres*1000);
+        //generatedDTO.setRadius(kilometres*1000);
+        generatedDTO.setRadius(10*1000);
         generatedDTO.setNumberOfData(100);
 
         LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);

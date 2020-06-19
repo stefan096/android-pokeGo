@@ -48,8 +48,38 @@ public class CaughtPokemonActivity extends AppCompatActivity {
         setUpCloseButton(x_button);
         setUpChooseFButton(choose_fighter);
 
-
+        //posalji backu id bossa
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.e("NEVENA","NEVENA: "+ "USAO");
+
+//        Call<ResponseBody> call = BaseService.userService.updateBoss(Long.parseLong(bossId.toString()));
+//        call.enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+//                String boss = null;
+//                if (response.code() == 200) {
+//                    Log.d("ASD", "Usao u petlju(boss)");
+//                    //to do nekako azurirati mapu
+//
+//                }else{
+//                    Log.d("pokes","error: "+response.code());
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ResponseBody> call, Throwable t) {
+//                Log.d(TAG, "onFailure: fail");
+//            }
+//        });
+    }
+
     private void fillData(Long id) {
         Call<ResponseBody> call = BaseService.userService.getBossById(id);
         call.enqueue(new Callback<ResponseBody>() {
