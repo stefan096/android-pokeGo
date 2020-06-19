@@ -114,6 +114,6 @@ public interface UserService {
             "User-Agent: Mobile-Android",
             "Content-Type:application/json"
     })
-    @GET(BaseService.BOSS)
+    @GET(BaseService.POKEMON_UPDATE_BOSS)
     Call<ResponseBody> updateBoss(@Path("id") Long id);
 }

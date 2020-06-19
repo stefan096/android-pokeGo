@@ -1,18 +1,16 @@
 package com.android.pokemon.controller;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
 
-import com.android.pokemon.dto.BossDTO;
-import com.android.pokemon.dto.FightDTO;
-import com.android.pokemon.model.Boss;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.android.pokemon.dto.UsersPokemonsDTO;
 import com.android.pokemon.dto.UsersPokemonsDTOList;

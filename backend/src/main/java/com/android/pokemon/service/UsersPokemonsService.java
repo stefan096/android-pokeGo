@@ -40,6 +40,13 @@ public class UsersPokemonsService {
     
     
     public UsersPokemons saveCaughtPokemon(Boss caughtBoss, User user) {
+    	
+    	UsersPokemons found = usersPokemonsRepository.findByUserIdAndPokemonId(user.getId(), caughtBoss.getPokemon().getId());
+    	
+    	if(found != null) {
+    		return null;
+    	}
+    	
     	UsersPokemons newPokemon = new UsersPokemons();
     	newPokemon.setPokemon(caughtBoss.getPokemon());
     	newPokemon.setLevel(caughtBoss.getLevel());

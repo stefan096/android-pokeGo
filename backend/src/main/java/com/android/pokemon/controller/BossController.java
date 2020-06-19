@@ -132,7 +132,9 @@ public class BossController {
     }
     
     @RequestMapping(value = "api/data/updateboss/{id}", method = RequestMethod.GET)
-    public ResponseEntity<BossListDTO> updateBoss(@PathVariable Long id) {
+    public ResponseEntity<Void> updateBoss(@PathVariable Long id) {
+    	
+    	System.out.println("USAO NEKAD");
     	HelpersGeo.changeOneSpecificBoss(id);
 
         return new ResponseEntity<>(HttpStatus.OK);
