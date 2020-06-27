@@ -47,9 +47,35 @@ public class CaughtPokemonActivity extends AppCompatActivity {
         fillData(Long.parseLong(bossId.toString()));
         setUpCloseButton(x_button);
         setUpChooseFButton(choose_fighter);
-
-
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Call<ResponseBody> call = BaseService.userService.updateBoss(Long.parseLong(bossId.toString()));
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String boss = null;
+                if (response.code() == 200) {
+                    Log.d("ASD", "Usao u petlju(boss)");
+                    //to do nekako azurirati mapu
+
+                }else{
+                    Log.d("pokes","error: "+response.code());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d(TAG, "onFailure: fail");
+            }
+        });
+    }
+
     private void fillData(Long id) {
         Call<ResponseBody> call = BaseService.userService.getBossById(id);
         call.enqueue(new Callback<ResponseBody>() {

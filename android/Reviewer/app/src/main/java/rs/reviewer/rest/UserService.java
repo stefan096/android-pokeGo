@@ -109,4 +109,11 @@ public interface UserService {
     })
     @PUT(BaseService.COOLDOWN)
     Call<ResponseBody> cooldown(@Query("id") Long id);
+
+    @Headers({
+            "User-Agent: Mobile-Android",
+            "Content-Type:application/json"
+    })
+    @GET(BaseService.POKEMON_UPDATE_BOSS)
+    Call<ResponseBody> updateBoss(@Path("id") Long id);
 }

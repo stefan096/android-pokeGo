@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface UsersPokemonsRepository extends JpaRepository<UsersPokemons, Long>{
 
     List<UsersPokemons> findByUser(Optional<User> user);
+    
+    UsersPokemons findByUserIdAndPokemonId(Long userId, Long pokemonId);
 }
