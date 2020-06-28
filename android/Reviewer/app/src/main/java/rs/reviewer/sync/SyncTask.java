@@ -68,8 +68,7 @@ public class SyncTask extends AsyncTask<Void, Void, Void> {
         Log.d("SYNC","sync happened: " );
         try {
 
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            double kilometres = Double.valueOf(sharedPreferences.getString("pref_map_list", "1"));
+            double kilometres = 100;
             Log.e("STEFAN km","kilometres: " + kilometres);
 
 

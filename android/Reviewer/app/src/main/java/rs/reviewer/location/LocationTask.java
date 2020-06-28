@@ -18,6 +18,7 @@ import android.preference.PreferenceManager;
 import androidx.core.app.NotificationCompat;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import model.PokeBoss;
 import model.PokeBossList;
@@ -64,13 +65,21 @@ public class LocationTask extends AsyncTask<Void, Void, Void> {
             }
         }
 
+
         return null;
     }
 
 
     @Override
     protected void onPostExecute(Void result) {
-        for(PokeBoss boss: this.nearMe) {
+        int notificationPermit = 10;
+        Collections.sort(this.nearMe);
+        if (this.nearMe.size() < notificationPermit) {
+            notificationPermit = this.nearMe.size();
+        }
+        // show max 10 notifications at time
+        for(int i = 0; i < notificationPermit; i++) {
+            PokeBoss boss = this.nearMe.get(i);
             this.generateSystemNotification(boss);
         }
     }
@@ -79,6 +88,7 @@ public class LocationTask extends AsyncTask<Void, Void, Void> {
         double distance = getDistance(location.getLatitude(), location.getLongitude(), boss.getLatitude(), boss.getLongitude());
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         double kilometres = Double.valueOf(sharedPreferences.getString("pref_map_list", "1"));
+        boss.setDistance(distance);
         if (distance <= kilometres) {
             return true;
         }

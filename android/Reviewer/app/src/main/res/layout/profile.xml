@@ -1,86 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
     >
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/background"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/background_faded" />
+    <RelativeLayout
         android:id="@+id/profile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/logo"
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:contentDescription="@string/logo"
-            android:layout_marginTop="150px"
-            android:src="@drawable/logo" />
-
-        <Button
-            android:id="@+id/button_image"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/photo"
+            android:layout_height="200dp"
             android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="100px"
-            android:layout_marginRight="100px"
-            android:gravity="center"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="105dp"
+            android:layout_marginLeft="105dp"
             android:layout_gravity="center"
+            app:cardElevation="2dp"
+            android:layout_marginTop="200px"
             android:onClick="takePicture"
-            android:text="@string/takePicture"/>
+            app:cardCornerRadius="100dp">
+            <ImageView
+                android:id="@+id/logo"
+                android:scaleType="centerCrop"
+                android:adjustViewBounds="true"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:contentDescription="@string/logo"
+                android:src="@drawable/profile" />
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_below="@+id/photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:backgroundTint="#e8ebff"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="-60dp"
+            android:layout_marginBottom="120dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="1dp"
+            >
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:hint="@string/first_name"
-            android:id="@+id/first_name"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="100px"/>
+            <RelativeLayout
+                android:id="@+id/profile_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:hint="@string/first_name"
+                    android:id="@+id/first_name"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginTop="70dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"/>
 
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:hint="@string/last_name"
-            android:id="@+id/last_name"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="100px"
-            android:layout_marginRight="100px"
-            />
+                <EditText
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:hint="@string/last_name"
+                    android:id="@+id/last_name"
+                    android:layout_below="@+id/first_name"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:fontFamily="sans-serif"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    />
+            </RelativeLayout>
+        </androidx.cardview.widget.CardView>
 
         <Button
-            android:layout_gravity="bottom"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/save_changes"
-            android:id="@+id/tap_to_play"
-            android:layout_alignParentTop="true"
+            android:id="@+id/btn_register"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_margin="50px"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button"
+            android:textColor="@color/white"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginBottom="40dp"
+            android:fontFamily="sans-serif"
+            android:radius="10dp"
             android:onClick="save"
-            />
+        />
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

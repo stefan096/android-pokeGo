@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -100,22 +101,25 @@ public class LostFightActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.item_image);
         TextView atk_text =  findViewById(R.id.atk_text);
         TextView defense_text =  findViewById(R.id.defense_text);
-        TextView hp_text =  findViewById(R.id.hp_text);
         TextView level_text = findViewById(R.id.level_text);
         TextView level = findViewById(R.id.level);
         TextView text = findViewById(R.id.text);
+        ProgressBar bar = findViewById(R.id.hp_bar);
 
 
         text.setText(R.string.lost);
-        hp_text.setText(R.string.hp);
         atk_text.setText(R.string.atk);
         defense_text.setText(R.string.defense);
         level_text.setText(R.string.lvl);
         name.setText(pokeBoss.getPokemon().getName());
         attack.setText(Double.toString(pokeBoss.getPokemon().getAtk()));
-        hp.setText(Double.toString(pokeBoss.getPokemon().getHp()));
         defense.setText(Double.toString(pokeBoss.getPokemon().getDefense()));
         level.setText(Double.toString(pokeBoss.getLevel()));
+        double initialHealth = setFightHealtBasedOnLevel(5, pokeBoss.getPokemon().getHp(), pokeBoss.getLevel());
+        hp.setText(Double.toString(pokeBoss.getFightHealt()) + " / " + Double.toString(initialHealth) + " HP");
+        bar.setMax((int) Math.round(initialHealth));
+        bar.setProgress((int) Math.round(pokeBoss.getFightHealt()));
+
         Picasso.get()
                 .load(pokeBoss.getPokemon().getImage_path())
                 .into(imageView);
@@ -126,6 +130,7 @@ public class LostFightActivity extends AppCompatActivity {
         Button choose_fighter = findViewById(R.id.btn_choose_fighter);
         int atkCounter = Integer.parseInt(attackCounter.toString());
         int pokeLSize = Integer.parseInt(pokeListSize.toString());
+        choose_fighter.setVisibility(View.VISIBLE);
 
         Log.d("Attack counter", atkCounter + "");
         if(atkCounter <= 2 && pokeLSize > 1) {
@@ -164,6 +169,17 @@ public class LostFightActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private double setFightHealtBasedOnLevel(int paramForBorderToAdd, double healt, int level) {
+        double retHealt = healt;
+        int multiplyConstant = level / paramForBorderToAdd;
+
+        if(multiplyConstant > 0) {
+            retHealt *= multiplyConstant;
+        }
+
+        return retHealt;
     }
 
 

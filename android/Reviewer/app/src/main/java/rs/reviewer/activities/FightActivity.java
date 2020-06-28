@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,8 @@ public class FightActivity extends AppCompatActivity {
     private boolean firstTime;
     private Uri atkCounter;
     private Uri pokeListSize;
+    private double bossMaxHealth;
+    private double pokeMaxHealth;
 
 
 
@@ -143,17 +146,21 @@ public class FightActivity extends AppCompatActivity {
     public void setUpScreen1(PokeBoss pokemon1, boolean firstTime){
         TextView name1 = findViewById(R.id.pokemon_name);
         TextView hp1 = findViewById(R.id.hp);
-        TextView hp_text1 = findViewById(R.id.hp_text);
         ImageView imageView1 = findViewById(R.id.item_image);
         Pokemon pokemon = pokemon1.getPokemon();
-
+        ProgressBar bar = findViewById(R.id.hp_bar_boss);
+        double maxHealth = setFightHealtBasedOnLevel(5, pokemon1.getPokemon().getHp(), pokemon1.getLevel());
+        bossMaxHealth = maxHealth;
         name1.setText(pokemon.getName());
-        hp_text1.setText(R.string.hp);
         if(firstTime){
-            hp1.setText(Double.toString(pokemon1.getPokemon().getHp()));
+            hp1.setText(Double.toString(maxHealth) + " / " + Double.toString(maxHealth) + " HP");
+            bar.setMax((int) Math.round(maxHealth));
+            bar.setProgress((int) Math.round(maxHealth));
         }
         else{
-            hp1.setText(Double.toString(pokemon1.getFightHealt()));
+            hp1.setText(Double.toString(pokemon1.getFightHealt()) + " / " + Double.toString(maxHealth) + " HP");
+            bar.setMax((int) Math.round(maxHealth));
+            bar.setProgress((int) Math.round(pokemon1.getFightHealt()));
         }
         Picasso.get()
                 .load(pokemon.getImage_path())
@@ -165,17 +172,21 @@ public class FightActivity extends AppCompatActivity {
     public void setUpScreen2(UsersPokemonsDTO pokemon2, boolean firstTime){
         TextView name2 = findViewById(R.id.pokemon_name2);
         TextView hp2 = findViewById(R.id.hp2);
-        TextView hp_text2 = findViewById(R.id.hp_text2);
         ImageView imageView2 = findViewById(R.id.item_image2);
-
+        ProgressBar bar = findViewById(R.id.hp_bar);
+        double maxHealth = setFightHealtBasedOnLevel(5, pokemon2.getPokemon().getHp(), pokemon2.getLevel());
+        pokeMaxHealth = maxHealth;
         name2.setText(pokemon2.getPokemon().getName());
-        hp_text2.setText(R.string.hp);
 
         if(firstTime){
-            hp2.setText(Double.toString(pokemon2.getPokemon().getHp()));
+            hp2.setText(Double.toString(maxHealth) + " / " + Double.toString(maxHealth) + " HP");
+            bar.setMax((int) Math.round(maxHealth));
+            bar.setProgress((int) Math.round(maxHealth));
         }
         else{
-            hp2.setText(Double.toString(pokemon2.getFightHealt()));
+            hp2.setText(Double.toString(pokemon2.getFightHealt()) + " / " + Double.toString(maxHealth) + " HP");
+            bar.setMax((int) Math.round(maxHealth));
+            bar.setProgress((int) Math.round(pokemon2.getFightHealt()));
         }
 
         Picasso.get()
@@ -208,8 +219,14 @@ public class FightActivity extends AppCompatActivity {
         TextView hpB = findViewById(R.id.hp);
         TextView hpU = findViewById(R.id.hp2);
 
-        hpB.setText(Double.toString(bossH));
-        hpU.setText(Double.toString(userH));
+        ProgressBar bar1 = findViewById(R.id.hp_bar);
+        ProgressBar bar2 = findViewById(R.id.hp_bar_boss);
+
+        bar1.setProgress((int) Math.round(userH));
+        bar2.setProgress((int) Math.round(bossH));
+
+        hpB.setText(Double.toString(bossH) + " / " + Double.toString(bossMaxHealth) + " HP");
+        hpU.setText(Double.toString(userH) + " / " + Double.toString(pokeMaxHealth) + " HP");
 
     }
 
@@ -221,11 +238,6 @@ public class FightActivity extends AppCompatActivity {
         } else {
             onTheMove.setText(R.string.use_atks);
         }
-    }
-
-    public void updateCounterForTurn(int counter){
-        TextView counterForTurn = findViewById(R.id.counterForTurn);
-        counterForTurn.setText("[" + counter +  "]");
     }
 
 
@@ -252,7 +264,6 @@ public class FightActivity extends AppCompatActivity {
                         while (healthBoss > 0 && healthUser > 0) {
                             updateHealth(healthBoss,healthUser);
                             updateMove(attackTurn);
-                            updateCounterForTurn(counterForTurn);
 
                             sleep(2000);
                             callMethod();
@@ -330,6 +341,19 @@ public class FightActivity extends AppCompatActivity {
             }
 
         });
+    }
+
+
+
+    private double setFightHealtBasedOnLevel(int paramForBorderToAdd, double healt, int level) {
+        double retHealt = healt;
+        int multiplyConstant = level / paramForBorderToAdd;
+
+        if(multiplyConstant > 0) {
+            retHealt *= multiplyConstant;
+        }
+
+        return retHealt;
     }
 
 }

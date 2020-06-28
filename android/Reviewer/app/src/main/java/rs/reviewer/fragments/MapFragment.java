@@ -453,7 +453,7 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
 
         if (shouldAnimate) {
             CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(loc).zoom(14).build();
+                    .target(loc).zoom(16).build();
 
             map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }

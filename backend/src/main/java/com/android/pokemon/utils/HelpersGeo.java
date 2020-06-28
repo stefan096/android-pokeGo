@@ -108,11 +108,12 @@ public class HelpersGeo {
 	  
 		List<Boss> bosses = bossRepository.findAll();
 		List<Pokemon> pokemons = pokemonRepository.findAll();
-		int paramToUpdate = valueGenerator.nextInt(bosses.size());
 		
 		if(bosses.size() == 0 || pokemons.size() == 0) {
 			return;
 		}
+
+		int paramToUpdate = valueGenerator.nextInt(bosses.size());
 		
 		for(int i = 0; i < bosses.size(); ++i) {
 			

@@ -40,7 +40,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     private User user;
 
-    private Button takePictureButton;
     private ImageView imageView;
     private Uri file;
 
@@ -62,13 +61,12 @@ public class ProfileActivity extends AppCompatActivity {
             editTextFirstName.setText(user.getName());
             editTextLastName.setText(user.getLastName());
 
-            takePictureButton = (Button) findViewById(R.id.button_image);
             imageView = (ImageView) findViewById(R.id.logo);
 
             this.FILE_NAME = user.getEmail();
 
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-                takePictureButton.setEnabled(false);
+                imageView.setEnabled(false);
                 ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
             }
 
@@ -132,7 +130,7 @@ public class ProfileActivity extends AppCompatActivity {
         if (requestCode == 0) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                     && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                takePictureButton.setEnabled(true);
+                imageView.setEnabled(true);
             }
         }
     }
