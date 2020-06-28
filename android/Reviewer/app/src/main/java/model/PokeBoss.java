@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
-public class PokeBoss implements Serializable {
+public class PokeBoss implements Serializable, Comparable<PokeBoss> {
 
     @SerializedName("id")
     @Expose
@@ -42,6 +42,10 @@ public class PokeBoss implements Serializable {
     @Expose
     private String name;
 
+
+    @Expose
+    private double distance;
+
     public PokeBoss(Long id, Pokemon pokemon, int level, double latitude, double longitude,
                     double fightHealt, String imagePath, String name) {
         this.id = id;
@@ -70,6 +74,14 @@ public class PokeBoss implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getDistance() {
+        return distance;
+    }
+
+    public void setDistance(double distance) {
+        this.distance = distance;
     }
 
     public double getFightHealt() {
@@ -122,5 +134,10 @@ public class PokeBoss implements Serializable {
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;
+    }
+
+    @Override
+    public int compareTo(PokeBoss o) {
+        return (int) Math.round(this.distance - o.getDistance());
     }
 }

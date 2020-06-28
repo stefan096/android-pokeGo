@@ -125,8 +125,8 @@ public class PokemonListAdapter extends BaseAdapter {
                 .into(image);
         if(mpokemons.get(position).getCooldown()!=null){
             if (isInCooldown(mpokemons.get(position).getCooldown())  && mforFight) {
-                TextView cooldown =  view.findViewById(R.id.cooldown);
-                cooldown.setText(R.string.cd);
+                RelativeLayout layout =  view.findViewById(R.id.pokemon_item);
+                layout.setBackgroundColor(mContext.getResources().getColor(R.color.disabled));
 
             }
 

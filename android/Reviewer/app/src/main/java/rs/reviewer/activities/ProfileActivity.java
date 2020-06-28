@@ -73,8 +73,8 @@ public class ProfileActivity extends AppCompatActivity {
             File tmp = makeFileToUse();
 
             if(tmp.exists()){
-//                file = FileProvider.getUriForFile(this, GenericFileProvider.MY_PROVIDER, getOutputMediaFile());
-//                imageView.setImageURI(file);
+                file = FileProvider.getUriForFile(this, GenericFileProvider.MY_PROVIDER, getOutputMediaFile());
+                imageView.setImageURI(file);
             }
             else{
                 //prikazi placeholder

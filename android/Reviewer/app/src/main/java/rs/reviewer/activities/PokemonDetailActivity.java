@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -92,9 +93,9 @@ public class PokemonDetailActivity extends AppCompatActivity {
       ImageView imageView = findViewById(R.id.item_image);
       TextView atk_text =  findViewById(R.id.atk_text);
       TextView defense_text =  findViewById(R.id.defense_text);
-      TextView hp_text =  findViewById(R.id.hp_text);
       TextView level_text = findViewById(R.id.level_text);
       TextView level = findViewById(R.id.level);
+      ProgressBar health_bar = findViewById(R.id.hp_bar);
 
       toolbar = findViewById(R.id.toolbar);
       setSupportActionBar(toolbar);
@@ -102,15 +103,16 @@ public class PokemonDetailActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayShowHomeEnabled(true);
       getSupportActionBar().setTitle(R.string.details);
       toolbar.setNavigationIcon(R.drawable.ic_action_back);
-      hp_text.setText(R.string.hp);
       atk_text.setText(R.string.atk);
       defense_text.setText(R.string.defense);
       level_text.setText(R.string.lvl);
       name.setText(usersPokemonsDTO.getPokemon().getName());
       attack.setText(Double.toString(usersPokemonsDTO.getPokemon().getAtk()));
-      hp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()));
+      hp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()) + " / " + Double.toString(usersPokemonsDTO.getPokemon().getHp()) + " HP");
       defense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
       level.setText(Double.toString(usersPokemonsDTO.getLevel()));
+      health_bar.setMax((int) usersPokemonsDTO.getPokemon().getHp());
+      health_bar.setProgress((int) usersPokemonsDTO.getPokemon().getHp());
 
 
       Picasso.get()

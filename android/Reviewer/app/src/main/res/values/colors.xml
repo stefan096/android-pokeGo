@@ -6,4 +6,6 @@
     <color name="holo_blue">#FF33B5E5</color>
     <color name="blue"> #1a1aff</color>
     <color name="white">#ffffff</color>
+    <color name="disabled">#d7d9e5</color>
+    <color name="backgroundTint">#f3f4f9</color>
 </resources> 

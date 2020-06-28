@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,17 +11,26 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="rs.reviewer.activities.FightBossActivity">
+
+        <ImageView
+            android:id="@+id/background"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            android:layout_below="@+id/toolbar"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:contentDescription="@string/logo"
+            android:src="@drawable/background_faded" />
+
 
         <ImageButton
             android:id="@+id/btn_close"
             android:layout_width="35dp"
             android:layout_height="35dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:layout_alignParentRight="true"
             android:background= "#00000000"/>
 
@@ -29,11 +39,12 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15dp"
+            android:textSize="20dp"
             android:gravity="center"
             android:text="@string/try_catch"
             android:layout_centerHorizontal="true"
             android:padding="15dp"
+            android:textColor="@color/white"
             android:layout_below="@id/btn_close"/>
 
         <ImageView
@@ -51,105 +62,177 @@
             android:layout_marginBottom="5dp"
             android:contentDescription="@null"
             android:gravity="center"
+            android:elevation="2dp"
             android:src="@drawable/pikachu" />
 
+        <androidx.cardview.widget.CardView
+            android:layout_below="@+id/item_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:backgroundTint="#e8ebff"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginTop="-100dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="1dp"
+            android:id="@+id/profile"
+            >
+
+
+    <RelativeLayout
+        android:id="@+id/profile_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
         <TextView
             android:id="@+id/pokemon_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:gravity="center"
-            android:layout_alignBaseline="@id/item_image"
             android:textColor="#990E0E"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="10dp"
-            android:layout_below="@+id/item_image"/>
+            android:layout_marginBottom="10dp"/>
+
+        <ProgressBar
+            android:thicknessRatio="1"
+            android:layout_below="@+id/pokemon_name"
+            android:id="@+id/hp_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:progressTint="@color/colorPrimary"
+            android:indeterminate="false" />
+
+        <TextView
+            android:id="@+id/hp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/hp_bar"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:padding="5dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/details_container"
+            android:layout_below="@+id/hp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp"
+            >
+        <RelativeLayout
+            android:id="@+id/level_container"
+            android:layout_width="0dp"
+            android:layout_height="70dp"
+            android:orientation="vertical"
+            android:layout_weight=".33"
+            >
 
         <TextView
             android:id="@+id/level_text"
             android:textColor="#050404"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_alignStart="@id/item_image"
-            android:layout_below="@+id/pokemon_name"
+            android:textAlignment="center"
             android:padding="5dp"/>
 
         <TextView
             android:id="@+id/level"
             android:textColor="#050404"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pokemon_name"
-            android:layout_toRightOf="@+id/level_text"
-            android:padding="5dp"/>
-
-        <TextView
-            android:id="@+id/hp_text"
-            android:textColor="#990E0E"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_alignStart="@id/item_image"
+            android:textAlignment="center"
             android:layout_below="@+id/level_text"
             android:padding="5dp"/>
+        </RelativeLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="70dp"
+                android:background="@android:color/darker_gray"
+                android:layout_toRightOf="@+id/level_container"
+                android:id="@+id/divider1"/>
 
-        <TextView
-            android:id="@+id/hp"
-            android:textColor="#990E0E"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/level"
-            android:layout_toRightOf="@+id/hp_text"
-            android:padding="5dp"/>
-
+            <RelativeLayout
+                android:id="@+id/atk_container"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:orientation="vertical"
+                android:layout_weight=".33"
+                android:layout_toRightOf="@+id/divider1"
+                >
         <TextView
             android:id="@+id/atk_text"
             android:textColor="#0000FF"
-            android:layout_alignStart="@id/item_image"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/hp_text"
+            android:textAlignment="center"
             android:padding="5dp"/>
 
         <TextView
             android:id="@+id/atk"
             android:textColor="#0000FF"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/hp"
-            android:layout_toRightOf="@+id/atk_text"
+            android:textAlignment="center"
+            android:layout_below="@+id/atk_text"
             android:padding="5dp"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="1dp"
+                android:layout_height="70dp"
+                android:background="@android:color/darker_gray"
+                android:layout_toRightOf="@+id/atk_container"
+                android:id="@+id/divider2"/>
 
+            <RelativeLayout
+                android:id="@+id/defense_container"
+                android:layout_width="0dp"
+                android:layout_height="70dp"
+                android:orientation="vertical"
+                android:layout_weight=".33"
+                android:layout_toRightOf="@+id/divider2"
+                >
         <TextView
             android:id="@+id/defense_text"
             android:textColor="#008000"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@id/item_image"
-            android:layout_below="@+id/atk_text"
+            android:textAlignment="center"
             android:padding="5dp"/>
 
         <TextView android:id="@+id/defense"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:textColor="#008000"
-            android:layout_below="@+id/atk"
-            android:layout_toRightOf="@+id/defense_text"
+            android:layout_below="@+id/defense_text"
             android:padding="5dp"/>
 
+        </RelativeLayout>
+        </LinearLayout>
+    </RelativeLayout>
+        </androidx.cardview.widget.CardView>
         <Button
             android:id="@+id/btn_choose_fighter"
-            android:gravity="center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceLarge"
             android:layout_centerInParent="true"
-            android:textSize="22sp"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/defense"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/profile"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
-            android:layout_width="261dp"
-            android:layout_marginRight="25dp"
-            android:layout_marginLeft="25dp"
+            android:background="@drawable/button"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:fontFamily="sans-serif"
+            android:radius="10dp"
 
             />
     </RelativeLayout>
