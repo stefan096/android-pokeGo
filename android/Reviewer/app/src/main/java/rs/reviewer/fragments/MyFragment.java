@@ -159,21 +159,12 @@ public class MyFragment extends Fragment implements LoaderManager.LoaderCallback
     public void setUpPokemon(UsersPokemons usersPokemonsDTO){
         View view = getView();
         TextView editTextName = view.findViewById(R.id.pokemon_name);
-        TextView editTextAtk = view.findViewById(R.id.atk);
-        TextView editTextDefense = view.findViewById(R.id.defense);
-        TextView editTextHp = view.findViewById(R.id.hp);
+        TextView editTextLvl = view.findViewById(R.id.level);
         ImageView imageView = view.findViewById(R.id.item_image);
-        TextView atk_text =  view.findViewById(R.id.atk_text);
-        TextView defense_text =  view.findViewById(R.id.defense_text);
-        TextView hp_text =  view.findViewById(R.id.hp_text);
-
-        hp_text.setText(R.string.hp);
-        atk_text.setText(R.string.atk);
-        defense_text.setText(R.string.defense);
+        TextView lvl_text =  view.findViewById(R.id.level_text);
+        lvl_text.setText(R.string.lvl);
         editTextName.setText(usersPokemonsDTO.getPokemon().getName());
-        editTextAtk.setText(Double.toString(usersPokemonsDTO.getPokemon().getAtk()));
-        editTextHp.setText(Double.toString(usersPokemonsDTO.getPokemon().getHp()));
-        editTextDefense.setText(Double.toString(usersPokemonsDTO.getPokemon().getDefense()));
+        editTextLvl.setText(Double.toString(usersPokemonsDTO.getLevel()));
 
         Picasso.get()
                 .load(usersPokemonsDTO.getPokemon().getImage_path())
