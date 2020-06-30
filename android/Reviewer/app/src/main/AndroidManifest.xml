@@ -113,6 +113,14 @@
             android:name=".activities.DetailActivity"
             android:label="@string/title_activity_detail"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activities.NearbyPokemonActivity"
+            android:label="@string/nearby_pokemon"
+            android:parentActivityName=".MainActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
 
         <provider
             android:name="rs.reviewer.database.DBContentProvider"

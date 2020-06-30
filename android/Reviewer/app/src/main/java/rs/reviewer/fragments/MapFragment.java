@@ -409,11 +409,12 @@ public class MapFragment extends Fragment implements LocationListener, OnMapRead
     private void addPokemonToMap(PokeBoss pokemon) {
         final LatLng location = new LatLng(pokemon.getLatitude(), pokemon.getLongitude());
         final Pokemon pokefinal = pokemon.getPokemon();
+        final int level = pokemon.getLevel();
         Target target = new Target() {
             @Override
             public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
                 final Marker marker = map.addMarker(new MarkerOptions()
-                        .title(pokefinal.getName())
+                        .title(pokefinal.getName() + " (lvl. " + level + ")")
                         .position(location));
                 marker.setIcon(BitmapDescriptorFactory.fromBitmap(bitmap));
             }

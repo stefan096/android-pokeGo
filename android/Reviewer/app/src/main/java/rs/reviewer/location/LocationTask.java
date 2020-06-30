@@ -3,6 +3,7 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -10,10 +11,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.location.Criteria;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.location.Location;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
@@ -26,6 +30,7 @@ import rs.reviewer.MainActivity;
 import rs.reviewer.R;
 import rs.reviewer.database.DatabaseHelper;
 import rs.reviewer.database.PokeBossSQLiteHelper;
+import rs.reviewer.database.PokeNearbySQLiteHelper;
 
 public class LocationTask extends AsyncTask<Void, Void, Void> {
 
@@ -76,6 +81,25 @@ public class LocationTask extends AsyncTask<Void, Void, Void> {
         Collections.sort(this.nearMe);
         if (this.nearMe.size() < notificationPermit) {
             notificationPermit = this.nearMe.size();
+        }
+
+        PokeNearbySQLiteHelper dbHelper = new PokeNearbySQLiteHelper(context);
+        // Gets the data repository in write mode
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+
+        //obrisi sve podatke
+        db.execSQL("DELETE FROM " + PokeNearbySQLiteHelper.TABLE_POKENEARBY);
+
+        for (PokeBoss boss : this.nearMe) {
+            ContentValues values = new ContentValues();
+            values.put(PokeNearbySQLiteHelper.COLUMN_ID, boss.getId());
+            values.put(PokeNearbySQLiteHelper.COLUMN_NAME, boss.getPokemon().getName());
+            values.put(PokeNearbySQLiteHelper.COLUMN_LATITUDE, boss.getLatitude());
+            values.put(PokeNearbySQLiteHelper.COLUMN_LONGITUDE, boss.getLongitude());
+            values.put(PokeNearbySQLiteHelper.COLUMN_LEVEL, boss.getLevel());
+            values.put(PokeNearbySQLiteHelper.COLUMN_FIGHT_HEALT, boss.getFightHealt());
+            values.put(PokeNearbySQLiteHelper.COLUMN_IMAGE_PATH, boss.getPokemon().getImage_path());
+            db.replace(PokeNearbySQLiteHelper.TABLE_POKENEARBY, null, values);
         }
         // show max 10 notifications at time
         for(int i = 0; i < notificationPermit; i++) {

@@ -40,11 +40,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import rs.reviewer.activities.LoginActivity;
+import rs.reviewer.activities.NearbyPokemonActivity;
 import rs.reviewer.activities.ProfileActivity;
 import rs.reviewer.activities.ReviewerPreferenceActivity;
 import rs.reviewer.adapters.DrawerListAdapter;
 import rs.reviewer.database.DatabaseHelper;
 import rs.reviewer.database.PokeBossSQLiteHelper;
+import rs.reviewer.database.PokeNearbySQLiteHelper;
 import rs.reviewer.dialogs.FightDialog;
 import rs.reviewer.fragments.MapFragment;
 import rs.reviewer.fragments.MyFragment;
@@ -167,8 +169,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         // Gets the data repository in write mode
         final SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        //db.execSQL("DROP TABLE IF EXISTS " + PokeBossSQLiteHelper.TABLE_POKEBOSS);
         db.execSQL(PokeBossSQLiteHelper.DB_CREATE);
+
+
+        PokeNearbySQLiteHelper dbHelper1 = new PokeNearbySQLiteHelper(this);
+        // Gets the data repository in write mode
+        final SQLiteDatabase db1 = dbHelper1.getWritableDatabase();
+
+        db1.execSQL(PokeNearbySQLiteHelper.DB_CREATE);
 
 
         DatabaseHelper.printTableData(PokeBossSQLiteHelper.TABLE_POKEBOSS, db);
@@ -319,6 +327,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private void prepareMenu(ArrayList<NavItem> mNavItems ){
     	mNavItems.add(new NavItem(getString(R.string.home), getString(R.string.home_long), R.drawable.ic_action_group));
         mNavItems.add(new NavItem(getString(R.string.pokemon_list), getString(R.string.pokemon_list_long), R.drawable.ic_action_name));
+        mNavItems.add(new NavItem(getString(R.string.nearby_pokemon), getString(R.string.nearby_pokemon_long), R.drawable.ic_action_name));
         mNavItems.add(new NavItem(getString(R.string.map), getString(R.string.map), R.drawable.ic_action_map));
         mNavItems.add(new NavItem(getString(R.string.profile), getString(R.string.profile_long), R.drawable.ic_action_person));
         mNavItems.add(new NavItem(getString(R.string.preferences), getString(R.string.preferences_long), R.drawable.ic_action_settings));
@@ -362,12 +371,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
         }else if(position == 1){ //list of pokemons
             FragmentTransition.to(PokemonListFragment.newInstance(), this, false);
             //..
-        }else if(position == 2){ //map
+        }else if(position == 2){ //pokemon nearby
+            Intent pokemon_nearby = new Intent(MainActivity.this, NearbyPokemonActivity.class);
+            startActivity(pokemon_nearby);
+        }else if(position == 3){ //map
             FragmentTransition.to(MapFragment.newInstance(), this, false);
-        }else if(position == 3){ //profile
+        }else if(position == 4){ //profile
             Intent profile = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(profile);
-        }else if(position == 4){ //preferences
+        }else if(position == 5){ //preferences
             Intent preference = new Intent(MainActivity.this,ReviewerPreferenceActivity.class);
             startActivity(preference);
         }else{
