@@ -162,6 +162,20 @@ public class FightController {
 		if(fight.getBoss().getFightHealt() <= 0) {
 			fight.setCaught(true);
 			usersPokemonService.saveCaughtPokemon(fight.getBoss(), fight.getPokemonOnMove().getUser());
+			
+			//deo za levelovanje
+			UsersPokemons userPokemonToLvl = fight.getPokemonOnMove();
+			double experience = userPokemonToLvl.getExperience();
+			experience += Constants.EXPERIENCE_FOR_ADDING;
+			
+			if(experience >= Constants.EXPERIENCE_TO_LEVEL) {
+				experience -= Constants.EXPERIENCE_TO_LEVEL;
+				
+				userPokemonToLvl.setLevel(userPokemonToLvl.getLevel() + 1);
+			}
+			
+			userPokemonToLvl.setExperience(experience);
+			usersPokemonService.save(userPokemonToLvl);
 		}
 
 		fight.setCounterForTurn(fight.getCounterForTurn() + 1);
