@@ -109,6 +109,9 @@ public class DatabaseHelper {
             }while (cur.moveToNext());
         }
     }
+    public static void deleteNearbyPokemon(int bossId, SQLiteDatabase db) {
+        db.delete(PokeNearbySQLiteHelper.TABLE_POKENEARBY,  PokeNearbySQLiteHelper.COLUMN_ID + " = " + bossId, null);
+    }
 
     public static PokeBossList readTableData(String table_name, SQLiteDatabase db){
 

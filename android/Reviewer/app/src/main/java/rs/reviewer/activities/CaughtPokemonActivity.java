@@ -1,6 +1,7 @@
 package rs.reviewer.activities;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.ColorSpace;
 import android.net.Uri;
@@ -27,6 +28,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rs.reviewer.MainActivity;
 import rs.reviewer.R;
+import rs.reviewer.database.DatabaseHelper;
+import rs.reviewer.database.PokeNearbySQLiteHelper;
 import rs.reviewer.rest.BaseService;
 
 import static android.content.ContentValues.TAG;
@@ -55,6 +58,10 @@ public class CaughtPokemonActivity extends AppCompatActivity {
         super.onStart();
 
         Call<ResponseBody> call = BaseService.userService.updateBoss(Long.parseLong(bossId.toString()));
+        PokeNearbySQLiteHelper dbHelper = new PokeNearbySQLiteHelper(getApplicationContext());
+        // Gets the data repository in write mode
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        DatabaseHelper.deleteNearbyPokemon(Integer.parseInt(bossId.toString()), db);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
