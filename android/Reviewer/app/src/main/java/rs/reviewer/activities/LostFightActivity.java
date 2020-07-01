@@ -1,6 +1,7 @@
 package rs.reviewer.activities;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import rs.reviewer.MainActivity;
 import rs.reviewer.R;
+import rs.reviewer.database.DatabaseHelper;
+import rs.reviewer.database.PokeNearbySQLiteHelper;
 import rs.reviewer.rest.BaseService;
 
 import static android.content.ContentValues.TAG;
@@ -48,6 +51,11 @@ public class LostFightActivity extends AppCompatActivity {
         fightId = extras.getParcelable("fightId");
         attackCounter = extras.getParcelable("attackCounter");
         pokeListSize = extras.getParcelable("pokeListSize");
+
+        PokeNearbySQLiteHelper dbHelper = new PokeNearbySQLiteHelper(getApplicationContext());
+        // Gets the data repository in write mode
+        final SQLiteDatabase db = dbHelper.getWritableDatabase();
+        DatabaseHelper.deleteNearbyPokemon(Integer.parseInt(bossId.toString()), db);
 
         fillData(Long.parseLong(bossId.toString()));
         setUpCloseButton();

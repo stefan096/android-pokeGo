@@ -60,7 +60,7 @@ public class PokemonListFragment extends ListFragment implements LoaderManager.L
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup vg, Bundle data) {
-        setHasOptionsMenu(true);
+        setHasOptionsMenu(false);
         View view = inflater.inflate(R.layout.list_layout, vg, false);
         return view;
     }

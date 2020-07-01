@@ -84,7 +84,9 @@
     <string name="save_changes">Save Changes</string>
     <string name="poke_go">Pokemon - Gotta catch them all!</string>
     <string name="pokemon_list">My pokemon</string>
-    <string name="pokemon_list_long">See the list of pokemons</string>
+    <string name="pokemon_list_long">See the list of pokemon</string>
+    <string name="nearby_pokemon">Pokemon Nearby</string>
+    <string name="nearby_pokemon_long">See pokemon near you</string>
     <string name="defense">Defense</string>
     <string name="atk">Attack</string>
     <string name="hp">Health</string>
@@ -92,7 +94,7 @@
     <string name="log_out">Log out</string>
     <string name="takePicture">Take a picture</string>
     <string name="lvl">Level</string>
-    <string name="details">POKEMON DETAILS</string>
+    <string name="details">Pokemon Details</string>
     <string name="try_catch">You`re trying to catch:</string>
     <string name="btn_choose_f">CHOOSE FIGHTER</string>
     <string name="fgtn">You`re fighting:</string>

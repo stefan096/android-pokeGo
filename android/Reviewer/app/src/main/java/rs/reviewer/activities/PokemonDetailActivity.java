@@ -102,6 +102,7 @@ public class PokemonDetailActivity extends AppCompatActivity {
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
       getSupportActionBar().setDisplayShowHomeEnabled(true);
       getSupportActionBar().setTitle(R.string.details);
+      toolbar.setTitleTextColor(getResources().getColor(R.color.white));
       toolbar.setNavigationIcon(R.drawable.ic_action_back);
       atk_text.setText(R.string.atk);
       defense_text.setText(R.string.defense);
