@@ -5,4 +5,4 @@ Da bi korisnik ušao u igru neophodno je prvo da napravi svoj nalog. Po napravlj
 
 
 
-Video sa demonstraciom: KRISTINA STAVI
+Video sa demonstracijom: KRISTINA STAVI
